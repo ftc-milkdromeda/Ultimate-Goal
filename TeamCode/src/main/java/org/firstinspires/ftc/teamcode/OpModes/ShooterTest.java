@@ -13,8 +13,15 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void loop() {
-        this.shooter0.setPower(super.gamepad1.right_trigger);
+        if(!super.gamepad1.x)
+            return;
+
+        shooter0.setPower(this.power == 0.0 ? 1.0 : 0.0);
+
+        while(super.gamepad1.x)
+            System.out.println(super.gamepad1.x);
     }
 
     private DcMotor shooter0;
+    private float power = 1.0f;
 }
