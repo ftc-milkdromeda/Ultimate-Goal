@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes;
+package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,7 +12,7 @@ public class ShooterTest extends OpMode {
         this.shooter0 = hardwareMap.get(DcMotor.class, "shooter0");
         this.shooter0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.shooter0.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.shooter0.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     @Override
