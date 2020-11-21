@@ -12,7 +12,7 @@ import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
 import RobotFunctions.Units;
 
-@TeleOp(name = "Mecanum Test")
+@TeleOp(name = "MecanumTest", group =  "Robot Test")
 public class MecanumTest extends OpMode {
     @Override
     public void init() {
@@ -27,6 +27,11 @@ public class MecanumTest extends OpMode {
         this.moters[1].setDirection(DcMotorSimple.Direction.FORWARD);
         this.moters[2].setDirection(DcMotorSimple.Direction.REVERSE);
         this.moters[3].setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.moters[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.moters[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.moters[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.moters[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(moters[0], moters[1], moters[2], moters[3]), 18, 18, Units.IN);
     }

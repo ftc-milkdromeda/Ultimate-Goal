@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "Wheel test")
+@TeleOp(name = "WheelTest", group = "HardwareTest")
 public class WheelsTest extends OpMode {
     @Override
     public void init() {
