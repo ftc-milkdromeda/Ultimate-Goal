@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,6 +13,7 @@ import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
 import RobotFunctions.Units;
 
+@Disabled
 @TeleOp(name = "MecanumVelocityTest")
 public class MecanumVelocityTest extends LinearOpMode {
     private static class MotorActivity extends Thread {
@@ -65,38 +67,48 @@ public class MecanumVelocityTest extends LinearOpMode {
         this.motors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.motors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 18, 18, Units.IN);
+        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 16, 13.3125, Units.IN);
+        mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
         mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
         MecanumVelocityTest.MotorActivity controller = new MotorActivity(this.mecanumWheels);
 
         waitForStart();
 
-        while(!super.gamepad1.x)
-            telemetry.update();
+        while(super.opModeIsActive()) {
+           super.telemetry.addData("Pivot: ", "%.1f", this.pivot);
+            while (!super.gamepad1.x)
+                super.telemetry.update();
 
-        System.out.println("Starting Test.");
+            System.out.println("Starting Test.");
 
-        controller.start();
+            controller.start();
 
-        long startTime = System.currentTimeMillis();
-        long endTime = startTime;
-        while(endTime - startTime <= this.testDuration * 1000 && super.gamepad1.x) {
-            endTime = System.currentTimeMillis();
-            super.telemetry.addData("Time: ", "%.2f", (endTime - startTime)/1000f);
-            super.telemetry.update();
+            long startTime = System.currentTimeMillis();
+            long endTime = startTime;
+            while (endTime - startTime <= this.testDuration * 1000 && super.gamepad1.x) {
+                endTime = System.currentTimeMillis();
+                super.telemetry.addData("Time: ", "%.2f", (endTime - startTime) / 1000f);
+                super.telemetry.update();
+            }
+
+            controller.interrupt();
+            System.out.println("Finished Test");
+            System.out.println("Final Time " + (endTime - startTime) / 1000f);
+
+            pivot -= 0.1;
+            mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
+
+            while(!super.gamepad1.y)
+                telemetry.update();
+
+            controller = new MotorActivity(this.mecanumWheels);
         }
-
-        controller.interrupt();
-        System.out.println("Finished Test");
-        System.out.println("Final Time " + (endTime - startTime)/1000f);
-
-        for( ; ; );
     }
 
     private RoughMecanumWheels mecanumWheels;
     private DcMotor motors[];
-    private double trojectory = Math.PI / 2;
-    private double pivot = 0;
-    private double power = 1;
-    private int testDuration = 1; //seconds
+    private double trojectory = 90 * Math.PI/180;
+    private double pivot = 0.9;
+    private double power = .5;
+    private int testDuration = 2; //seconds
 }
