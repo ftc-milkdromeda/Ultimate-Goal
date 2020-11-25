@@ -48,15 +48,15 @@ public class MecanumTest extends OpMode {
     public void loop() {
         double pivot = Math.pow(super.gamepad1.right_stick_x, 2) * Math.signum(super.gamepad1.right_stick_x);
         double magnitude = Math.sqrt(Math.pow(gamepad1.left_stick_x, 2) + Math.pow(gamepad1.left_stick_y, 2));
-        double trojectory = Math.acos(gamepad1.left_stick_x/magnitude) * Math.signum(-gamepad1.left_stick_y);
+        double trajectory = Math.acos(gamepad1.left_stick_x/magnitude) * Math.signum(-gamepad1.left_stick_y);
 
-        if(trojectory == 0)
-            trojectory = Math.signum(gamepad1.left_stick_x) == 1 ? 0 : Math.PI;
+        if(trajectory == 0)
+            trajectory = Math.signum(gamepad1.left_stick_x) == 1 ? 0 : Math.PI;
 
         if(magnitude == 0)
-            mecanumWheels.addTrojectory(new Procedure(0, pivot, -1));
+            mecanumWheels.addTrajectory(new Procedure(0, pivot, -1));
         else
-            mecanumWheels.addTrojectory(new Procedure(trojectory, magnitude, -pivot * .75));
+            mecanumWheels.addTrajectory(new Procedure(trajectory, magnitude, -pivot * .75));
 
         mecanumWheels.drive();
     }

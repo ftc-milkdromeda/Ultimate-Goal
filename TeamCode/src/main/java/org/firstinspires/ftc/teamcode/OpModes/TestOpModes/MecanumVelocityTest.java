@@ -13,7 +13,7 @@ import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
 import RobotFunctions.Units;
 
-@Disabled
+//@Disabled
 @TeleOp(name = "MecanumVelocityTest")
 public class MecanumVelocityTest extends LinearOpMode {
     private static class MotorActivity extends Thread {
@@ -68,14 +68,14 @@ public class MecanumVelocityTest extends LinearOpMode {
         this.motors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 16, 13.3125, Units.IN);
-        mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
-        mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
+        mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
+        mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
         MecanumVelocityTest.MotorActivity controller = new MotorActivity(this.mecanumWheels);
 
-        waitForStart();
+        super.waitForStart();
 
         while(super.opModeIsActive()) {
-           super.telemetry.addData("Pivot: ", "%.1f", this.pivot);
+           super.telemetry.addData("Trajectory: ", "%.1f", this.trojectory * 180 / Math.PI);
             while (!super.gamepad1.x)
                 super.telemetry.update();
 
@@ -95,11 +95,14 @@ public class MecanumVelocityTest extends LinearOpMode {
             System.out.println("Finished Test");
             System.out.println("Final Time " + (endTime - startTime) / 1000f);
 
-            pivot -= 0.1;
-            mecanumWheels.addTrojectory(new Procedure(this.trojectory, this.power, this.pivot));
+            trojectory += 15 * Math.PI / 180;
+            mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
 
-            while(!super.gamepad1.y)
+            while(!super.gamepad1.y) {
                 telemetry.update();
+                if(!super.opModeIsActive())
+                    return;
+            }
 
             controller = new MotorActivity(this.mecanumWheels);
         }
@@ -107,8 +110,8 @@ public class MecanumVelocityTest extends LinearOpMode {
 
     private RoughMecanumWheels mecanumWheels;
     private DcMotor motors[];
-    private double trojectory = 90 * Math.PI/180;
-    private double pivot = 0.9;
-    private double power = .5;
+    private double trojectory = 0;
+    private double pivot = 0.0;
+    private double power = .3;
     private int testDuration = 2; //seconds
 }
