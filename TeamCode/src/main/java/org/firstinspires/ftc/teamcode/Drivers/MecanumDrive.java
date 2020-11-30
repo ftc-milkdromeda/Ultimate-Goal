@@ -18,7 +18,7 @@ public class MecanumDrive extends Drive {
     @Override
     public void setMotor(Motor index, double power) {
         this.moters[index.getValue()].setPower(power);
-        System.out.println("Motor " + index.name() + \"set to: " + power);
+        System.out.println("Motor " + index.name() + "set to: " + power);
     }
 
     @Override
