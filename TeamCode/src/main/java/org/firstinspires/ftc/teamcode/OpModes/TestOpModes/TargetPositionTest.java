@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import RobotFunctions.MecanumWheels.Motor;
 
-//@Disabled
+@Disabled
 @TeleOp(name = "TargetPositionTest", group = "Robot Test")
 public class TargetPositionTest extends LinearOpMode {
 
@@ -30,16 +30,6 @@ public class TargetPositionTest extends LinearOpMode {
         this.motors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.motors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        this.motors[0].setTargetPosition(3936);
-        this.motors[1].setTargetPosition(3936);
-        this.motors[2].setTargetPosition(3936);
-        this.motors[3].setTargetPosition(3936);
-
-        this.motors[0].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.motors[1].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.motors[2].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.motors[3].setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         this.motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
         this.motors[1].setDirection(DcMotorSimple.Direction.FORWARD);
         this.motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
@@ -47,15 +37,30 @@ public class TargetPositionTest extends LinearOpMode {
 
         super.waitForStart();
 
-        while(super.gamepad1.x)
+        this.motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        while(!super.gamepad1.x)
             super.telemetry.update();
 
-        this.motors[0].setPower(1.0);
-        this.motors[1].setPower(1.0);
-        this.motors[2].setPower(1.0);
-        this.motors[3].setPower(1.0);
+        this.motors[0].setTargetPosition(3936);
+        this.motors[1].setTargetPosition(3936);
+        this.motors[2].setTargetPosition(3936);
+        this.motors[3].setTargetPosition(3936);
 
-        while(super.gamepad1.x || super.opModeIsActive())
+        this.motors[0].setPower(0.60);
+        this.motors[1].setPower(0.45);
+        this.motors[2].setPower(0.54);
+        this.motors[3].setPower(0.50);
+
+        this.motors[0].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motors[1].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motors[2].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motors[3].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while(super.gamepad1.x && super.opModeIsActive())
             super.telemetry.update();
     }
 

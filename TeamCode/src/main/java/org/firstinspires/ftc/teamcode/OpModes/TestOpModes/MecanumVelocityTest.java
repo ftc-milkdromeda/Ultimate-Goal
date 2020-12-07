@@ -13,7 +13,7 @@ import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
 import RobotFunctions.Units;
 
-//@Disabled
+@Disabled
 @TeleOp(name = "MecanumVelocityTest")
 public class MecanumVelocityTest extends LinearOpMode {
     private static class MotorActivity extends Thread {
