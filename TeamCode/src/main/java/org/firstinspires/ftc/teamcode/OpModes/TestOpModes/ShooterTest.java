@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Drivers.RobotFeeder;
+import org.firstinspires.ftc.teamcode.Drivers.Feeder;
+import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
 @Disabled
 @TeleOp(name = "ShooterTest", group = "Robot Test")
@@ -19,15 +20,18 @@ public class ShooterTest extends OpMode {
         this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter0.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        this.servo = hardwareMap.get(Servo.class, "servo1");
 
-        this.feeder = new RobotFeeder(this.servo, 270);
+        this.storage = new Storage();
+        this.servo = hardwareMap.get(Servo.class, "servo1");
+        this.feeder = new Feeder(this.storage, this.servo, 1.5 * Math.PI);
+        this.storage.setRings(3);
     }
 
     @Override
     public void loop() {
         super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
         super.telemetry.addData("Power set: ", "%.2d", this.power);
+        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
         super.telemetry.update();
 
         while(!this.status) {
@@ -41,27 +45,35 @@ public class ShooterTest extends OpMode {
                 this.power += 0.005;
             else if(super.gamepad1.left_bumper)
                 this.status = true;
+            else if(super.gamepad2.a)
+                this.storage.setRings(3);
 
             super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
             super.telemetry.addData("Power set: ", "%.2d", this.power);
+            super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
             super.telemetry.update();
         }
 
         while(!super.gamepad1.left_bumper) {
             if(super.gamepad1.right_bumper)
-                this.feeder.feed();
+                this.feeder.shoot();
+            else if(super.gamepad2.a)
+                this.storage.setRings(3);
 
             super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
             super.telemetry.addData("Power set: ", "%.2d", this.power);
+            super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
             super.telemetry.update();
         }
 
         super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
         super.telemetry.addData("Power set: ", "%.2d", this.power);
+        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
         super.telemetry.update();
     }
 
-    private RobotFeeder feeder;
+    private Storage storage;
+    private Feeder feeder;
     private double power = 1.0;
     private boolean status = false;
     private DcMotor shooter0;
