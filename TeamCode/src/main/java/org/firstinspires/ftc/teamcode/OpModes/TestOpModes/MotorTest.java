@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Disabled
 @TeleOp(name = "MoterTest", group = "HardwareTest")
-public class MoterTest extends LinearOpMode {
+public class MotorTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         this.shooter0 = hardwareMap.get(DcMotor.class, "shooter0");
