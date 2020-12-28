@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 
 import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
-import RobotFunctions.Units;
+import RobotFunctions.Units_length;
+import RobotFunctions.Units_length;
 
 @Disabled
 @TeleOp(name = "MecanumTest", group =  "Robot Test")
@@ -41,7 +42,7 @@ public class MecanumTest extends OpMode {
 
 
 
-        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 18, 18, Units.IN);
+        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 18, 18, Units_length.IN);
     }
 
     @Override

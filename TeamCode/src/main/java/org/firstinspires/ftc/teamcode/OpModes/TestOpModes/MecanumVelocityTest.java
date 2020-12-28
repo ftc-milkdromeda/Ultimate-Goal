@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 
 import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
-import RobotFunctions.Units;
+import RobotFunctions.Units_length;
 
 @Disabled
 @TeleOp(name = "MecanumVelocityTest")
@@ -67,7 +67,7 @@ public class MecanumVelocityTest extends LinearOpMode {
         this.motors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.motors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 16, 13.3125, Units.IN);
+        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 16, 13.3125, Units_length.IN);
         mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
         mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
         MecanumVelocityTest.MotorActivity controller = new MotorActivity(this.mecanumWheels);
