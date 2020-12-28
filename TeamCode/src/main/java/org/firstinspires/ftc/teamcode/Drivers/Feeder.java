@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotFeeder;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
 public class Feeder extends RobotFeeder {
-    public Feeder(RobotStorage storage, Servo servo, int maxAngle) {
+    public Feeder(RobotStorage storage, Servo servo, double maxAngle) {
         super(storage);
     }
 
