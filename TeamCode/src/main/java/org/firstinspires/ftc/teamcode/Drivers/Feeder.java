@@ -11,6 +11,7 @@ public class Feeder extends RobotFeeder {
     public Feeder(RobotStorage storage, Servo servo) {
         super(storage);
         this.servo = servo;
+        this.servo.setPosition(0.975f);
     }
 
     @Override
