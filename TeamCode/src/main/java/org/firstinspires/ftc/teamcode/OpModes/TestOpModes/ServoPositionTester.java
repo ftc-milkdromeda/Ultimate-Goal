@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//@Disabled
+@Disabled
 @TeleOp(name = "Servo Tester")
 public class ServoPositionTester extends LinearOpMode {
     @Override
@@ -13,13 +13,13 @@ public class ServoPositionTester extends LinearOpMode {
         double servoValue = 0;
         Servo testServo = hardwareMap.servo.get("servo");
 
-        super.telemetry.addData("Value: ", "%.5f", servoValue);
+        super.telemetry.addData("Value: ", "%.2f", servoValue);
         super.telemetry.update();
 
         //testServo.setDirection(Servo.Direction.REVERSE);
 
         final double bigIncrement = 0.05;
-        final double smallIncrement = 0.0015;
+        final double smallIncrement = 0.0005;
 
         testServo.setPosition(servoValue);
 
@@ -57,7 +57,7 @@ public class ServoPositionTester extends LinearOpMode {
 
             testServo.setPosition(servoValue);
 
-            super.telemetry.addData("Value: ", "%.5f", servoValue);
+            super.telemetry.addData("Value: ", "%.2f", servoValue);
             super.telemetry.update();
         }
     }
