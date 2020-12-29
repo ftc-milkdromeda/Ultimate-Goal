@@ -11,14 +11,19 @@ public class Feeder extends RobotFeeder {
     public Feeder(RobotStorage storage, Servo servo) {
         super(storage);
         this.servo = servo;
-        this.servo.setPosition(0.975f);
+        this.servo.setPosition(Feeder.initialPosition);
     }
 
     @Override
     protected void feed() {
-        servo.setPosition(0.98);
-        servo.setPosition(0.8);
-        servo.setPosition(0.98);
+        servo.setPosition(Feeder.initialPosition);
+        servo.setPosition(Feeder.extendedPosition);
+        servo.setPosition(Feeder.initialPosition);
     }
+
     private Servo servo;
+
+    //constants
+    private static final double initialPosition = 0.975;
+    private static final double extendedPosition = 0.8;
 }
