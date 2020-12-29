@@ -9,6 +9,9 @@ public class Storage extends RobotStorage {
         super();
         this.liftServo = liftServo; //Lifts the storage up and down.
         this.storageServo = storageServo; //Rotates the storage box to line up with the shooter box.
+
+        this.liftServo.setPosition(0.0f);
+        this.storageServo.setPosition(1.0f);
     }
 
     @Override

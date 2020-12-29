@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,11 +11,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Drivers.Feeder;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
-@Disabled
+//@Disabled
 @TeleOp(name = "ShooterTest", group = "Robot Test")
-public class ShooterTest extends OpMode {
-    @Override
-    public void init() {
+public class ShooterTest extends LinearOpMode {
+
+    public void runOpMode() {
         this.shooter0 = hardwareMap.get(DcMotor.class, "shooter0");
         this.shooter0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -27,98 +28,96 @@ public class ShooterTest extends OpMode {
         this.feederServo = hardwareMap.get(Servo.class, "feeder");
         this.feeder = new Feeder(this.storage, this.feederServo);
 
-        this.liftServo.setPosition(0);
-        this.feederServo.setPosition(0);
-        this.storageServo.setPosition(0);
-
         this.storage.setRings(3);
-    }
 
-    @Override
-    public void loop() {
+        super.waitForStart();
+
         super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-        super.telemetry.addData("Power set: ", "%.2d", this.power);
+        super.telemetry.addData("Power set: ", "%.5d", this.power);
         super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
         super.telemetry.update();
 
         final double bigIncrement = 0.05;
         final double smallIncrement = 0.0005;
 
-        while(!this.status) {
-            if(super.gamepad1.b && this.power <= 1 - bigIncrement) {
-                this.power += bigIncrement;
-                while(super.gamepad1.b) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update(); }
-            }
-            else if(super.gamepad1.a && this.power >= bigIncrement) {
-                this.power -= bigIncrement;
-                while(super.gamepad1.a) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-            else if(super.gamepad1.x && this.power >= smallIncrement) {
-                this.power -= smallIncrement;
-                while(super.gamepad1.x) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-            else if(super.gamepad1.y && this.power <= 1 - smallIncrement) {
-                this.power += smallIncrement;
-                while(super.gamepad1.y) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-            else if(super.gamepad1.left_bumper) {
-                this.status = true;
-                while(super.gamepad1.left_bumper) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-            else if(super.gamepad2.a) {
-                this.storage.setRings(3);
-                while(super.gamepad2.a) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-
-        }
-
-        while(!super.gamepad1.left_bumper) {
-            if(super.gamepad1.right_bumper) {
-                this.feeder.shoot();
-
-                while(super.gamepad1.left_bumper) {
-                    super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-                    super.telemetry.addData("Power set: ", "%.2d", this.power);
-                    super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
-                    super.telemetry.update();
-                }
-            }
-            else if(super.gamepad2.a)
-                this.storage.setRings(3);
-
+        while(super.opModeIsActive()) {
             super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
-            super.telemetry.addData("Power set: ", "%.2d", this.power);
+            super.telemetry.addData("Power set: ", "%.5d", this.power);
             super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
             super.telemetry.update();
+
+            while (!this.status) {
+                if (super.gamepad1.b && this.power <= 1 - bigIncrement) {
+                    this.power += bigIncrement;
+                    while (super.gamepad1.b) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.5d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                } else if (super.gamepad1.a && this.power >= bigIncrement) {
+                    this.power -= bigIncrement;
+                    while (super.gamepad1.a) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                } else if (super.gamepad1.x && this.power >= smallIncrement) {
+                    this.power -= smallIncrement;
+                    while (super.gamepad1.x) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                } else if (super.gamepad1.y && this.power <= 1 - smallIncrement) {
+                    this.power += smallIncrement;
+                    while (super.gamepad1.y) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                }
+                else if (super.gamepad1.left_bumper) {
+                    this.status = true;
+                    while (super.gamepad1.left_bumper) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                }
+                else if (super.gamepad2.a) {
+                    this.storage.setRings(3);
+                    while (super.gamepad2.a) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                }
+
+            }
+            while (!super.gamepad1.left_bumper) {
+                if (super.gamepad1.right_bumper) {
+                    this.feeder.shoot();
+
+                    while (super.gamepad1.left_bumper) {
+                        super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                        super.telemetry.addData("Power set: ", "%.2d", this.power);
+                        super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                        super.telemetry.update();
+                    }
+                } else if (super.gamepad2.a)
+                    this.storage.setRings(3);
+
+                super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
+                super.telemetry.addData("Power set: ", "%.2d", this.power);
+                super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
+                super.telemetry.update();
+            }
         }
     }
 
