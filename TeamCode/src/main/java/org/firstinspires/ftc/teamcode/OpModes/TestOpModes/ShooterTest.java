@@ -22,10 +22,10 @@ public class ShooterTest extends OpMode {
 
         this.liftServo = hardwareMap.get(Servo.class, "lift");
         this.liftServo = hardwareMap.get(Servo.class, "storage");
-        this.storage = new Storage(liftServo, storageServo, 1.5 * Math.PI);
+        this.storage = new Storage(liftServo, storageServo);
 
         this.feederServo = hardwareMap.get(Servo.class, "feeder");
-        this.feeder = new Feeder(this.storage, this.liftServo, 1.5 * Math.PI);
+        this.feeder = new Feeder(this.storage, this.liftServo);
 
         this.liftServo.setPosition(0);
         this.feederServo.setPosition(0);
