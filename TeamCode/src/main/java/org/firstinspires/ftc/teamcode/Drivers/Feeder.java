@@ -15,8 +15,9 @@ public class Feeder extends RobotFeeder {
 
     @Override
     protected void feed() {
-        servo.setPosition(0.0);
-        servo.setPosition(0.0);
+        servo.setPosition(0.98);
+        servo.setPosition(0.8);
+        servo.setPosition(0.98);
     }
     private Servo servo;
 }

@@ -15,19 +15,19 @@ public class Storage extends RobotStorage {
     protected void setPosition(int position) {
         if (position == 0) {
            liftServo.setPosition(0.0);
-           storageServo.setPosition(0.0);
+           storageServo.setPosition(1.0);
         }
         else if (position == 1) {
             liftServo.setPosition(0.0);
-            storageServo.setPosition(0.0);
+            storageServo.setPosition(0.9);
         }
         else if (position == 2) {
-            liftServo.setPosition(0.0);
-            storageServo.setPosition(0.0);
+            liftServo.setPosition(0.635);
+            storageServo.setPosition(0.9);
         }
         else if (position == 3) {
-            liftServo.setPosition(0.0);
-            storageServo.setPosition(0.0);
+            liftServo.setPosition(0.8985);
+            storageServo.setPosition(0.9);
         }
     }
 
