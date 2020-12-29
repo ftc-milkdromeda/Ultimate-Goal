@@ -41,17 +41,20 @@ public class ShooterTest extends OpMode {
         super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
         super.telemetry.update();
 
+        final double bigIncrement = 0.05;
+        final double smallIncrement = 0.0005;
+
         while(!this.status) {
-            if(super.gamepad1.b && this.power <= 0.95) {
-                this.power += 0.05;
+            if(super.gamepad1.b && this.power <= 1 - bigIncrement) {
+                this.power += bigIncrement;
                 while(super.gamepad1.b) {
                     super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
                     super.telemetry.addData("Power set: ", "%.2d", this.power);
                     super.telemetry.addData("# of Rings: ", "%n", this.storage.getRings());
                     super.telemetry.update(); }
             }
-            else if(super.gamepad1.a && this.power >= 0.05) {
-                this.power -= 0.05;
+            else if(super.gamepad1.a && this.power >= bigIncrement) {
+                this.power -= bigIncrement;
                 while(super.gamepad1.a) {
                     super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
                     super.telemetry.addData("Power set: ", "%.2d", this.power);
@@ -59,8 +62,8 @@ public class ShooterTest extends OpMode {
                     super.telemetry.update();
                 }
             }
-            else if(super.gamepad1.x && this.power >= 0.0005) {
-                this.power -= 0.0005;
+            else if(super.gamepad1.x && this.power >= smallIncrement) {
+                this.power -= smallIncrement;
                 while(super.gamepad1.x) {
                     super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
                     super.telemetry.addData("Power set: ", "%.2d", this.power);
@@ -68,8 +71,8 @@ public class ShooterTest extends OpMode {
                     super.telemetry.update();
                 }
             }
-            else if(super.gamepad1.y && this.power <= 0.9995) {
-                this.power += 0.0005;
+            else if(super.gamepad1.y && this.power <= 1 - smallIncrement) {
+                this.power += smallIncrement;
                 while(super.gamepad1.y) {
                     super.telemetry.addData("Status: ", this.status ? "Running" : "Stopped");
                     super.telemetry.addData("Power set: ", "%.2d", this.power);
