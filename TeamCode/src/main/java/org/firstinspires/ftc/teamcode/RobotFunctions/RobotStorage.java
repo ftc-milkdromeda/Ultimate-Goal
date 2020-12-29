@@ -4,7 +4,7 @@ public abstract class RobotStorage {
 
     /**
      * @brief Sets the storage to specified location.
-     * @param postion an integer 0 - 2 for the 3 different positions of lift.
+     * @param postion An integer 0 - 3, where 0 is the intake position; where 1 - 3 is each of its shooting positions.
      */
     protected abstract void setPosition(int postion);
 
@@ -25,7 +25,7 @@ public abstract class RobotStorage {
         if(numOfRings == 0)
             return false;
 
-        this.setPosition(3 - numOfRings);
+        this.setPosition(4 - numOfRings);
 
         return true;
     }
