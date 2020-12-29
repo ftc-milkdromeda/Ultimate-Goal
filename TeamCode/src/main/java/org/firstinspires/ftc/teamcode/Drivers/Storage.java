@@ -5,11 +5,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
 public class Storage extends RobotStorage {
-    public Storage(Servo liftServo, Servo storageServo, double maxAngle) {
+    public Storage(Servo liftServo, Servo storageServo) {
         super();
-        this.liftServo = liftServo;
-        this.storageServo = storageServo;
-        this.maxAngle = maxAngle;
+        this.liftServo = liftServo; //Lifts the storage up and down.
+        this.storageServo = storageServo; //Rotates the storage box to line up with the shooter box.
     }
 
     @Override
@@ -18,19 +17,15 @@ public class Storage extends RobotStorage {
            liftServo.setPosition(0.0);
            storageServo.setPosition(0.0);
         }
-
-
         else if (position == 1) {
             liftServo.setPosition(0.0);
             storageServo.setPosition(0.0);
         }
-
         else if (position == 2) {
             liftServo.setPosition(0.0);
             storageServo.setPosition(0.0);
         }
-
-        else if (position ==3) {
+        else if (position == 3) {
             liftServo.setPosition(0.0);
             storageServo.setPosition(0.0);
         }
@@ -38,5 +33,4 @@ public class Storage extends RobotStorage {
 
     private Servo liftServo;
     private Servo storageServo;
-    private double maxAngle;
 }
