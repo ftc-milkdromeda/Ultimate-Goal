@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
 public class Feeder extends RobotFeeder {
-    public Feeder(RobotStorage storage, Servo servo, double maxAngle) {
+    public Feeder(RobotStorage storage, Servo servo) {
         super(storage);
         this.servo = servo;
     }
