@@ -20,10 +20,17 @@ public class ShooterTest extends OpMode {
         this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter0.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        this.liftServo = hardwareMap.get(Servo.class, "lift");
+        this.liftServo = hardwareMap.get(Servo.class, "storage");
+        this.storage = new Storage(liftServo, storageServo, 1.5 * Math.PI);
 
-        this.storage = new Storage();
-        this.servo = hardwareMap.get(Servo.class, "servo1");
-        this.feeder = new Feeder(this.storage, this.servo, 1.5 * Math.PI);
+        this.feederServo = hardwareMap.get(Servo.class, "feeder");
+        this.feeder = new Feeder(this.storage, this.liftServo, 1.5 * Math.PI);
+
+        this.liftServo.setPosition(0);
+        this.feederServo.setPosition(0);
+        this.storageServo.setPosition(0);
+
         this.storage.setRings(3);
     }
 
@@ -77,5 +84,7 @@ public class ShooterTest extends OpMode {
     private double power = 1.0;
     private boolean status = false;
     private DcMotor shooter0;
-    private Servo servo;
+    private Servo feederServo;
+    private Servo liftServo;
+    private Servo storageServo;
 }
