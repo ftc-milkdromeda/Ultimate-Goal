@@ -15,7 +15,7 @@ public abstract class RobotFeeder {
             return false;
 
         long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= RobotFeeder.timeDelay);
+        while(System.currentTimeMillis() - startTime <= RobotFeeder.shootingTimeDelay);
 
         this.feed();
 
@@ -27,5 +27,5 @@ public abstract class RobotFeeder {
     private RobotStorage storage;
 
     //constants
-    private static final int timeDelay = 750;
+    private static final int shootingTimeDelay = 750;
 }
