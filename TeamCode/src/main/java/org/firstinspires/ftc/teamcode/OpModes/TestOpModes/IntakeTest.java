@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -12,6 +11,8 @@ public class IntakeTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         this.intakeMotor = hardwareMap.dcMotor.get("intake");
+        this.intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         this.power = 1;
 
         final double bigIncrement = 0.05;
