@@ -22,7 +22,7 @@ public class Storage extends RobotStorage {
         }
         else if (position == 1) {
             liftServo.setPosition(liftPos1);
-            storageServo.setPosition(storageInitialPosition);
+            storageServo.setPosition(storageExtendedPosition);
         }
         else if (position == 2) {
             liftServo.setPosition(liftPos2);
