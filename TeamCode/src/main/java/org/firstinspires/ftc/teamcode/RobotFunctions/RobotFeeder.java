@@ -14,6 +14,9 @@ public abstract class RobotFeeder {
         if(!this.storage.nextRing())
             return false;
 
+        long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime <= RobotFeeder.timeDelay);
+
         this.feed();
 
         this.storage.removeRing();
@@ -22,4 +25,7 @@ public abstract class RobotFeeder {
     }
 
     private RobotStorage storage;
+
+    //constants
+    private static final int timeDelay = 750;
 }
