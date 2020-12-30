@@ -16,8 +16,11 @@ public class Feeder extends RobotFeeder {
 
     @Override
     protected void feed() {
-        servo.setPosition(Feeder.initialPosition);
         servo.setPosition(Feeder.extendedPosition);
+        long startTime = System.currentTimeMillis();
+
+        while(System.currentTimeMillis() - startTime <= Feeder.timeExtended);
+
         servo.setPosition(Feeder.initialPosition);
     }
 
@@ -26,4 +29,5 @@ public class Feeder extends RobotFeeder {
     //constants
     private static final double initialPosition = 0.975;
     private static final double extendedPosition = 0.8;
+    private static final int timeExtended = 150;
 }
