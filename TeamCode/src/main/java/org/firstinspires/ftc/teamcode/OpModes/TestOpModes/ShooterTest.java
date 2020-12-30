@@ -26,12 +26,9 @@ public class ShooterTest extends LinearOpMode {
         this.shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        this.liftServo = hardwareMap.servo.get("lift");
-        this.storageServo = hardwareMap.servo.get("storage");
-        this.storage = new Storage(liftServo, storageServo);
+        this.storage = new Storage(super.hardwareMap);
 
-        this.feederServo = hardwareMap.servo.get("feeder");
-        this.feeder = new Feeder(this.storage, this.feederServo);
+        this.feeder = new Feeder(this.storage, super.hardwareMap);
 
         this.storage.setRings(3);
 
@@ -100,9 +97,6 @@ public class ShooterTest extends LinearOpMode {
     private double power = 1.0;
     private boolean status = false;
     private DcMotor shooter;
-    private Servo feederServo;
-    private Servo liftServo;
-    private Servo storageServo;
 
     //increment amounts
     private static final double bigIncrement = 0.05;
