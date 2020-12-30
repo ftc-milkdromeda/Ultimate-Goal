@@ -45,29 +45,7 @@ public class MecanumVelocityTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        motors = new DcMotor[4];
-
-        this.motors[0] = hardwareMap.get(DcMotor.class, "wheel0");
-        this.motors[1] = hardwareMap.get(DcMotor.class, "wheel1");
-        this.motors[2] = hardwareMap.get(DcMotor.class, "wheel2");
-        this.motors[3] = hardwareMap.get(DcMotor.class, "wheel3");
-
-        this.motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
-        this.motors[1].setDirection(DcMotorSimple.Direction.FORWARD);
-        this.motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
-        this.motors[3].setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.motors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.motors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        this.motors[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.motors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.motors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.motors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(motors[0], motors[1], motors[2], motors[3]), 16, 13.3125, Units_length.IN);
+        mecanumWheels = RoughMecanumWheels.instance(new MecanumDrive(super.hardwareMap), 16, 13.3125, Units_length.IN);
         mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
         mecanumWheels.addTrajectory(new Procedure(this.trojectory, this.power, this.pivot));
         MecanumVelocityTest.MotorActivity controller = new MotorActivity(this.mecanumWheels);
@@ -109,7 +87,6 @@ public class MecanumVelocityTest extends LinearOpMode {
     }
 
     private RoughMecanumWheels mecanumWheels;
-    private DcMotor motors[];
     private double trojectory = 0;
     private double pivot = 0.0;
     private double power = .3;
