@@ -3,35 +3,29 @@ package org.firstinspires.ftc.teamcode.RobotFunctions;
 public abstract class RobotFeeder {
     protected RobotFeeder(RobotStorage storage) {
         this.storage = storage;
-        this.busy = false;
     }
 
     /**
      * @brief Activates the servo to feed the next ring.
      */
-    protected abstract boolean feed();
+    protected abstract void feed();
 
-    public boolean feedRing() {
+    public boolean shoot() {
         if(!this.storage.nextRing())
             return false;
 
         long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= RobotFeeder.shootingTimeDelay);
+        while(System.currentTimeMillis() - startTime <= RobotFeeder.timeDelay);
 
-        if(!this.feed())
-            return false;
+        this.feed();
 
         this.storage.removeRing();
 
         return true;
     }
 
-    public boolean isBusy() {
-        return this.busy;
-    }
-
     private RobotStorage storage;
-    protected boolean busy;
+
     //constants
-    private static final int shootingTimeDelay = 1000;
+    private static final int timeDelay = 750;
 }
