@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.Drivers;
-
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
 public class Storage extends RobotStorage {
-    public Storage(Servo liftServo, Servo storageServo) {
+    public Storage(HardwareMap hardware) {
         super();
-        this.liftServo = liftServo; //Lifts the storage up and down.
-        this.storageServo = storageServo; //Rotates the storage box to line it up with the shooter box.
+        this.liftServo = hardware.servo.get("lift"); //Lifts the storage up and down.
+        this.storageServo = hardware.servo.get("storage"); //Rotates the storage box to line it up with the shooter box.
 
         this.liftServo.setPosition(Storage.liftInitialPosition);
         this.storageServo.setPosition(Storage.storageInitialPosition);
