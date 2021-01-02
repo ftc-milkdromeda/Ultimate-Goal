@@ -24,6 +24,6 @@ public class Feeder extends RobotFeeder {
     private Servo servo;
 
     //constants
-    private static final double initialPosition = 0.975;
-    private static final double extendedPosition = 0.8;
+    private static final double initialPosition = 0.97;
+    private static final double extendedPosition = 0.75;
 }
