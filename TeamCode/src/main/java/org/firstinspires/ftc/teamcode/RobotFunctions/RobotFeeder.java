@@ -27,5 +27,5 @@ public abstract class RobotFeeder {
     private RobotStorage storage;
 
     //constants
-    private static final int shootingTimeDelay = 750;
+    private static final int shootingTimeDelay = 1000;
 }
