@@ -19,14 +19,14 @@ public class MotorTest extends LinearOpMode {
         super.waitForStart();
 
         this.shooter0.setPower(1.0);
-        System.out.println("STARTING UP MOTERS");
+        super.telemetry.addData("Status: ","STARTING MOTORS");
         long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= 2000) {
+        while(System.currentTimeMillis() - startTime <= 5000) {
             super.telemetry.addData("Time: ", "%5.2fs", (System.currentTimeMillis() - startTime) / 1000f);
             super.telemetry.update();
         }
 
-        System.out.println("STARTING TEST!!!!");
+        super.telemetry.addData("Status: ","STARTED");
 
         startTime = System.currentTimeMillis();
         int startEncoder = this.shooter0.getCurrentPosition();
@@ -37,6 +37,7 @@ public class MotorTest extends LinearOpMode {
         while(endTime - startTime <= runtime * 1000) {
             endTime = System.currentTimeMillis();
             endEncoder = this.shooter0.getCurrentPosition();
+            super.telemetry.addData("Status: ","STARTED");
             super.telemetry.addData("Test Time: ", "%5.2fs", (endTime - startTime) / 1000f);
             super.telemetry.addData("Encoder Value: ", "%d", endEncoder);
             super.telemetry.update();
@@ -46,15 +47,19 @@ public class MotorTest extends LinearOpMode {
 
         double result = ((endEncoder - startEncoder)/this.tpr)/timeInterval;
 
-        System.out.println("\t\tRPM: " + result * 60);
+        super.telemetry.addData("Status: ","STOPPED");
+        super.telemetry.addData("RPM:", "%.5f", result * 60);
+        super.telemetry.update();
 
         startTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - startTime > 10000)
             startTime = System.currentTimeMillis();
+
+        while(super.opModeIsActive());
     }
 
     private DcMotor shooter0;
     private float power = 1.0f;
-    private double tpr = 537.6;
+    private double tpr = 103.6;
     private int runtime = 10;
 }
