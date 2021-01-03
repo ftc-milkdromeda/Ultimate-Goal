@@ -8,6 +8,7 @@ public abstract class RobotStorage {
      */
     protected abstract void setPosition(int postion);
     protected abstract void shake();
+    protected abstract void shakeEnd();
 
     public int getRings() {
         return this.numOfRings;
