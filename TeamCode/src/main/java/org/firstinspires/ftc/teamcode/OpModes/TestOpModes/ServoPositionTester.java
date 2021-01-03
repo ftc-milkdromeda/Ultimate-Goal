@@ -19,7 +19,7 @@ public class ServoPositionTester extends LinearOpMode {
         //testServo.setDirection(Servo.Direction.REVERSE);
 
         final double bigIncrement = 0.05;
-        final double smallIncrement = 0.0005;
+        final double smallIncrement = 0.0015;
 
         testServo.setPosition(servoValue);
 
