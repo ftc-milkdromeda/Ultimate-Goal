@@ -34,14 +34,73 @@ public class Storage extends RobotStorage {
         }
     }
 
+    @Override
+    protected void shake() {
+        this.shake = new Storage.Shake(storageServo);
+
+        this.shake.start();
+    }
+    @Override
+    protected void shakeEnd() {
+        this.shake.stopThread();
+    }
+
+    private static class Shake extends Thread {
+        public Shake (Servo servo) {
+            this.servo = servo;
+        }
+
+        @Override
+        public void run() {
+            while(this.interrupt == Interrupt.RUN) {
+                this.servo.setPosition(Shake.extended);
+
+                long startTime = System.currentTimeMillis();
+                while(System.currentTimeMillis() - startTime <= 1 / Shake.frequency / 2) {
+                    if (this.interrupt == Interrupt.STOPPED) {
+                        this.servo.setPosition(Shake.initial);
+                        return;
+                    }
+                }
+
+                this.servo.setPosition(Shake.initial);
+
+                startTime = System.currentTimeMillis();
+                while(System.currentTimeMillis() - startTime <= 1 / Shake.frequency / 2) {
+                    if (this.interrupt == Interrupt.STOPPED)
+                        return;
+                }
+            }
+        }
+
+        public void stopThread() {
+            this.interrupt = Interrupt.STOPPED;
+        }
+
+        private enum Interrupt {
+            STOPPED, RUN;
+        }
+
+        private Shake.Interrupt interrupt;
+        private Servo servo;
+
+        //constants
+        private static final double frequency = 2;
+        private static final double extended = 0.9;
+        private static final double initial = 1.0;
+    }
+
     private Servo liftServo;
     private Servo storageServo;
+    private Storage.Shake shake;
 
     //constants
     private static final double liftInitialPosition = 0.0;
     private static final double liftPos1 = 0.1;
     private static final double liftPos2 = 0.7;
     private static final double liftPos3 = .89;
+
     private static final double storageInitialPosition = 1.0;
     private static final double storageExtendedPosition = 0.905;
+    private static final double shakeExtendedPosition = 0.9;
 }
