@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
 public abstract class RobotStorage {
-    protected RobotStorage() {
-        this.busy = false;
-    }
 
     /**
      * @brief Sets the storage to specified location.
      * @param postion An integer 0 - 3, where 0 is the intake position; where 1 - 3 is each of its shooting positions.
-     * @return returns true on success; false if function failed to execute.
      */
-    public abstract boolean setPosition(int postion);
-    protected abstract boolean shake();
-    protected abstract boolean shakeEnd();
+    protected abstract void setPosition(int postion);
+    protected abstract void shake();
 
     public int getRings() {
         return this.numOfRings;
@@ -36,12 +31,6 @@ public abstract class RobotStorage {
         return true;
     }
 
-    public boolean isBusy() {
-        return this.busy;
-    }
-
     private int position;
     private int numOfRings;
-
-    protected boolean busy;
 }
