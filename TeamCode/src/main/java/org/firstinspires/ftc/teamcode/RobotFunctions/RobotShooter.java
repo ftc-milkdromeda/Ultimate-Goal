@@ -7,9 +7,13 @@ public abstract class RobotShooter {
         this.busy = false;
     }
 
-    public abstract void runShooter(double distance, Units_length units);
+    public abstract boolean runShooter(double distance, Units_length units);
+    public abstract boolean runShooter(double distance, Units_length units, double offset);
 
-    public abstract void runShooter(double distance, Units_length units, double offset);
+    @Deprecated
+    public abstract boolean runShooter(double rpm);
+
+    public abstract  boolean stopShooter();
 
     public boolean isBusy() {
         return this.busy;
