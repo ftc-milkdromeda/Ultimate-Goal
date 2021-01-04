@@ -17,13 +17,22 @@ public class Feeder extends RobotFeeder {
     }
 
     @Override
-    protected void feed() {
+    protected boolean feed() {
+        if(super.busy)
+            return false;
+
         servo.setPosition(Feeder.extendedPosition);
 
         long startTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - startTime <= Feeder.timeExtended);
 
         servo.setPosition(Feeder.initialPosition);
+
+        while(servo.getPosition() != Feeder.initialPosition);
+
+        super.busy = false;
+
+        return true;
     }
 
     private Servo servo;
