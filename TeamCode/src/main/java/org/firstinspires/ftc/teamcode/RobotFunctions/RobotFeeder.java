@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.RobotFunctions;
 public abstract class RobotFeeder {
     protected RobotFeeder(RobotStorage storage) {
         this.storage = storage;
+        this.busy = false;
     }
 
     /**
@@ -24,8 +25,12 @@ public abstract class RobotFeeder {
         return true;
     }
 
-    private RobotStorage storage;
+    public boolean isBusy() {
+        return this.busy;
+    }
 
+    private RobotStorage storage;
+    protected boolean busy;
     //constants
     private static final int shootingTimeDelay = 1000;
 }
