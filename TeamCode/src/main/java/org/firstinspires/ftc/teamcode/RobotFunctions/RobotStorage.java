@@ -7,6 +7,8 @@ public abstract class RobotStorage {
      * @param postion An integer 0 - 3, where 0 is the intake position; where 1 - 3 is each of its shooting positions.
      */
     protected abstract void setPosition(int postion);
+    protected abstract void shake();
+    protected abstract void shakeEnd();
 
     public int getRings() {
         return this.numOfRings;
