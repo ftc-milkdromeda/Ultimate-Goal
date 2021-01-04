@@ -15,48 +15,66 @@ public class Storage extends RobotStorage {
     }
 
     @Override
-    protected void setPosition(int position) {
-        if(this.busy)
-            return;
+    protected boolean setPosition(int position) {
+        if(super.busy)
+            return false;
+
+        super.busy = true;
 
         if (position == 0) {
            liftServo.setPosition(liftInitialPosition);
            storageServo.setPosition(storageInitialPosition);
+
+            while(liftServo.getPosition() != liftPos1 && storageServo.getPosition() != storageInitialPosition);
         }
         else if (position == 1) {
             liftServo.setPosition(liftPos1);
             storageServo.setPosition(storageExtendedPosition);
+
+            while(liftServo.getPosition() != liftPos1 && storageServo.getPosition() != storageExtendedPosition);
         }
         else if (position == 2) {
             liftServo.setPosition(liftPos2);
             storageServo.setPosition(storageExtendedPosition);
+
+            while(liftServo.getPosition() != liftPos2 && storageServo.getPosition() != storageExtendedPosition);
         }
         else if (position == 3) {
             liftServo.setPosition(liftPos3);
             storageServo.setPosition(storageExtendedPosition);
+
+            while(liftServo.getPosition() != liftPos3 && storageServo.getPosition() != storageExtendedPosition);
         }
+
+        super.busy = false;
+
+        return true;
     }
 
     @Override
-    protected void shake() {
+    protected boolean shake() {
         if(this.busy)
-            return;
+            return false;
 
         this.busy = true;
 
         this.shake = new Shake(storageServo);
         this.shake.start();
+
+        return true;
     }
     @Override
-    protected void shakeEnd() {
+    protected boolean shakeEnd() {
         if(this.shake == null)
-            return;
+            return false;
 
         this.shake.interrupt();
         this.storageServo.setPosition(Storage.storageInitialPosition);
 
         this.shake = null;
         this.busy = false;
+
+        return true;
     }
 
     private static class Shake extends Thread {
