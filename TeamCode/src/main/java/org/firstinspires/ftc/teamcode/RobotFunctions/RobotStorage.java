@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
 public abstract class RobotStorage {
+    protected RobotStorage() {
+        this.busy = false;
+    }
 
     /**
      * @brief Sets the storage to specified location.
@@ -32,6 +35,12 @@ public abstract class RobotStorage {
         return true;
     }
 
+    public boolean isBusy() {
+        return this.busy;
+    }
+
     private int position;
     private int numOfRings;
+
+    protected boolean busy;
 }
