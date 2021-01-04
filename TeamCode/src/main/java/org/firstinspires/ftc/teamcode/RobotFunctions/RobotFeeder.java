@@ -9,16 +9,17 @@ public abstract class RobotFeeder {
     /**
      * @brief Activates the servo to feed the next ring.
      */
-    protected abstract void feed();
+    protected abstract boolean feed();
 
-    public boolean shoot() {
+    public boolean feedRing() {
         if(!this.storage.nextRing())
             return false;
 
         long startTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - startTime <= RobotFeeder.shootingTimeDelay);
 
-        this.feed();
+        if(!this.feed())
+            return false;
 
         this.storage.removeRing();
 
