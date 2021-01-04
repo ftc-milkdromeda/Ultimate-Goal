@@ -16,6 +16,9 @@ public class Storage extends RobotStorage {
 
     @Override
     protected void setPosition(int position) {
+        if(this.busy)
+            return;
+
         if (position == 0) {
            liftServo.setPosition(liftInitialPosition);
            storageServo.setPosition(storageInitialPosition);
@@ -36,63 +39,72 @@ public class Storage extends RobotStorage {
 
     @Override
     protected void shake() {
-        this.shake = new Storage.Shake(storageServo);
+        if(this.busy)
+            return;
 
+        this.busy = true;
+
+        this.shake = new Shake(storageServo);
         this.shake.start();
     }
     @Override
     protected void shakeEnd() {
-        this.shake.stopThread();
+        if(this.shake == null)
+            return;
+
+        this.shake.interrupt();
+        this.storageServo.setPosition(Storage.storageInitialPosition);
+
+        this.shake = null;
+        this.busy = false;
     }
 
     private static class Shake extends Thread {
-        public Shake (Servo servo) {
+        public Shake(Servo servo) {
             this.servo = servo;
         }
 
         @Override
         public void run() {
-            while(this.interrupt == Interrupt.RUN) {
-                this.servo.setPosition(Shake.extended);
+            int iteration = 0;
+            while(!this.isInterrupted()) {
 
-                long startTime = System.currentTimeMillis();
-                while(System.currentTimeMillis() - startTime <= 1 / Shake.frequency / 2) {
-                    if (this.interrupt == Interrupt.STOPPED) {
-                        this.servo.setPosition(Shake.initial);
-                        return;
-                    }
+                System.out.println(iteration++);
+
+                this.servo.setPosition(Shake.extendedPos);
+
+                try {
+                    this.sleep((long)(1000 / Shake.frequency / 2));
+                }
+                catch(InterruptedException e) {
+                    this.servo.setPosition(Shake.initialPos);
+                    return;
                 }
 
-                this.servo.setPosition(Shake.initial);
+                this.servo.setPosition(Shake.initialPos);
 
-                startTime = System.currentTimeMillis();
-                while(System.currentTimeMillis() - startTime <= 1 / Shake.frequency / 2) {
-                    if (this.interrupt == Interrupt.STOPPED)
-                        return;
+                try {
+                    this.sleep((long)(1000 / Shake.frequency / 2));
+                }
+                catch(InterruptedException e) {
+                    this.servo.setPosition(Shake.initialPos);
+                    return;
                 }
             }
         }
 
-        public void stopThread() {
-            this.interrupt = Interrupt.STOPPED;
-        }
-
-        private enum Interrupt {
-            STOPPED, RUN;
-        }
-
-        private Shake.Interrupt interrupt;
         private Servo servo;
 
         //constants
-        private static final double frequency = 2;
-        private static final double extended = 0.9;
-        private static final double initial = 1.0;
+        private static final double frequency = 3;
+        private static final double initialPos = 1.0;
+        private static final double extendedPos = 0.95;
     }
 
     private Servo liftServo;
     private Servo storageServo;
     private Storage.Shake shake;
+    private boolean busy;
 
     //constants
     private static final double liftInitialPosition = 0.0;
