@@ -15,7 +15,7 @@ public class Storage extends RobotStorage {
     }
 
     @Override
-    protected boolean setPosition(int position) {
+    public boolean setPosition(int position) {
         if(super.busy)
             return false;
 
@@ -24,26 +24,18 @@ public class Storage extends RobotStorage {
         if (position == 0) {
            liftServo.setPosition(liftInitialPosition);
            storageServo.setPosition(storageInitialPosition);
-
-            while(liftServo.getPosition() != liftPos1 && storageServo.getPosition() != storageInitialPosition);
         }
         else if (position == 1) {
             liftServo.setPosition(liftPos1);
             storageServo.setPosition(storageExtendedPosition);
-
-            while(liftServo.getPosition() != liftPos1 && storageServo.getPosition() != storageExtendedPosition);
         }
         else if (position == 2) {
             liftServo.setPosition(liftPos2);
             storageServo.setPosition(storageExtendedPosition);
-
-            while(liftServo.getPosition() != liftPos2 && storageServo.getPosition() != storageExtendedPosition);
         }
         else if (position == 3) {
             liftServo.setPosition(liftPos3);
             storageServo.setPosition(storageExtendedPosition);
-
-            while(liftServo.getPosition() != liftPos3 && storageServo.getPosition() != storageExtendedPosition);
         }
 
         super.busy = false;
@@ -114,9 +106,9 @@ public class Storage extends RobotStorage {
         private Servo servo;
 
         //constants
-        private static final double frequency = 3;
+        private static final double frequency = 8;
         private static final double initialPos = 1.0;
-        private static final double extendedPos = 0.95;
+        private static final double extendedPos = 0.99;
     }
 
     private Servo liftServo;
@@ -126,7 +118,7 @@ public class Storage extends RobotStorage {
 
     //constants
     private static final double liftInitialPosition = 0.0;
-    private static final double liftPos1 = 0.1;
+    private static final double liftPos1 = 0.405;
     private static final double liftPos2 = 0.7;
     private static final double liftPos3 = .89;
 

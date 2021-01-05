@@ -11,6 +11,7 @@ public class Intake extends RobotIntake {
 
         this.storage = storage;
         this.intake = hardware.dcMotor.get("intake");
+        this.intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
