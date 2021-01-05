@@ -10,7 +10,7 @@ public abstract class RobotStorage {
      * @param postion An integer 0 - 3, where 0 is the intake position; where 1 - 3 is each of its shooting positions.
      * @return returns true on success; false if function failed to execute.
      */
-    protected abstract boolean setPosition(int postion);
+    public abstract boolean setPosition(int postion);
     protected abstract boolean shake();
     protected abstract boolean shakeEnd();
 
