@@ -28,8 +28,6 @@ public class Feeder extends RobotFeeder {
 
         servo.setPosition(Feeder.initialPosition);
 
-        while(servo.getPosition() != Feeder.initialPosition);
-
         super.busy = false;
 
         return true;

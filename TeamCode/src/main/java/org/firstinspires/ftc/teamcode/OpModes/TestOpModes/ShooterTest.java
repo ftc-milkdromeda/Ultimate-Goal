@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Drivers.Feeder;
+import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
 import java.util.ArrayList;
@@ -33,19 +34,7 @@ public class ShooterTest extends LinearOpMode {
     }
 
     public void runOpMode() {
-        this.shooter = new DcMotor[2];
-        this.shooter[0] = hardwareMap.get(DcMotor.class, "shooter0");
-        this.shooter[1] = hardwareMap.get(DcMotor.class, "shooter1");
-
-        this.shooter[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.shooter[0].setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.shooter[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.shooter[1].setDirection(DcMotorSimple.Direction.REVERSE);
-
-        this.motorVelocity = new ShooterTest.Velocity(shooter);
-        this.motorVelocity.start();
-
+        this.shooter = new Shooter(super.hardwareMap);
         this.storage = new Storage(super.hardwareMap);
         this.feeder = new Feeder(this.storage, super.hardwareMap);
         this.storage.setRings(3);
@@ -54,7 +43,7 @@ public class ShooterTest extends LinearOpMode {
 
         super.waitForStart();
 
-        double velocity[] = this.motorVelocity.getMotorVelocity();
+        double velocity[] = this.shooter.getAverageVelocity();
         while(super.opModeIsActive()) {
             while (!this.status && super.opModeIsActive()) {
                 if (super.gamepad1.b && this.power <= 1 - bigIncrement) {
@@ -82,20 +71,20 @@ public class ShooterTest extends LinearOpMode {
                 }
                 else if (super.gamepad2.a) {
                     this.storage.setRings(3);
+                    this.storage.setPosition(0);
                     while (super.gamepad2.a) {
-                        this.updateTelemetry(velocity);
+                        this.updateTelemetry();
                     }
                 }
             }
 
-            this.shooter[0].setPower(this.power);
-            this.shooter[1].setPower(this.power);
+            this.shooter.runShooterPower(this.power);
 
             boolean isReset = false;
             while (this.status && super.opModeIsActive()) {
                 if ((super.gamepad1.right_bumper || super.gamepad2.right_bumper) && isReset) {
-                    velocity = this.motorVelocity.getMotorVelocity();
-                    this.feeder.shoot();
+                    velocity = this.shooter.getAverageVelocity();
+                    this.feeder.feedRing();
                     isReset = false;
 
                     while (super.gamepad1.right_bumper || super.gamepad2.right_bumper)
@@ -103,106 +92,31 @@ public class ShooterTest extends LinearOpMode {
                 }
                 else if (super.gamepad2.a) {
                     this.storage.setRings(3);
+
                     this.updateTelemetry(velocity);
                 }
                 else if(super.gamepad1.left_bumper || super.gamepad2.left_bumper)
                     this.status = false;
                 else if(super.gamepad1.right_trigger > .75 || super.gamepad2.right_trigger > .75) {
-                    this.motorVelocity.reset();
+                    shooter.resetGauge();
                     isReset = true;
+                    this.updateTelemetry(velocity);
                 }
 
                 this.updateTelemetry(velocity);
             }
 
             this.updateTelemetry(velocity);
-            this.shooter[0].setPower(0.0);
-            this.shooter[1].setPower(0.0);
+            this.shooter.stopShooter();
         }
-
-        this.motorVelocity.interrupt();
     }
 
-    private static class Velocity extends Thread {
-        public Velocity(DcMotor motor[]) {
-            this.motor = motor;
-            this.interrupt = Interrupt.CONTINUE;
-
-            this.motorVelocity = new double[2];
-            this.motorVelocity[0] = 0;
-            this.motorVelocity[1] = 0;
-        }
-
-
-        @Override
-        public void run() {
-            long startTime;
-            long endTime;
-
-            int startPositions[] = {motor[0].getCurrentPosition(), motor[1].getCurrentPosition()};
-
-            while(this.interrupt == Interrupt.CONTINUE) {
-                endTime = System.currentTimeMillis();
-                startTime = System.currentTimeMillis();
-
-                startPositions[0] = motor[0].getCurrentPosition();
-                startPositions[1] = motor[1].getCurrentPosition();
-
-                while(endTime - startTime <= this.refreshSpeed) {
-                    System.out.println("In timer");
-                    if (this.interrupt == Interrupt.STOP)
-                        return;
-                    endTime = System.currentTimeMillis();
-                }
-
-                double velocity[] = { this.motor[0].getCurrentPosition() - startPositions[0], this.motor[1].getCurrentPosition() - startPositions[1] };
-
-                velocity[0] = 60000 * velocity[0] / this.tpr / (endTime - startTime);
-                velocity[1] = 60000 * velocity[1] / this.tpr / (endTime - startTime);
-
-                this.motorVelocity[0] = (this.motorVelocity[0] * this.dataPoints + velocity[0]) / (this.dataPoints + 1);
-                this.motorVelocity[1] = (this.motorVelocity[1] * this.dataPoints + velocity[1]) / (this.dataPoints + 1);
-                this.dataPoints++;
-            }
-        }
-
-        public synchronized void reset() {
-            this.dataPoints = 0;
-
-            this.motorVelocity[0] = 0;
-            this.motorVelocity[1] = 0;
-        }
-
-        public synchronized void stopThread() {
-            this.interrupt = Interrupt.STOP;
-        }
-
-        public double[] getMotorVelocity() {
-            double returnArray[] = { this.motorVelocity[0], this.motorVelocity[1] };
-
-            return returnArray;
-        }
-
-        private enum Interrupt {
-            STOP, CONTINUE;
-        }
-
-        private double motorVelocity[];
-        private Interrupt interrupt;
-        private DcMotor motor[];
-        private int dataPoints;
-
-        //constants
-        private final int refreshSpeed = 500;
-        private final double tpr = 103.6 / 3;
-    }
-
+    private Shooter shooter;
     private Storage storage;
     private Feeder feeder;
-    private double power = .71;
+
+    private double power = .74;
     private boolean status = false;
-    private DcMotor shooter[];
-    private ShooterTest.Velocity motorVelocity;
 
     //increment amounts
     private static final double bigIncrement = 0.05;

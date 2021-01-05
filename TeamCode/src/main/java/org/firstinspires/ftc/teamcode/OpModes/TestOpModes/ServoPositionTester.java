@@ -13,7 +13,7 @@ public class ServoPositionTester extends LinearOpMode {
         double servoValue = 0;
         Servo testServo = hardwareMap.servo.get("servo");
 
-        super.telemetry.addData("Value: ", "%.2f", servoValue);
+        super.telemetry.addData("Value: ", "%.5f", servoValue);
         super.telemetry.update();
 
         //testServo.setDirection(Servo.Direction.REVERSE);
@@ -57,7 +57,7 @@ public class ServoPositionTester extends LinearOpMode {
 
             testServo.setPosition(servoValue);
 
-            super.telemetry.addData("Value: ", "%.2f", servoValue);
+            super.telemetry.addData("Value: ", "%.5f", servoValue);
             super.telemetry.update();
         }
     }
