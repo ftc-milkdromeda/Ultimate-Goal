@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
-public class Feeder extends RobotFeeder {
+public class Feeder extends RobotFeeder implements Drivers{
     public Feeder(RobotStorage storage, HardwareMap hardware) {
         super(storage);
 
@@ -32,6 +32,8 @@ public class Feeder extends RobotFeeder {
 
         return true;
     }
+
+    public void destructor() {}
 
     private Servo servo;
 
