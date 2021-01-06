@@ -69,6 +69,10 @@ public class Storage extends RobotStorage {
         return true;
     }
 
+    public void destructor() {
+        this.shake.interrupt();
+    }
+
     private static class Shake extends Thread {
         public Shake(Servo servo) {
             this.servo = servo;

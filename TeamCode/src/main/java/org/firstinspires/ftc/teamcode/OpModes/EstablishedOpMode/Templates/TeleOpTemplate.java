@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import RobotFunctions.Units_time;
 
-public abstract class TeleOp extends LinearOpMode {
+public abstract class TeleOpTemplate extends LinearOpMode {
     protected void startSequence() {}
     protected void finalizer() {}
     protected abstract void initHardware();

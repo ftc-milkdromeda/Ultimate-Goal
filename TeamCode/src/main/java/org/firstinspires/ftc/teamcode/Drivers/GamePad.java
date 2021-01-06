@@ -81,12 +81,12 @@ public class GamePad implements Controller {
 
     @Override
     public JoyStick get_LeftStick() {
-        return null;
+        return new JoyStick(this.gamepad.left_stick_x, -this.gamepad.left_stick_y);
     }
 
     @Override
     public JoyStick get_RightStick() {
-        return null;
+        return new JoyStick(this.gamepad.right_stick_x, -this.gamepad.right_stick_y);
     }
 
     private Gamepad gamepad;
