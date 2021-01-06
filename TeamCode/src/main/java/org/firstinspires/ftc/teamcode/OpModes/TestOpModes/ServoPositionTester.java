@@ -11,10 +11,10 @@ public class ServoPositionTester extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double servoValue = 0;
-        Servo testServo = hardwareMap.servo.get("servo");
+        double servoValue1 = 0;
 
-        super.telemetry.addData("Value: ", "%.5f", servoValue);
-        super.telemetry.update();
+        Servo testServo = hardwareMap.servo.get("servo0");
+        Servo testServo1 = hardwareMap.servo.get("servo1");
 
         //testServo.setDirection(Servo.Direction.REVERSE);
 
@@ -28,36 +28,42 @@ public class ServoPositionTester extends LinearOpMode {
         while(super.opModeIsActive()) {
             if (super.gamepad1.b && servoValue <= 1 - bigIncrement) {
                 servoValue += bigIncrement;
-                while (super.gamepad1.b) {
-                    super.telemetry.addData("Value: ", "%.5f", servoValue);
-                    super.telemetry.update();
-                }
+                while (super.gamepad1.b);
             }
             else if (super.gamepad1.a && servoValue >= bigIncrement) {
                 servoValue -= bigIncrement;
-                while (super.gamepad1.a) {
-                    super.telemetry.addData("Value: ", "%.5f", servoValue);
-                    super.telemetry.update();
-                }
+                while (super.gamepad1.a);
             }
             else if (super.gamepad1.x && servoValue >= smallIncrement) {
                 servoValue -= smallIncrement;
-                while (super.gamepad1.x) {
-                    super.telemetry.addData("Value: ", "%.5f", servoValue);
-                    super.telemetry.update();
-                }
+                while (super.gamepad1.x);
             }
             else if (super.gamepad1.y && servoValue <= 1 - smallIncrement) {
                 servoValue += smallIncrement;
-                while (super.gamepad1.y) {
-                    super.telemetry.addData("Value: ", "%.5f", servoValue);
-                    super.telemetry.update();
-                }
+                while (super.gamepad1.y);
+            }
+            else if (super.gamepad2.b && servoValue <= 1 - bigIncrement) {
+                servoValue1 += bigIncrement;
+                while (super.gamepad1.b);
+            }
+            else if (super.gamepad2.a && servoValue >= bigIncrement) {
+                servoValue1 -= bigIncrement;
+                while (super.gamepad1.a);
+            }
+            else if (super.gamepad2.x && servoValue >= smallIncrement) {
+                servoValue1 -= smallIncrement;
+                while (super.gamepad1.x);
+            }
+            else if (super.gamepad2.y && servoValue <= 1 - smallIncrement) {
+                servoValue1 += smallIncrement;
+                while (super.gamepad1.y);
             }
 
             testServo.setPosition(servoValue);
+            testServo1.setPosition(servoValue1);
 
             super.telemetry.addData("Value: ", "%.5f", servoValue);
+            super.telemetry.addData("Value1: ", ".5f", servoValue1);
             super.telemetry.update();
         }
     }
