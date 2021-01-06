@@ -24,10 +24,10 @@ public class Movement extends JoyStickTask {
 
     @Override
     public void run() {
-        if(super.status)
+        if(Movement.status)
             return;
 
-        super.status = true;
+        Movement.status = true;
 
         this.controller = RoughMecanumWheels.instance(this.drive, 18, 18, Units_length.IN);
         if(this.controller == null) {
@@ -37,8 +37,6 @@ public class Movement extends JoyStickTask {
         Procedure procedure;
 
         while(!super.isInterrupted()) {
-            int startClock = super.clock.getCurrentState();
-
             JoyStick[] controllerState = this.joyStickMapping();
 
             if(controllerState[0].getMagnitude() == 0)
@@ -49,10 +47,11 @@ public class Movement extends JoyStickTask {
             controller.addTrajectory(procedure);
             controller.drive();
 
+            int startClock = super.clock.getCurrentState();
             while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
         }
 
-        super.status = false;
+        Movement.status = false;
     }
 
     @Override
@@ -60,6 +59,8 @@ public class Movement extends JoyStickTask {
         this.controller.stop();
         this.controller.deleteObject();
     }
+
+    private static boolean status = false;
 
     private Drive drive;
     private RoughMecanumWheels controller;
