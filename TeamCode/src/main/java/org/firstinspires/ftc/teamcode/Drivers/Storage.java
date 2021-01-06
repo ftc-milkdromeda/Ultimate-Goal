@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-public class Storage extends RobotStorage {
+public class Storage extends RobotStorage implements Drivers{
     public Storage(HardwareMap hardware) {
         super();
         this.liftServo = hardware.servo.get("lift"); //Lifts the storage up and down.
@@ -69,6 +69,7 @@ public class Storage extends RobotStorage {
         return true;
     }
 
+    @Override
     public void destructor() {
         this.shake.interrupt();
     }

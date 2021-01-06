@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 
-public class Intake extends RobotIntake {
+public class Intake extends RobotIntake implements Drivers{
     public Intake(Storage storage, HardwareMap hardware) {
         super();
 
@@ -25,6 +25,9 @@ public class Intake extends RobotIntake {
         this.intake.setPower(0.0);
         this.storage.shakeEnd();
     }
+
+    @Override
+    public void destructor() {}
 
     private DcMotor intake;
     private Storage storage;

@@ -12,7 +12,7 @@ import java.util.logging.SocketHandler;
 
 import RobotFunctions.Units_length;
 
-public class Shooter extends RobotShooter {
+public class Shooter extends RobotShooter implements Drivers{
     public Shooter(HardwareMap hardware) {
         shooter = new DcMotor[2];
 
@@ -74,6 +74,9 @@ public class Shooter extends RobotShooter {
 
         return true;
     }
+
+    @Override
+    public void destructor() {}
 
     private static class Velocity extends VelocityGauge {
         public Velocity(DcMotor motor[]) {
