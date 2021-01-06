@@ -87,3 +87,5 @@ lint/tmp/
 # lint/reports/
 
 */misc.xml
+*/*.jar
+*/*.workspace.xml
