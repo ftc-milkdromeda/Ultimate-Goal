@@ -11,6 +11,11 @@ public class MecanumDrive extends Drive {
     public MecanumDrive(HardwareMap hardware) {
         this.motors = new DcMotor[4];
 
+        this.motors[0] = hardware.dcMotor.get("motor0");
+        this.motors[1] = hardware.dcMotor.get("motor1");
+        this.motors[2] = hardware.dcMotor.get("motor2");
+        this.motors[3] = hardware.dcMotor.get("motor3");
+
         this.motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
         this.motors[1].setDirection(DcMotorSimple.Direction.FORWARD);
         this.motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
@@ -25,11 +30,6 @@ public class MecanumDrive extends Drive {
         this.motors[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.motors[2].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.motors[3].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        this.motors[0] = hardware.dcMotor.get("motor0");
-        this.motors[1] = hardware.dcMotor.get("motor1");
-        this.motors[2] = hardware.dcMotor.get("motor2");
-        this.motors[3] = hardware.dcMotor.get("motor3");
     }
 
     @Override
