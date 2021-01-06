@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.GamePadTasks;
+package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
 import RobotFunctions.MecanumWheels.Drive;
 import RobotFunctions.MecanumWheels.Procedure;
