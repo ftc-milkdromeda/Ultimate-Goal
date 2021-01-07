@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
 import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
-import org.firstinspires.ftc.teamcode.OpModes.EstablishedOpMode.Templates.TeleOpTemplate;
+import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
 import RobotFunctions.TaskManager.Clock;
 import RobotFunctions.TaskManager.Controller;
