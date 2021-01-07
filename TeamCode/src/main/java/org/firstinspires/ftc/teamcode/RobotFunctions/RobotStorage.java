@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
-public abstract class RobotStorage {
+import Drivers.Template.Driver;
+
+public abstract class RobotStorage extends Driver {
     protected RobotStorage() {
         this.busy = false;
     }

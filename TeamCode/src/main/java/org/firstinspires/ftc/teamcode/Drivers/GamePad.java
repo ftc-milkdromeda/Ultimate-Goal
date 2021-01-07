@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.Drivers;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import RobotFunctions.TaskManager.Controller;
 import RobotFunctions.TaskManager.JoyStick;
+import Drivers.Controller;
 
-public class GamePad implements Controller {
+public class GamePad extends Controller {
     public GamePad(Gamepad gamepad) {
         this.gamepad = gamepad;
     }
@@ -90,7 +90,9 @@ public class GamePad implements Controller {
     }
 
     @Override
-    public void destructor() {}
+    public void terminate() {
+
+    }
 
     private Gamepad gamepad;
 }

@@ -33,7 +33,7 @@ public class Feeder extends RobotFeeder{
         return true;
     }
 
-    public void destructor() {}
+    public void terminate() {}
 
     private Servo servo;
 

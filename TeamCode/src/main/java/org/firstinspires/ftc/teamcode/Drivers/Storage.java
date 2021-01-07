@@ -70,7 +70,7 @@ public class Storage extends RobotStorage {
     }
 
     @Override
-    public void destructor() {
+    public void terminate() {
         this.shakeEnd();
     }
 
