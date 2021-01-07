@@ -24,7 +24,7 @@ public class TaskMangerTest extends TeleOpTemplate {
 
     @Override
     protected void startSequence() {
-        //this.task.start();
+        this.task.start();
         this.clock.start();
     }
 
