@@ -48,7 +48,7 @@ public class ShooterTask extends KeyTask {
         ShooterTask.status = false;
     }
     public void proceed() {
-        if(ShooterTask.status || !this.isAlive())
+        if(ShooterTask.status || !this.isAlive() || !pause)
             return;
 
         ShooterTask.status = true;
