@@ -44,6 +44,7 @@ public class ShooterTask extends KeyTask {
             return;
 
         this.shooter.stopShooter();
+        this.shooter.resetGauge();
         this.pause = true;
         ShooterTask.status = false;
     }
@@ -55,6 +56,7 @@ public class ShooterTask extends KeyTask {
         this.pause = false;
 
         this.shooter.runShooterPower(ShooterTask.power);
+        this.shooter.resetGauge();
     }
 
     private static boolean status = false;
