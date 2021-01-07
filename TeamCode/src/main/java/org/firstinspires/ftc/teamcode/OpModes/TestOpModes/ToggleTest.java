@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
-import org.firstinspires.ftc.teamcode.OpModes.EstablishedOpMode.Templates.TeleOpTemplate;
+import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
 import RobotFunctions.TaskManager.Clock;
 import RobotFunctions.TaskManager.Controller;
