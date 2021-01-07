@@ -19,6 +19,7 @@ public class Intake extends RobotIntake {
     public void runIntake() {
         if(this.status)
             return;
+
         this.status = true;
 
         this.intake.setPower(Intake.power);
@@ -30,7 +31,7 @@ public class Intake extends RobotIntake {
         if(!this.status)
                 return;
 
-        this.intake.setPower(0.0);
+        this.intake.setPower(-0.25);
         this.storage.shakeEnd();
         this.status = false;
     }
