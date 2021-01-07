@@ -27,7 +27,10 @@ public class Intake extends RobotIntake implements Drivers{
     }
 
     @Override
-    public void destructor() {}
+    public void destructor() {
+        this.intake.setPower(0.0);
+        this.storage.shakeEnd();
+    }
 
     private DcMotor intake;
     private Storage storage;
