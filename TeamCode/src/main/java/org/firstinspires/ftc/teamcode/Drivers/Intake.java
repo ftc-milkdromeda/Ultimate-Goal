@@ -21,7 +21,7 @@ public class Intake extends RobotIntake implements Drivers{
     }
 
     @Override
-    public void reverseIntake() {
+    public void stopIntake() {
         this.intake.setPower(-0.25);
         this.storage.shakeEnd();
     }
