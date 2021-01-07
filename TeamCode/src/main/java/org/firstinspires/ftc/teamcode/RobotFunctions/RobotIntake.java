@@ -6,7 +6,7 @@ public abstract class RobotIntake {
     }
 
     public abstract void runIntake();
-    public abstract void stopIntake();
+    public abstract void reverseIntake();
 
     public boolean isBusy() {
         return this.busy;
