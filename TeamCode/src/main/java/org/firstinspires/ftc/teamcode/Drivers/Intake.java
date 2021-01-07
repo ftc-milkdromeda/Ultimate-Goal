@@ -36,7 +36,7 @@ public class Intake extends RobotIntake {
     }
 
     @Override
-    public void destructor() {
+    public void terminate() {
         this.stopIntake();
     }
 

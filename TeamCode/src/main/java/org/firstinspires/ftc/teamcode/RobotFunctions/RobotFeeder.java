@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
-public abstract class RobotFeeder {
+import Drivers.Template.Driver;
+
+public abstract class RobotFeeder extends Driver {
     protected RobotFeeder(RobotStorage storage) {
         this.storage = storage;
         this.busy = false;

@@ -76,7 +76,7 @@ public class Shooter extends RobotShooter {
     }
 
     @Override
-    public void destructor() {}
+    public void terminate() {}
 
     private static class Velocity extends VelocityGauge {
         public Velocity(DcMotor motor[]) {

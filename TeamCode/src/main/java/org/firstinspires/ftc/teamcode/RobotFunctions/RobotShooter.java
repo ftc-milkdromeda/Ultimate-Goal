@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode.RobotFunctions;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import Drivers.Template.Driver;
 import RobotFunctions.Units_length;
 
-public abstract class RobotShooter {
+public abstract class RobotShooter extends Driver {
     protected RobotShooter() {
         this.busy = true;
     }

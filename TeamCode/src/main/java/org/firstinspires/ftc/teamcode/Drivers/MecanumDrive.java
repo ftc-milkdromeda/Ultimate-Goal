@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import RobotFunctions.MecanumWheels.Drive;
+import Drivers.DriveTrain;
 import RobotFunctions.MecanumWheels.Motor;
 
-public class MecanumDrive extends Drive {
+public class MecanumDrive extends DriveTrain {
     public MecanumDrive(HardwareMap hardware) {
         this.motors = new DcMotor[4];
 
@@ -56,7 +56,7 @@ public class MecanumDrive extends Drive {
     }
 
     @Override
-    public void destructor() {}
+    public void terminate() {}
 
     DcMotor motors[];
 }

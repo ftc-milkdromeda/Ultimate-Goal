@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
-public abstract class RobotIntake {
+import Drivers.Template.Driver;
+
+public abstract class RobotIntake extends Driver {
     protected  RobotIntake() {
         this.busy = false;
     }
