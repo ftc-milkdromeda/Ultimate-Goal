@@ -9,6 +9,7 @@ public abstract class RobotIntake extends Driver {
 
     public abstract void runIntake();
     public abstract void stopIntake();
+    public abstract void hardStop();
 
     public boolean isBusy() {
         return this.busy;
