@@ -36,6 +36,12 @@ public class Intake extends RobotIntake {
     }
 
     @Override
+    public void hardStop() {
+        this.intake.setPower(0.0);
+        this.storage.shakeEnd();
+    }
+
+    @Override
     public void terminate() {
         this.stopIntake();
     }
