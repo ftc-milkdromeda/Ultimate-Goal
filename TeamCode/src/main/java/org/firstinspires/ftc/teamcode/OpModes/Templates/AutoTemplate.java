@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.EstablishedOpMode.Templates;
+package org.firstinspires.ftc.teamcode.OpModes.Templates;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
