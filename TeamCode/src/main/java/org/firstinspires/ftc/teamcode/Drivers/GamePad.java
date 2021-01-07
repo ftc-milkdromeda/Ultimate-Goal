@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import RobotFunctions.TaskManager.Controller;
 import RobotFunctions.TaskManager.JoyStick;
 
-public class GamePad implements Controller, Drivers {
+public class GamePad implements Controller {
     public GamePad(Gamepad gamepad) {
         this.gamepad = gamepad;
     }

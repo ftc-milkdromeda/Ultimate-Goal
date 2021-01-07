@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import RobotFunctions.MecanumWheels.Drive;
 import RobotFunctions.MecanumWheels.Motor;
 
-public class MecanumDrive extends Drive implements Drivers{
+public class MecanumDrive extends Drive {
     public MecanumDrive(HardwareMap hardware) {
         this.motors = new DcMotor[4];
 
