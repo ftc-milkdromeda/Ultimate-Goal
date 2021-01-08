@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
-import RobotFunctions.MecanumWheels.Drive;
+import Drivers.DriveTrain;
 import RobotFunctions.MecanumWheels.Procedure;
 import RobotFunctions.MecanumWheels.RoughMecanumWheels;
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
-import RobotFunctions.TaskManager.JoyStick;
-import RobotFunctions.TaskManager.JoyStickTask;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.JoyStick;
+import TaskManager.JoyStickTask;
 import RobotFunctions.Units_length;
 
 public class Movement extends JoyStickTask {
-    public Movement(Clock clock, Controller controller, Drive drive) {
+    public Movement(Clock clock, Controller controller, DriveTrain drive) {
         super(clock, controller);
 
         this.drive = drive;
@@ -30,9 +30,8 @@ public class Movement extends JoyStickTask {
         Movement.status = true;
 
         this.controller = RoughMecanumWheels.instance(this.drive, 18, 18, Units_length.IN);
-        if(this.controller == null) {
+        if(this.controller == null)
             return;
-        }
 
         Procedure procedure;
 
@@ -42,7 +41,7 @@ public class Movement extends JoyStickTask {
             if(controllerState[0].getMagnitude() == 0)
                 procedure = new Procedure(0, controllerState[1].X, -1);
             else
-                procedure = new Procedure(controllerState[0].getAngle(), controllerState[0].getMagnitude(), controllerState[1].X);
+                procedure = new Procedure(controllerState[0].getAngle(), controllerState[0].getMagnitude(), -controllerState[1].X);
 
             controller.addTrajectory(procedure);
             controller.drive();
@@ -56,13 +55,15 @@ public class Movement extends JoyStickTask {
 
     @Override
     protected void deconstructor() {
-        this.controller.stop();
-        this.controller.deleteObject();
+        if(this.controller != null) {
+            this.controller.stop();
+            this.controller.deleteObject();
+        }
     }
 
     private static boolean status = false;
 
-    private Drive drive;
+    private DriveTrain drive;
     private RoughMecanumWheels controller;
 }
 
