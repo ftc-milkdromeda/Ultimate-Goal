@@ -16,7 +16,12 @@ public class RingTaskCoordinator extends KeyTask {
 
         this.intake = new IntakeTask(clock, intake);
         this.shooter = new ShooterTask(clock, controller, shooter, feeder, storage);
-        this.button = new ToggleButton(controller, clock);
+        this.modeToggle = new Toggle(clock, controller) {
+            @Override
+            protected boolean testKey() {
+                return 1.0 == super.controller.get_X();
+            }
+        };
     }
 
     @Override
@@ -27,7 +32,7 @@ public class RingTaskCoordinator extends KeyTask {
 
         this.intake.start();
         this.shooter.start();
-        this.button.start();
+        this.modeToggle.start();
 
         while(!super.isInterrupted()) {
             if(this.keyMapping()[0] == 0.0) {
@@ -35,6 +40,8 @@ public class RingTaskCoordinator extends KeyTask {
                 this.shooter.pause();
             }
             else {
+                if(this.shooter.getRings() == 0)
+                    this.modeToggle.setState(false);
                 this.intake.stopIntake();
                 this.shooter.proceed();
             }
@@ -48,7 +55,7 @@ public class RingTaskCoordinator extends KeyTask {
 
     @Override
     protected double[] keyMapping() {
-        double returnArray[] = {button.getToggleState()};
+        double returnArray[] = {modeToggle.getToggleState()};
 
         return returnArray;
     }
@@ -59,20 +66,9 @@ public class RingTaskCoordinator extends KeyTask {
         ThreadManager.stopProcess(shooter.getProcessId());
     }
 
-    private static class ToggleButton extends Toggle {
-        public ToggleButton(Controller controller, Clock clock) {
-            super(clock, controller);
-        }
-
-        @Override
-        protected boolean testKey() {
-            return 1.0 == super.controller.get_RightBumper();
-        }
-    }
-
     private static boolean status = false;
 
     private IntakeTask intake;
     private ShooterTask shooter;
-    private ToggleButton button; //if true, then shoot mode; if false, then intake mode.
+    private Toggle modeToggle; //if true, then shoot mode; if false, then intake mode.
 }

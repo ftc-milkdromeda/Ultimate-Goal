@@ -65,6 +65,10 @@ public class ShooterTask extends KeyTask {
         this.shooter.resetGauge();
     }
 
+    public int getRings() {
+        return this.storage.getRings();
+    }
+
     private static boolean status = false;
 
     private RobotShooter shooter;
