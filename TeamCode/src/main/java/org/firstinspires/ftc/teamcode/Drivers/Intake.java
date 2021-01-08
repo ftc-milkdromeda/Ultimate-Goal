@@ -5,33 +5,55 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 
-public class Intake extends RobotIntake implements Drivers{
+public class Intake extends RobotIntake {
     public Intake(Storage storage, HardwareMap hardware) {
         super();
 
         this.storage = storage;
         this.intake = hardware.dcMotor.get("intake");
-        this.intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.status = false;
     }
 
     @Override
     public void runIntake() {
+        if(this.status)
+            return;
+
+        this.status = true;
+
         this.intake.setPower(Intake.power);
         this.storage.shake();
+        this.storage.setPosition(0);
     }
 
     @Override
     public void stopIntake() {
-        this.intake.setPower(-0.25);
+        if(!this.status)
+                return;
+
+        this.intake.setPower(Intake.reversePower);
+        this.storage.shakeEnd();
+        this.storage.setPosition(1);
+        this.status = false;
+    }
+
+    @Override
+    public void hardStop() {
+        this.intake.setPower(0.0);
         this.storage.shakeEnd();
     }
 
     @Override
-    public void destructor() {}
+    public void terminate() {
+        this.stopIntake();
+    }
 
     private DcMotor intake;
     private Storage storage;
+    private boolean status;
 
     //constants
     private static final double power = 1.0;
+    private static final double reversePower = -.10;
 }
