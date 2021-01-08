@@ -3,17 +3,19 @@ package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotFeeder;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
+import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
-import RobotFunctions.TaskManager.KeyTask;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.KeyTask;
+import TaskManager.ThreadManager;
 
 public class RingTaskCoordinator extends KeyTask {
-    public RingTaskCoordinator(Clock clock, Controller controller, RobotIntake intake, RobotShooter shooter, RobotFeeder feeder) {
+    public RingTaskCoordinator(Clock clock, Controller controller, RobotIntake intake, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {
         super(clock, controller);
 
         this.intake = new IntakeTask(clock, intake);
-        this.shooter = new ShooterTask(clock, controller, shooter, feeder);
+        this.shooter = new ShooterTask(clock, controller, shooter, feeder, storage);
         this.button = new ToggleButton(controller, clock);
     }
 
@@ -25,6 +27,7 @@ public class RingTaskCoordinator extends KeyTask {
 
         this.intake.start();
         this.shooter.start();
+        this.button.start();
 
         while(!super.isInterrupted()) {
             if(this.keyMapping()[0] == 0.0) {
@@ -48,6 +51,12 @@ public class RingTaskCoordinator extends KeyTask {
         double returnArray[] = {button.getToggleState()};
 
         return returnArray;
+    }
+
+    @Override
+    protected void deconstructor() {
+        ThreadManager.stopProcess(intake.getProcessId());
+        ThreadManager.stopProcess(shooter.getProcessId());
     }
 
     private static class ToggleButton extends Toggle {
