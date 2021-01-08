@@ -13,29 +13,28 @@ import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.RingTaskCoordinator;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.ThreadManager;
 
-@Disabled
 @TeleOp(name="TeleOp")
 public class Teleop extends TeleOpTemplate {
     @Override
     protected void startSequence() {
+        this.clock.start();
         this.movement.start();
         this.ringManagement.start();
     }
 
     @Override
     protected void finalizer() {
-        this.feeder.destructor();
-        this.shooter.destructor();
-        this.intake.destructor();
-        this.drive.destructor();
-        this.storage.destructor();
-        this.clock.terminate();
+        ThreadManager.stopAllProcess();
 
-        this.movement.terminate();
-        this.ringManagement.terminate();
+        this.feeder.terminate();
+        this.shooter.terminate();
+        this.intake.terminate();
+        this.drive.terminate();
+        this.storage.terminate();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class Teleop extends TeleOpTemplate {
         this.drive = new MecanumDrive(super.hardwareMap);
         this.intake = new Intake(storage, super.hardwareMap);
         this.shooter = new Shooter(super.hardwareMap);
-        this.clock = new Clock(100);
+        this.clock = new Clock(50);
 
         this.controller = new Controller[2];
         this.controller[0] = new GamePad(super.gamepad1);
@@ -53,13 +52,14 @@ public class Teleop extends TeleOpTemplate {
 
 
         this.movement = new Movement(this.clock, this.controller[0], this.drive);
-        this.ringManagement = new RingTaskCoordinator(this.clock, this.controller[0], this.intake, this.shooter, this.feeder);
+        this.ringManagement = new RingTaskCoordinator(this.clock, this.controller[0], this.intake, this.shooter, this.feeder, this.storage);
     }
 
     @Override
     protected void main() {
         super.telemetry.addData("Refresh: ", "%.2f", this.clock.getCurrentRate());
         super.telemetry.addData("Shooter Speed: ", "%.2f : %.2f ", this.shooter.getAverageVelocity()[0], this.shooter.getAverageVelocity()[1]);
+        super.telemetry.addData("Tasks: ", "%d", ThreadManager.numOfProcess());
         super.telemetry.update();
     }
 
