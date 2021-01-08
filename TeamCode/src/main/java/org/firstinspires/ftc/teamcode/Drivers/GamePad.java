@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Drivers;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import RobotFunctions.TaskManager.JoyStick;
+import TaskManager.JoyStick;
 import Drivers.Controller;
 
 public class GamePad extends Controller {
@@ -87,6 +87,11 @@ public class GamePad extends Controller {
     @Override
     public JoyStick get_RightStick() {
         return new JoyStick(this.gamepad.right_stick_x, -this.gamepad.right_stick_y);
+    }
+
+    @Override
+    public double get_Back() {
+        return this.gamepad.back ? 1.0 : 0.0;
     }
 
     @Override
