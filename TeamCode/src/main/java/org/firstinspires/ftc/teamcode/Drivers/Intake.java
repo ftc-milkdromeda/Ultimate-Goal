@@ -11,7 +11,7 @@ public class Intake extends RobotIntake {
 
         this.storage = storage;
         this.intake = hardware.dcMotor.get("intake");
-        this.intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.status = false;
     }
 
@@ -24,6 +24,7 @@ public class Intake extends RobotIntake {
 
         this.intake.setPower(Intake.power);
         this.storage.shake();
+        this.storage.setPosition(0);
     }
 
     @Override
@@ -31,8 +32,9 @@ public class Intake extends RobotIntake {
         if(!this.status)
                 return;
 
-        this.intake.setPower(-0.25);
+        this.intake.setPower(Intake.reversePower);
         this.storage.shakeEnd();
+        this.storage.setPosition(1);
         this.status = false;
     }
 
@@ -53,4 +55,5 @@ public class Intake extends RobotIntake {
 
     //constants
     private static final double power = 1.0;
+    private static final double reversePower = -.10;
 }
