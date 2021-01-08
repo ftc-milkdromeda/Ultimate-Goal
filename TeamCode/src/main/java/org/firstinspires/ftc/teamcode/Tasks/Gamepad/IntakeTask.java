@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Task;
+import TaskManager.Clock;
+import TaskManager.Task;
 
 public class IntakeTask extends Task {
     protected IntakeTask(Clock clock, RobotIntake intake) {
@@ -11,19 +11,24 @@ public class IntakeTask extends Task {
 
         this.intake = intake;
         this.isRunning = false;
+        this.isActive = false;
+
+        this.intake.hardStop();
     }
 
     public void runIntake() {
-        if(IntakeTask.status && !this.isRunning)
+        if(!this.isActive)
             return;
-
+        this.isRunning = true;
         intake.runIntake();
     }
     public void stopIntake() {
-        if(IntakeTask.status && !this.isRunning)
+        if(!this.isRunning || !this.isActive)
             return;
 
         intake.stopIntake();
+
+        this.isRunning = false;
     }
 
     @Override
@@ -31,17 +36,23 @@ public class IntakeTask extends Task {
         if(IntakeTask.status)
             return;
 
+        this.isActive = true;
         IntakeTask.status = true;
-        this.isRunning = true;
 
         while(!super.isInterrupted());
 
         IntakeTask.status = false;
-        this.isRunning = false;
+        this.isActive = false;
+    }
+
+    @Override
+    protected void deconstructor() {
+        this.intake.hardStop();
     }
 
     private static boolean status = false;
 
-    private boolean isRunning;
     private RobotIntake intake;
+    private boolean isRunning;
+    private boolean isActive;
 }
