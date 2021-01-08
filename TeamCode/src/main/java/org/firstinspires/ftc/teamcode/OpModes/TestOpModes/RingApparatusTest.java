@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Drivers.Intake;
 import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
-//@Disabled
+@Disabled
 @TeleOp(name="Ring Apparatus Test")
 public class RingApparatusTest extends LinearOpMode {
     @Override
