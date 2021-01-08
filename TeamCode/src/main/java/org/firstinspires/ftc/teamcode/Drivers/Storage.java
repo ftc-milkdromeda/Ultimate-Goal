@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
+import TaskManager.Task;
+import TaskManager.ThreadManager;
+
 public class Storage extends RobotStorage {
     public Storage(HardwareMap hardware) {
         super();
@@ -60,7 +63,7 @@ public class Storage extends RobotStorage {
         if(this.shake == null)
             return false;
 
-        this.shake.interrupt();
+        ThreadManager.stopProcess(this.shake.getProcessId());
         this.storageServo.setPosition(Storage.storageInitialPosition);
 
         this.shake = null;
@@ -74,8 +77,9 @@ public class Storage extends RobotStorage {
         this.shakeEnd();
     }
 
-    private static class Shake extends Thread {
+    private static class Shake extends Task {
         public Shake(Servo servo) {
+            super(null);
             this.servo = servo;
         }
 
@@ -102,14 +106,18 @@ public class Storage extends RobotStorage {
                     return;
                 }
             }
+
+            Shake.status = false;
         }
+
+        private static boolean status = false;
 
         private Servo servo;
 
         //constants
-        private static final double frequency = 8;
+        private static final double frequency = 5;
         private static final double initialPos = 1.0;
-        private static final double extendedPos = 0.99;
+        private static final double extendedPos = 0.97;
     }
 
     private Servo liftServo;
