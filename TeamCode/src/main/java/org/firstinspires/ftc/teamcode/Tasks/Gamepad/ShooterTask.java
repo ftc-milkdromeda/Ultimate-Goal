@@ -2,17 +2,19 @@ package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotFeeder;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
+import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
-import RobotFunctions.TaskManager.KeyTask;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.KeyTask;
 
 public class ShooterTask extends KeyTask {
-    public ShooterTask(Clock clock, Controller controller, RobotShooter shooter, RobotFeeder feeder) {
+    public ShooterTask(Clock clock, Controller controller, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {
         super(clock, controller);
         this.shooter = shooter;
         this.feeder = feeder;
-        this.pause = true;
+        this.storage = storage;
+        this.isRunning = false;
     }
 
     @Override
@@ -24,36 +26,40 @@ public class ShooterTask extends KeyTask {
 
     @Override
     public void run() {
+        this.alive = true;
+
         while(!super.isInterrupted()) {
-            if(this.pause) {
-                int startClock = super.clock.getCurrentState();
-                while(super.clock.getCurrentState() != startClock);
-                continue;
+            while(!this.isRunning && !super.isInterrupted());
+
+            if(this.keyMapping()[0] == 1.0) {
+                this.feeder.feedRing();
+                while(!super.isInterrupted() && this.keyMapping()[0] == 1.0);
             }
 
-            if(this.keyMapping()[0] == 1.0)
-                this.feeder.feedRing();
-
             int startClock = super.clock.getCurrentState();
-            while(super.clock.getCurrentState() == startClock);
+            while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
         }
+
+        this.pause();
+        this.alive = false;
     }
 
     public void pause() {
-        if(!this.isAlive() || pause)
+        if(!this.isRunning)
             return;
 
         this.shooter.stopShooter();
         this.shooter.resetGauge();
-        this.pause = true;
+        this.isRunning = false;
         ShooterTask.status = false;
     }
     public void proceed() {
-        if(ShooterTask.status || !this.isAlive() || !pause)
+        if(ShooterTask.status || !this.alive || this.isRunning)
             return;
 
+        this.storage.setRings(3);
         ShooterTask.status = true;
-        this.pause = false;
+        this.isRunning = true;
 
         this.shooter.runShooterPower(ShooterTask.power);
         this.shooter.resetGauge();
@@ -62,8 +68,10 @@ public class ShooterTask extends KeyTask {
     private static boolean status = false;
 
     private RobotShooter shooter;
+    private RobotStorage storage;
     private RobotFeeder feeder;
-    private boolean pause;
+    private boolean isRunning;
+    private boolean alive;
 
-    private static final double power = .74;
+    private static final double power = .78;
 }

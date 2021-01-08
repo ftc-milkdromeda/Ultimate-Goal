@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
 import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
-import RobotFunctions.TaskManager.KeyTask;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.KeyTask;
+import TaskManager.ThreadManager;
 
-//@Disabled
+@Disabled
 @TeleOp(name="Toggle test")
 public class ToggleTest extends TeleOpTemplate {
     @Override
@@ -31,7 +33,7 @@ public class ToggleTest extends TeleOpTemplate {
 
     @Override
     protected void finalizer() {
-        this.task.terminate();
+        ThreadManager.stopAllProcess();
     }
 
     private static class ToggleTask extends KeyTask {
@@ -54,7 +56,7 @@ public class ToggleTest extends TeleOpTemplate {
 
         @Override
         protected double[] keyMapping() {
-            double returnArray[] = { this.key.getToggleState() ? 1.0 : 0.0 /*this.controller.get_B()*/};
+            double returnArray[] = { this.key.getToggleState()};
             return returnArray;
         }
 
@@ -64,7 +66,7 @@ public class ToggleTest extends TeleOpTemplate {
 
         public static class Key extends KeyTask.Toggle {
             public Key(Controller controller, Clock clock) {
-                super(controller, clock);
+                super(clock, controller);
             }
 
             @Override

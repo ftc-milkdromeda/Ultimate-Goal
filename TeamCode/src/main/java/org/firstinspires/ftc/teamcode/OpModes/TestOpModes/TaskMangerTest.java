@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
@@ -7,10 +8,11 @@ import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
 import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
-import RobotFunctions.TaskManager.Clock;
-import RobotFunctions.TaskManager.Controller;
+import TaskManager.Clock;
+import Drivers.Controller;
+import TaskManager.ThreadManager;
 
-//@Disabled
+@Disabled
 @TeleOp(name="Teleop Task Test")
 public class TaskMangerTest extends TeleOpTemplate {
     @Override
@@ -37,8 +39,7 @@ public class TaskMangerTest extends TeleOpTemplate {
 
     @Override
     protected void finalizer() {
-        this.task.terminate();
-        this.clock.terminate();
+        ThreadManager.stopAllProcess();
     }
 
     private MecanumDrive drive;
