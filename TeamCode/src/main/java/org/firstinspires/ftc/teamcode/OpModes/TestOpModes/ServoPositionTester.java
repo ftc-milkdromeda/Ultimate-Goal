@@ -48,22 +48,22 @@ public class ServoPositionTester extends LinearOpMode {
             }
             else if (super.gamepad2.a && servoValue >= bigIncrement) {
                 servoValue1 -= bigIncrement;
-                while (super.gamepad1.a);
+                while (super.gamepad2.a);
             }
             else if (super.gamepad2.x && servoValue >= smallIncrement) {
                 servoValue1 -= smallIncrement;
-                while (super.gamepad1.x);
+                while (super.gamepad2.x);
             }
             else if (super.gamepad2.y && servoValue <= 1 - smallIncrement) {
                 servoValue1 += smallIncrement;
-                while (super.gamepad1.y);
+                while (super.gamepad2.y);
             }
 
             testServo.setPosition(servoValue);
             testServo1.setPosition(servoValue1);
 
             super.telemetry.addData("Value: ", "%.5f", servoValue);
-            super.telemetry.addData("Value1: ", ".5f", servoValue1);
+            super.telemetry.addData("Value1: ", "%.5f", servoValue1);
             super.telemetry.update();
         }
     }
