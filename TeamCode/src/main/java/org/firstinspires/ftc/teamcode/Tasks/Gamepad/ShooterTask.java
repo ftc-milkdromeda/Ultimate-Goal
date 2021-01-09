@@ -19,21 +19,19 @@ public class ShooterTask extends KeyTask {
 
     @Override
     protected double[] keyMapping() {
-        double returnArray[] = { super.controller.get_A() };
+        double returnArray[] = { super.controller.get_RightTrigger() };
 
         return returnArray;
     }
 
     @Override
     public void run() {
-        this.alive = true;
-
         while(!super.isInterrupted()) {
             while(!this.isRunning && !super.isInterrupted());
 
-            if(this.keyMapping()[0] == 1.0) {
+            if(this.keyMapping()[0] >= .5) {
                 this.feeder.feedRing();
-                while(!super.isInterrupted() && this.keyMapping()[0] == 1.0);
+                while(!super.isInterrupted() && this.keyMapping()[0] >= .5);
             }
 
             int startClock = super.clock.getCurrentState();
