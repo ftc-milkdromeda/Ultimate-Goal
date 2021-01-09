@@ -21,7 +21,7 @@ public abstract class RobotFeeder extends Driver {
     protected abstract void feed();
 
     public boolean feedRing(Task task) {
-         if(!this.storage.nextRing() || !super.testTask(task))
+         if(!this.storage.nextRing(task) || !super.testTask(task))
             return false;
 
         long startTime = System.currentTimeMillis();
