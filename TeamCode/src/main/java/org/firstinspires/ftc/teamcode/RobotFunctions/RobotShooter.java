@@ -2,19 +2,26 @@ package org.firstinspires.ftc.teamcode.RobotFunctions;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import Drivers.DriverManager;
 import Drivers.Template.Driver;
 import RobotFunctions.Units_length;
+import TaskManager.Task;
 
 public abstract class RobotShooter extends Driver {
     protected RobotShooter() {
-        this.busy = true;
+        super();
+
+        if(RobotShooter.processId != -1)
+            super.alive = false;
+        else
+            RobotShooter.processId = DriverManager.attachProcess(this);
     }
 
-    public abstract boolean runShooter(double distance, Units_length units);
-    public abstract boolean runShooter(double distance, Units_length units, double offset);
-    public abstract boolean runShooter(double rpm);
-    public abstract boolean runShooterPower(double power);
-    public abstract boolean stopShooter();
+    public abstract boolean runShooter(Task task, double distance, Units_length units);
+    public abstract boolean runShooter(Task task, double distance, Units_length units, double offset);
+    public abstract boolean runShooter(Task task, double rpm);
+    public abstract boolean runShooterPower(Task task, double power);
+    public abstract boolean stopShooter(Task task);
 
     public double[] getVelocity() {
         return meter.getMotorVelocity();
@@ -26,17 +33,12 @@ public abstract class RobotShooter extends Driver {
         this.meter.reset();
     }
 
-    public boolean isBusy() {
-        return this.busy;
-    }
-
     protected void setMeter(VelocityGauge meter) {
         this.meter = meter;
         this.meter.start();
 
         this.busy = false;
     }
-
 
     protected static abstract class VelocityGauge extends Thread {
         @Override
@@ -73,9 +75,12 @@ public abstract class RobotShooter extends Driver {
         protected int dataPoints;
     }
 
-    protected boolean busy;
+    @Override
+    protected void destructor() {
+        RobotShooter.processId = -1;
+    }
 
     private VelocityGauge meter;
 
+    private static int processId = -1;
 }
-//todo make all drivers singletons

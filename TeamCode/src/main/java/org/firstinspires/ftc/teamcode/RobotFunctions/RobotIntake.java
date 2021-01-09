@@ -1,19 +1,27 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
+import Drivers.DriverManager;
 import Drivers.Template.Driver;
+import TaskManager.Task;
 
 public abstract class RobotIntake extends Driver {
     protected  RobotIntake() {
-        this.busy = false;
+        super();
+
+        if(RobotIntake.processId != -1)
+            super.alive = false;
+        else
+            RobotIntake.processId = DriverManager.attachProcess(this);
     }
 
-    public abstract void runIntake();
-    public abstract void stopIntake();
-    public abstract void hardStop();
+    public abstract boolean runIntake(Task task);
+    public abstract boolean stopIntake(Task task);
+    public abstract boolean hardStop(Task task);
 
-    public boolean isBusy() {
-        return this.busy;
+    @Override
+    protected void destructor() {
+        RobotIntake.processId = -1;
     }
 
-    protected boolean busy;
+    private static int processId = -1;
 }

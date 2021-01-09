@@ -1,39 +1,48 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
+import Drivers.DriverManager;
 import Drivers.Template.Driver;
+import TaskManager.Task;
 
 public abstract class RobotFeeder extends Driver {
     protected RobotFeeder(RobotStorage storage) {
+        super();
+
         this.storage = storage;
-        this.busy = false;
+        if(this.processId != -1)
+            super.alive = false;
+        else
+            RobotFeeder.processId = DriverManager.attachProcess(this);
     }
 
     /**
      * @brief Activates the servo to feed the next ring.
      */
-    protected abstract boolean feed();
+    protected abstract void feed();
 
-    public boolean feedRing() {
-        if(!this.storage.nextRing())
+    public boolean feedRing(Task task) {
+         if(!this.storage.nextRing() || !super.testTask(task))
             return false;
 
         long startTime = System.currentTimeMillis();
         while(System.currentTimeMillis() - startTime <= RobotFeeder.shootingTimeDelay);
 
-        if(!this.feed())
-            return false;
+        this.feed();
 
         this.storage.removeRing();
 
         return true;
     }
 
-    public boolean isBusy() {
-        return this.busy;
+    @Override
+    protected void destructor() {
+        RobotFeeder.processId = -1;
     }
 
     private RobotStorage storage;
-    protected boolean busy;
+
+    private static int processId = -1;
+
     //constants
     private static final int shootingTimeDelay = 1000;
 }
