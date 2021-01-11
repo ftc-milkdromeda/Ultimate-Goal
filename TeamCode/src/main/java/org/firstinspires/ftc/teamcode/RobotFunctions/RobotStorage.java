@@ -22,6 +22,7 @@ public abstract class RobotStorage extends Driver {
     public abstract boolean setPosition(Task task, int postion);
     public abstract boolean shake(Task task);
     public abstract boolean shakeEnd(Task task);
+    public abstract boolean dump(Task task);
 
     public int getRings() {
         return RobotStorage.numOfRings;
@@ -37,12 +38,10 @@ public abstract class RobotStorage extends Driver {
     }
 
     public boolean nextRing(Task task) {
-        if(numOfRings == 0 || super.testTask(task))
+        if(this.numOfRings == 0)
             return false;
 
-        this.setPosition(task, 4 - numOfRings);
-
-        return true;
+        return this.setPosition(task, 4 - numOfRings);
     }
 
     @Override
