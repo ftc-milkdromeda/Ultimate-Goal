@@ -4,11 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.teamcode.OpModes.TestOpModes.ShooterTest;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
-
-import java.util.logging.SocketHandler;
+import TaskManager.Task;
 
 import RobotFunctions.Units_length;
 
@@ -26,20 +23,17 @@ public class Shooter extends RobotShooter {
 
         super.setMeter(new Velocity(this.shooter));
     }
-
     @Override
-    public boolean runShooter(double distance, Units_length units) {
+    public boolean runShooter(Task task, double distance, Units_length units) {
         return false;
     }
-
     @Override
-    public boolean runShooter(double distance, Units_length units, double offset) {
+    public boolean runShooter(Task task, double distance, Units_length units, double offset) {
         return false;
     }
-
     @Override
-    public boolean runShooter(double rpm) {
-        if(super.busy)
+    public boolean runShooter(Task task, double rpm) {
+        if(super.busy || super.testTask(task))
             return false;
 
         super.busy = true;
@@ -49,10 +43,9 @@ public class Shooter extends RobotShooter {
 
         return true;
     }
-
     @Override
-    public boolean runShooterPower(double power) {
-        if(super.busy)
+    public boolean runShooterPower(Task task, double power) {
+        if(super.busy || !super.testTask(task))
             return false;
 
         super.busy = true;
@@ -61,10 +54,9 @@ public class Shooter extends RobotShooter {
 
         return true;
     }
-
     @Override
-    public boolean stopShooter() {
-        if(!super.busy)
+    public boolean stopShooter(Task task) {
+        if(!super.busy || !this.testTask(task))
             return false;
 
         shooter[0].setPower(0.0);
@@ -74,9 +66,6 @@ public class Shooter extends RobotShooter {
 
         return true;
     }
-
-    @Override
-    public void terminate() {}
 
     private static class Velocity extends VelocityGauge {
         public Velocity(DcMotor motor[]) {

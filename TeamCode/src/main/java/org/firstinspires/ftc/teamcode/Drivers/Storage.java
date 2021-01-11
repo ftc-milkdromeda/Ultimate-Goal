@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Drivers;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -18,8 +19,8 @@ public class Storage extends RobotStorage {
     }
 
     @Override
-    public boolean setPosition(int position) {
-        if(super.busy)
+    public boolean setPosition(Task task, int position) {
+        if(!super.testTask(task))
             return false;
 
         super.busy = true;
@@ -29,14 +30,17 @@ public class Storage extends RobotStorage {
            storageServo.setPosition(storageInitialPosition);
         }
         else if (position == 1) {
+            this.shakeEnd(task);
             liftServo.setPosition(liftPos1);
             storageServo.setPosition(storageExtendedPosition);
         }
         else if (position == 2) {
+            this.shakeEnd(task);
             liftServo.setPosition(liftPos2);
             storageServo.setPosition(storageExtendedPosition);
         }
         else if (position == 3) {
+            this.shakeEnd(task);
             liftServo.setPosition(liftPos3);
             storageServo.setPosition(storageExtendedPosition);
         }
@@ -47,11 +51,11 @@ public class Storage extends RobotStorage {
     }
 
     @Override
-    protected boolean shake() {
-        if(this.busy || this.shake != null)
+    public boolean shake(Task task) {
+        if(!super.testTask(task) || this.shake != null)
             return false;
 
-        this.busy = true;
+        super.busy = true;
 
         this.shake = new Shake(storageServo);
         this.shake.start();
@@ -59,22 +63,45 @@ public class Storage extends RobotStorage {
         return true;
     }
     @Override
-    protected boolean shakeEnd() {
-        if(this.shake == null)
+    public boolean shakeEnd(Task task) {
+        if(!super.testTask(task) || this.shake == null)
             return false;
 
         ThreadManager.stopProcess(this.shake.getProcessId());
         this.storageServo.setPosition(Storage.storageInitialPosition);
 
         this.shake = null;
-        this.busy = false;
+        super.busy = false;
 
         return true;
     }
 
     @Override
-    public void terminate() {
-        this.shakeEnd();
+    public boolean dump(Task task) {
+        if(!this.setPosition(task, 0))
+            return false;
+
+        super.busy = true;
+        this.storageServo.setPosition(Storage.dumpPosition);
+
+        long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime <= Storage.dumpWait);
+
+
+        super.busy = false;
+        this.setPosition(task, 0);
+
+        return true;
+    }
+
+    @Override
+    protected void destructor() {
+        super.destructor();
+
+        if(this.shake != null)
+            ThreadManager.stopProcess(this.shake.getProcessId());
+
+        this.storageServo.setPosition(Storage.storageInitialPosition);
     }
 
     private static class Shake extends Task {
@@ -133,4 +160,7 @@ public class Storage extends RobotStorage {
 
     private static final double storageInitialPosition = 1.0;
     private static final double storageExtendedPosition = 0.882;
+
+    private static final double dumpPosition = 1.0;
+    private static final long dumpWait = 1000;
 }
