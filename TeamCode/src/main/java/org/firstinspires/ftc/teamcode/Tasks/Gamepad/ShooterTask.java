@@ -25,7 +25,7 @@ public class ShooterTask extends KeyTask {
 
     @Override
     protected double[] keyMapping() {
-        double returnArray[] = { super.controller.get_RightBumper() };
+        double returnArray[] = { super.controller.get_RightTrigger() };
 
         return returnArray;
     }
@@ -37,10 +37,10 @@ public class ShooterTask extends KeyTask {
         while(!super.isInterrupted()) {
             while(!this.isRunning && !super.isInterrupted());
 
-            if(this.keyMapping()[0] == 1.0) {
+            if(this.keyMapping()[0] >= .8) {
                 System.out.println("Here");
                 this.feeder.feedRing(this);
-                while(!super.isInterrupted() && this.keyMapping()[0] == 1.0);
+                while(!super.isInterrupted() && this.keyMapping()[0] >= .8);
             }
 
             int startClock = super.clock.getCurrentState();
