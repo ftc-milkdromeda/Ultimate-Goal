@@ -95,7 +95,7 @@ public class GamePad extends Controller {
     }
 
     @Override
-    public void terminate() {
+    public void destructor() {
 
     }
 
