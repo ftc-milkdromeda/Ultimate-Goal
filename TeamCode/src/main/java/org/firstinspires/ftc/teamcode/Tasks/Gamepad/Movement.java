@@ -19,6 +19,13 @@ public class Movement extends JoyStickTask {
     @Override
     protected JoyStick[] joyStickMapping() {
         JoyStick returnValue[] = { super.controller.get_LeftStick(), super.controller.get_RightStick() };
+
+        returnValue[0].X *= returnValue[0].X * Math.signum(returnValue[0].X);
+        returnValue[0].X *= returnValue[0].X * Math.signum(returnValue[0].X);
+        returnValue[0].Y *= returnValue[0].Y * Math.signum(returnValue[0].Y);
+        returnValue[0].Y *= returnValue[0].Y * Math.signum(returnValue[0].Y);
+        returnValue[1].X *= returnValue[1].X * Math.signum(returnValue[1].X);
+
         return returnValue;
     }
 
