@@ -42,9 +42,9 @@ public class Teleop extends TeleOpTemplate {
         this.storage = new Storage(super.hardwareMap);
         this.feeder = new Feeder(storage, super.hardwareMap);
         this.drive = new MecanumDrive(super.hardwareMap);
-        this.intake = new Intake(storage, super.hardwareMap);
+        this.intake = new Intake(storage, super.hardwareMap, super.telemetry);
         this.shooter = new Shooter(super.hardwareMap);
-        this.clock = new Clock(50);
+        this.clock = new Clock(60);
 
         this.controller = new Controller[2];
         this.controller[0] = new GamePad(super.gamepad1);
@@ -57,10 +57,10 @@ public class Teleop extends TeleOpTemplate {
 
     @Override
     protected void main() {
-        super.telemetry.addData("Refresh: ", "%.2f", this.clock.getCurrentRate());
-        super.telemetry.addData("Shooter Speed: ", "%.2f : %.2f ", this.shooter.getAverageVelocity()[0], this.shooter.getAverageVelocity()[1]);
-        super.telemetry.addData("Tasks: ", "%d", ThreadManager.numOfProcess());
-        super.telemetry.update();
+       super.telemetry.addData("Refresh: ", "%.2f", this.clock.getCurrentRate());
+       super.telemetry.addData("Shooter Speed: ", "%.2f : %.2f ", this.shooter.getAverageVelocity()[0], this.shooter.getAverageVelocity()[1]);
+       super.telemetry.addData("Rings: ", "%d", this.storage.getRings());
+       super.telemetry.update();
     }
 
     Clock clock;

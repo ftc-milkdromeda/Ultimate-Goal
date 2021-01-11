@@ -34,12 +34,8 @@ public abstract class TeleOpTemplate extends LinearOpMode {
         while(super.opModeIsActive() && this.programIsActive())
             this.main();
 
-        if(!this.programIsActive()) {
-            finalizer();
-            return;
-        }
-
-        for( ; ;);
+        if(!this.programIsActive())
+            this.finalizer();
     }
 
     private ExitTask exit;
