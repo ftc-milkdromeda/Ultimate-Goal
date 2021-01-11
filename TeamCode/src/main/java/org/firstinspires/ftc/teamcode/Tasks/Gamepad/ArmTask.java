@@ -31,7 +31,7 @@ public class ArmTask extends KeyTask {
         while(!super.isInterrupted()) {
             while(this.keyMapping()[3] == 1.0) {
                 this.arm.setArmPosition(this, this.keyMapping()[1] == 1.0 ? 2 : 1);
-                this.arm.setGrabberPosition(this, this.keyMapping()[0] == 1.0);
+                this.arm.setGrabberPosition(this, this.keyMapping()[0] >= 0.8);
 
                 int startClock = super.clock.getCurrentState();
                 while(super.clock.getCurrentState() == startClock);
