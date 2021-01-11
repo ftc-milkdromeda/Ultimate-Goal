@@ -38,6 +38,7 @@ public class ArmTask extends KeyTask {
             }
 
             this.arm.setArmPosition(this, 0);
+            this.arm.setGrabberPosition(this, false);
 
             int startClock = super.clock.getCurrentState();
             while(super.clock.getCurrentState() == startClock);
