@@ -84,8 +84,13 @@ public class RingTaskCoordinator extends KeyTask {
 
     @Override
     protected void deconstructor() {
+        this.storage.exitThread(this.intake);
+        this.storage.exitThread(this.shooter);
+
         ThreadManager.stopProcess(intake.getProcessId());
         ThreadManager.stopProcess(shooter.getProcessId());
+
+        this.modeToggle.terminate();
     }
 
     private static class ToggleButton extends Toggle {
