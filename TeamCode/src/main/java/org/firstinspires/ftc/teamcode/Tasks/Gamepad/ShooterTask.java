@@ -15,23 +15,32 @@ public class ShooterTask extends KeyTask {
         this.feeder = feeder;
         this.storage = storage;
         this.isRunning = false;
+        this.alive = false;
+
+        ShooterTask.status = false;
+
+        this.shooter.enterThread(this);
+        this.feeder.enterThread(this);
     }
 
     @Override
     protected double[] keyMapping() {
-        double returnArray[] = { super.controller.get_RightTrigger() };
+        double returnArray[] = { super.controller.get_RightBumper() };
 
         return returnArray;
     }
 
     @Override
     public void run() {
+        this.alive = true;
+
         while(!super.isInterrupted()) {
             while(!this.isRunning && !super.isInterrupted());
 
-            if(this.keyMapping()[0] >= .5) {
-                this.feeder.feedRing();
-                while(!super.isInterrupted() && this.keyMapping()[0] >= .5);
+            if(this.keyMapping()[0] == 1.0) {
+                System.out.println("Here");
+                this.feeder.feedRing(this);
+                while(!super.isInterrupted() && this.keyMapping()[0] == 1.0);
             }
 
             int startClock = super.clock.getCurrentState();
@@ -46,7 +55,7 @@ public class ShooterTask extends KeyTask {
         if(!this.isRunning)
             return;
 
-        this.shooter.stopShooter();
+        this.shooter.stopShooter(this);
         this.shooter.resetGauge();
         this.isRunning = false;
         ShooterTask.status = false;
@@ -55,11 +64,10 @@ public class ShooterTask extends KeyTask {
         if(ShooterTask.status || !this.alive || this.isRunning)
             return;
 
-        this.storage.setRings(3);
         ShooterTask.status = true;
         this.isRunning = true;
 
-        this.shooter.runShooterPower(ShooterTask.power);
+        this.shooter.runShooterPower(this, ShooterTask.power);
         this.shooter.resetGauge();
     }
 
@@ -75,5 +83,5 @@ public class ShooterTask extends KeyTask {
     private boolean isRunning;
     private boolean alive;
 
-    private static final double power = .78;
+    private static final double power = .77;
 }
