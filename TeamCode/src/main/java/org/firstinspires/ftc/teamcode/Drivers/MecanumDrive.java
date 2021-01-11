@@ -56,7 +56,7 @@ public class MecanumDrive extends DriveTrain {
     }
 
     @Override
-    public void terminate() {}
+    public void destructor() {}
 
     DcMotor motors[];
 }
