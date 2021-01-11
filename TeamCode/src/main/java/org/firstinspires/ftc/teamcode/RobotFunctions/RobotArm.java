@@ -15,7 +15,7 @@ public abstract class RobotArm extends Driver {
             RobotArm.processId = DriverManager.attachProcess(this);
     }
 
-    public abstract boolean setArmPosition(Task task, int postition);
+    public abstract boolean setArmPosition(Task task, int position);
     public abstract boolean setGrabberPosition(Task task, boolean open);
 
     private static int processId = -1;
