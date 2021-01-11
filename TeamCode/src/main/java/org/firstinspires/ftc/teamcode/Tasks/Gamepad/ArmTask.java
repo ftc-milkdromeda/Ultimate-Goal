@@ -37,6 +37,10 @@ public class ArmTask extends KeyTask {
                 while(super.clock.getCurrentState() == startClock);
             }
 
+            this.arm.setArmPosition(this, 0);
+
+            int startClock = super.clock.getCurrentState();
+            while(super.clock.getCurrentState() == startClock);
         }
     }
 
