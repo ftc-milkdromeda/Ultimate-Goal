@@ -13,20 +13,23 @@ public class IntakeTask extends Task {
         this.isRunning = false;
         this.isActive = false;
 
-        this.intake.hardStop();
+        this.intake.enterThread(this);
+
+        this.intake.hardStop(this);
     }
 
     public void runIntake() {
         if(!this.isActive)
             return;
+
         this.isRunning = true;
-        intake.runIntake();
+        intake.runIntake(this);
     }
     public void stopIntake() {
         if(!this.isRunning || !this.isActive)
             return;
 
-        intake.stopIntake();
+        intake.stopIntake(this);
 
         this.isRunning = false;
     }
@@ -47,7 +50,8 @@ public class IntakeTask extends Task {
 
     @Override
     protected void deconstructor() {
-        this.intake.hardStop();
+        this.intake.hardStop(this);
+        this.intake.exitThread(this);
     }
 
     private static boolean status = false;
