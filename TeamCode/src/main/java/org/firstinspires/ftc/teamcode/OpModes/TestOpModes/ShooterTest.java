@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
 import java.util.ArrayList;
-
+/*
 //@Disabled
 @TeleOp(name = "ShooterTest", group = "Robot Test")
 public class ShooterTest extends LinearOpMode {
@@ -122,3 +122,6 @@ public class ShooterTest extends LinearOpMode {
     private static final double bigIncrement = 0.05;
     private static final double smallIncrement = 0.00025;
 }
+
+ */
+//todo update to fit new drivers.
