@@ -25,5 +25,7 @@ public abstract class AutoTemplate extends LinearOpMode {
         this.startSequence();
 
         this.main();
+
+        this.finalizer();
     }
 }
