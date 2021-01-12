@@ -16,7 +16,7 @@ public class RingTaskCoordinator extends KeyTask {
     public RingTaskCoordinator(Clock clock, Controller controller, RobotIntake intake, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {
         super(clock, controller);
 
-        this.intake = new IntakeTask(clock, intake);
+        this.intake = new IntakeTask(clock, controller, intake, storage);
         this.shooter = new ShooterTask(clock, controller, shooter, feeder, storage);
         this.modeToggle = new ToggleButton(clock, controller);
         this.storage = storage;
