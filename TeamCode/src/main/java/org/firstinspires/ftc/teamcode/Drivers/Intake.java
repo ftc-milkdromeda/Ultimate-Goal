@@ -15,8 +15,6 @@ public class Intake extends RobotIntake {
 
         this.storage = storage;
         this.intake = hardware.dcMotor.get("intake");
-        this.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        this.intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.busy = false;
     }
@@ -37,8 +35,10 @@ public class Intake extends RobotIntake {
 
     @Override
     public boolean stopIntake(Task task) {
-        if(!super.busy || !super.testTask(task))
+        if(!super.testTask(task))
                 return false;
+        if(!super.busy)
+            return true;
 
         this.intake.setPower(Intake.reversePower);
         this.storage.shakeEnd(task);
