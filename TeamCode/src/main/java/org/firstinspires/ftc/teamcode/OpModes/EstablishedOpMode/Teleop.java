@@ -10,9 +10,12 @@ import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
+import org.firstinspires.ftc.teamcode.Tasks.Gamepad.ArmTask;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.RingTaskCoordinator;
+import org.firstinspires.ftc.teamcode.Drivers.Arm;
 
+import Drivers.DriverManager;
 import TaskManager.Clock;
 import Drivers.Controller;
 import TaskManager.ThreadManager;
@@ -24,17 +27,13 @@ public class Teleop extends TeleOpTemplate {
         this.clock.start();
         this.movement.start();
         this.ringManagement.start();
+        this.armTask.start();
     }
 
     @Override
     protected void finalizer() {
         ThreadManager.stopAllProcess();
-
-        this.feeder.terminate();
-        this.shooter.terminate();
-        this.intake.terminate();
-        this.drive.terminate();
-        this.storage.terminate();
+        DriverManager.stopAllProcess();
     }
 
     @Override
@@ -45,6 +44,7 @@ public class Teleop extends TeleOpTemplate {
         this.intake = new Intake(storage, super.hardwareMap, super.telemetry);
         this.shooter = new Shooter(super.hardwareMap);
         this.clock = new Clock(60);
+        this.arm = new Arm(super.hardwareMap);
 
         this.controller = new Controller[2];
         this.controller[0] = new GamePad(super.gamepad1);
@@ -53,6 +53,7 @@ public class Teleop extends TeleOpTemplate {
 
         this.movement = new Movement(this.clock, this.controller[0], this.drive);
         this.ringManagement = new RingTaskCoordinator(this.clock, this.controller[0], this.intake, this.shooter, this.feeder, this.storage);
+        this.armTask = new ArmTask(this.clock, this.controller[0], this.arm);
     }
 
     @Override
@@ -68,6 +69,7 @@ public class Teleop extends TeleOpTemplate {
     //Tasks
     Movement movement;
     RingTaskCoordinator ringManagement;
+    ArmTask armTask;
 
     //Drivers
     Feeder feeder;
@@ -75,5 +77,6 @@ public class Teleop extends TeleOpTemplate {
     Intake intake;
     MecanumDrive drive;
     Storage storage;
+    Arm arm;
     Controller controller[];
 }
