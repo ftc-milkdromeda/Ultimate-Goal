@@ -45,15 +45,6 @@ public class IntakeTask extends KeyTask {
         IntakeTask.status = true;
 
         while(!super.isInterrupted()) {
-            while(!this.isRunning);
-
-            if(this.keyMapping()[0] == 1.0) {
-                this.storage.shakeEnd(this);
-                this.storage.dump(this);
-            }
-
-            int startClock = super.clock.getCurrentState();
-            while(super.clock.getCurrentState() == startClock);
         }
 
         IntakeTask.status = false;
