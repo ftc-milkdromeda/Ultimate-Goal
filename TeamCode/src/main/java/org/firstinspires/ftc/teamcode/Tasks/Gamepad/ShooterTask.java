@@ -38,7 +38,6 @@ public class ShooterTask extends KeyTask {
             while(!this.isRunning && !super.isInterrupted());
 
             if(this.keyMapping()[0] >= .8) {
-                System.out.println("Here");
                 this.feeder.feedRing(this);
                 while(!super.isInterrupted() && this.keyMapping()[0] >= .8);
             }
