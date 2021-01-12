@@ -17,17 +17,21 @@ public class Arm extends RobotArm {
 
     @Override
     public boolean setArmPosition(Task task, int position) {
-        if(!super.testTask(task))
+        if(super.busy || !super.testTask(task))
             return false;
-
         super.busy = true;
 
         if(position == 0)
-            armServo.setPosition(armInitialPosition);
-        else if(position == 1)
-            armServo.setPosition(armReadyPosition);
+            armServo.setPosition(Arm.armInitialPosition);
+        else if(position == 1) {
+            armServo.setPosition(Arm.armReadyPosition);
+        }
         else if(position == 2)
-            armServo.setPosition((armExtendedPosition));
+            armServo.setPosition(Arm.armExtendedPosition);
+        else {
+            super.busy = false;
+            return false;
+        }
 
         super.busy = false;
 
@@ -36,8 +40,8 @@ public class Arm extends RobotArm {
 
     @Override
     public boolean setGrabberPosition(Task task, boolean open) {
-        if(!super.testTask(task))
-        return false;
+        if(super.busy || !super.testTask(task))
+            return false;
         super.busy = true;
 
         if(open)
@@ -54,9 +58,9 @@ public class Arm extends RobotArm {
     private Servo handServo;
 
     //constants
-    private static double armInitialPosition = 0.0;
-    private static double armReadyPosition = .25;
-    private static double armExtendedPosition = 0.5;
+    private static double armInitialPosition = .5;
+    private static double armReadyPosition = .75;
+    private static double armExtendedPosition = 1.0;
 
     private static double handClosedPosition = 0.0;
     private static double handOpenPosition = 1.0;
