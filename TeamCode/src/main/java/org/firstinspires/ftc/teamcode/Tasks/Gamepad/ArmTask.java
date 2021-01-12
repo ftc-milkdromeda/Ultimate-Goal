@@ -7,16 +7,10 @@ import TaskManager.Clock;
 import TaskManager.KeyTask;
 
 public class ArmTask extends KeyTask {
-    protected ArmTask(Clock clock, Controller controller, RobotArm arm) {
+    public ArmTask(Clock clock, Controller controller, RobotArm arm) {
         super(clock, controller);
 
         this.arm = arm;
-    }
-
-    @Override
-    protected void deconstructor() {
-        super.deconstructor();
-        this.arm.exitThread(this);
 
         this.onSwitch = new Toggle(super.clock, super.controller) {
             @Override
@@ -24,24 +18,35 @@ public class ArmTask extends KeyTask {
                 return super.controller.get_A() == 1.0;
             }
         };
+
+        this.onSwitch.setState(false);
+        this.arm.enterThread(this);
+        this.onSwitch.start();
+    }
+
+    @Override
+    protected void deconstructor() {
+        this.arm.exitThread(this);
+
+        this.onSwitch.terminate();
     }
 
     @Override
     public void run() {
         while(!super.isInterrupted()) {
-            while(this.keyMapping()[3] == 1.0) {
+            while(this.keyMapping()[2] == 1.0 && !super.isInterrupted()) {
                 this.arm.setArmPosition(this, this.keyMapping()[1] == 1.0 ? 2 : 1);
                 this.arm.setGrabberPosition(this, this.keyMapping()[0] == 1.0);
 
                 int startClock = super.clock.getCurrentState();
-                while(super.clock.getCurrentState() == startClock);
+                while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
             }
 
             this.arm.setArmPosition(this, 0);
             this.arm.setGrabberPosition(this, false);
 
             int startClock = super.clock.getCurrentState();
-            while(super.clock.getCurrentState() == startClock);
+            while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
         }
     }
 
