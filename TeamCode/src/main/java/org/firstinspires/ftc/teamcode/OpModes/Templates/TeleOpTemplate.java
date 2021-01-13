@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Drivers.GamePad;
 import org.firstinspires.ftc.teamcode.Drivers.Intake;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.ExitTask;
 
+import Drivers.DriverManager;
 import RobotFunctions.Units_time;
 import TaskManager.ThreadManager;
 
@@ -20,8 +21,9 @@ public abstract class TeleOpTemplate extends LinearOpMode {
     }
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public final void runOpMode() throws InterruptedException {
         ThreadManager.stopAllProcess();
+        DriverManager.stopAllProcess();
 
         this.exit = new ExitTask(new GamePad(super.gamepad1));
         this.exit.start();
@@ -36,6 +38,8 @@ public abstract class TeleOpTemplate extends LinearOpMode {
 
         if(!this.programIsActive())
             this.finalizer();
+
+        this.finalizer();
     }
 
     private ExitTask exit;
