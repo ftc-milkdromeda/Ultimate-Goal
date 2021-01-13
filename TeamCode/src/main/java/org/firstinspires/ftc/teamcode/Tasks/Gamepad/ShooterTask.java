@@ -13,7 +13,6 @@ public class ShooterTask extends KeyTask {
         super(clock, controller);
         this.shooter = shooter;
         this.feeder = feeder;
-        this.storage = storage;
         this.isRunning = false;
         this.alive = false;
 
@@ -70,14 +69,9 @@ public class ShooterTask extends KeyTask {
         this.shooter.resetGauge();
     }
 
-    public int getRings() {
-        return this.storage.getRings();
-    }
-
     private static boolean status = false;
 
     private RobotShooter shooter;
-    private RobotStorage storage;
     private RobotFeeder feeder;
     private boolean isRunning;
     private boolean alive;

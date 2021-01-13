@@ -66,7 +66,7 @@ public class RingTaskCoordinator extends KeyTask {
 
                 this.shooter.proceed();
             }
-            else if(this.shooter.getRings() == 0 && status)
+            else if(this.storage.getRings() == 0 && status)
                 this.modeToggle.setState(false);
 
             int startClock = super.clock.getCurrentState();
