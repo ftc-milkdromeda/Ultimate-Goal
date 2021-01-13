@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode.Drivers;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
+import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
 import TaskManager.Task;
 
 public class Intake extends RobotIntake {
-    public Intake(Storage storage, HardwareMap hardware, Telemetry telemetry) {
+    public Intake(RobotStorage storage, HardwareMap hardware) {
         super();
 
         this.storage = storage;
@@ -67,7 +66,7 @@ public class Intake extends RobotIntake {
     }
 
     private DcMotor intake;
-    private Storage storage;
+    private RobotStorage storage;
 
     //constants
     private static final double power = 1.0;
