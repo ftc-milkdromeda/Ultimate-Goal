@@ -41,7 +41,7 @@ public class Teleop extends TeleOpTemplate {
         this.storage = new Storage(super.hardwareMap);
         this.feeder = new Feeder(storage, super.hardwareMap);
         this.drive = new MecanumDrive(super.hardwareMap);
-        this.intake = new Intake(storage, super.hardwareMap, super.telemetry);
+        this.intake = new Intake(storage, super.hardwareMap);
         this.shooter = new Shooter(super.hardwareMap);
         this.clock = new Clock(60);
         this.arm = new Arm(super.hardwareMap);
