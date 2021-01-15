@@ -28,9 +28,12 @@ import TaskManager.ThreadManager;
 
 @Autonomous(name="Auto")
 public class RemoteAuto extends AutoTemplate {
+    private boolean motorIsDone(DcMotor motor, int target) {
+        final int acceptedError = 5;
+        return motor.getCurrentPosition() <= target + acceptedError && motor.getCurrentPosition() >= target - acceptedError;
+    }
     private int tickCalculator(double distance, Units_length units) {
         final double tickConstant = 3787.87878788;
-
         return (int)Math.round(distance * units.getValue() * tickConstant);
     }
     private void runToDistance(double power, double distance, Units_length units) {
@@ -45,9 +48,14 @@ public class RemoteAuto extends AutoTemplate {
         this.motors[2].setPower(power);
         this.motors[3].setPower(power);
 
-        while((this.motors[0].getCurrentPosition() || this.motors[1].isBusy() || this.motors[2].isBusy() || this.motors[3].isBusy()) && super.opModeIsActive());
+        while(
+                !(this.motorIsDone(this.motors[0], this.tickCalculator(distance, units)) &&
+                this.motorIsDone(this.motors[1], this.tickCalculator(distance, units)) &&
+                this.motorIsDone(this.motors[2], this.tickCalculator(distance, units)) &&
+                this.motorIsDone(this.motors[3], this.tickCalculator(distance, units)))
+                && super.opModeIsActive()
+        );
     }
-
     private void strafeToDistance(double power, double distance, Units_length units) {
         for(int a = 0; a < this.motors.length; a+=3) {
             this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -62,19 +70,18 @@ public class RemoteAuto extends AutoTemplate {
         }
 
         this.motors[0].setPower(power);
-        this.motors[1].setPower(power);
-        this.motors[2].setPower(power);
+        this.motors[1].setPower(-power);
+        this.motors[2].setPower(-power);
         this.motors[3].setPower(power);
 
-        while((this.motors[0].isBusy() || this.motors[1].isBusy() || this.motors[2].isBusy() || this.motors[3].isBusy()) && super.opModeIsActive());
-
-        this.motors[0].setPower(power);
-        this.motors[1].setPower(power);
-        this.motors[2].setPower(power);
-        this.motors[3].setPower(power);
-
-        while((this.motors[0].isBusy() || this.motors[1].isBusy() || this.motors[2].isBusy() || this.motors[3].isBusy()) && super.opModeIsActive());
-    }
+        while(
+                !(this.motorIsDone(this.motors[0], this.tickCalculator(distance, units)) &&
+            this.motorIsDone(this.motors[1], -this.tickCalculator(distance, units)) &&
+            this.motorIsDone(this.motors[2], -this.tickCalculator(distance, units)) &&
+            this.motorIsDone(this.motors[3], this.tickCalculator(distance, units)))
+            && super.opModeIsActive()
+        );
+}
 
     @Override
     protected void startSequence() {
@@ -128,6 +135,12 @@ public class RemoteAuto extends AutoTemplate {
         this.coordinator.stopShooter();
 
         this.strafeToDistance(0.2, 5, Units_length.IN);
+        this.runToDistance(0.2, 14, Units_length.IN);
+
+        this.strafeToDistance(-0.2, -5, Units_length.IN);
+        this.coordinator.runShooter();
+        while(this.storage.getRings() != 0 || super.opModeIsActive());
+        this.coordinator.stopShooter();
     }
 
     private RobotShooter shooter;
