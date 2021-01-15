@@ -8,9 +8,11 @@ import TaskManager.Clock;
 import TaskManager.Task;
 
 public class ShooterTask extends Task {
-    public ShooterTask(Clock clock, RobotShooter shooter, RobotFeeder feeder) {
+    public ShooterTask(Clock clock, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {
         super(clock);
         this.shooter = shooter;
+        this.feeder = feeder;
+        this.storage = storage;
 
         this.isRunning = false;
         this.alive = false;
@@ -27,8 +29,10 @@ public class ShooterTask extends Task {
         int gauge = super.clock.getCurrentState();
 
         while(!super.isInterrupted()) {
-            if(this.shoot)
-                this.feeder.feedRing(this);
+            if(this.shoot) {
+                while(this.storage.getRings() != 0)
+                    this.feeder.feedRing(this);
+            }
             if(this.isRunning)
                 this.shooter.runShooterPower(this, .78);
             else
@@ -66,7 +70,7 @@ public class ShooterTask extends Task {
     }
 
     private static boolean status = false;
-
+    private RobotStorage storage;
     private RobotShooter shooter;
     private RobotFeeder feeder;
     private boolean isRunning;

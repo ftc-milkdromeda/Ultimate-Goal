@@ -15,7 +15,7 @@ public class RingTaskCoordinator extends Task {
         super(clock);
 
         this.intake = new IntakeTask(clock, intake);
-        this.shooter = new ShooterTask(clock, shooter, feeder);
+        this.shooter = new ShooterTask(clock, shooter, feeder, storage);
         this.storage = storage;
     }
 
