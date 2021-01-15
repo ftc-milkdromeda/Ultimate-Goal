@@ -28,7 +28,7 @@ public class RingTaskCoordinator extends Task {
         this.mode = false;
 
         while(!super.isInterrupted()) {
-            if(this.mode) {
+            if(!this.mode) {
                 this.shooter.pause();
 
                 this.storage.exitThread(this.shooter);
