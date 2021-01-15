@@ -31,5 +31,5 @@ public class Feeder extends RobotFeeder{
     //constants
     private static final double initialPosition = 0.975;
     private static final double extendedPosition = 0.75;
-    private static final double time = 200;
+    private static final double time = 300;
 }

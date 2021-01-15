@@ -17,6 +17,7 @@ public class TickTester extends LinearOpMode {
 
         for(int a = 0; a < 4; a++) {
             motors[a] = super.hardwareMap.dcMotor.get("motor" + a);
+            motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         }
 
         motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
@@ -35,5 +36,5 @@ public class TickTester extends LinearOpMode {
         while(motors[0].isBusy() || motors[1].isBusy() || motors[2].isBusy() || motors[3].isBusy());
     }
 
-    private final static int ticks = 1000;
+    private final static int ticks = 2000;
 }
