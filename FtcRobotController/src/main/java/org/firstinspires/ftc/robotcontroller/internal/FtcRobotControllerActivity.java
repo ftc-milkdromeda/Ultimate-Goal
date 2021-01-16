@@ -448,7 +448,7 @@ FtcDashboard.stop();
   }
 
   @Override
-  protected void onDestroy() {
+  protected void onDestroy () {
     super.onDestroy();
     RobotLog.vv(TAG, "onDestroy()");
 

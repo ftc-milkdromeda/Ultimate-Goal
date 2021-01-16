@@ -29,17 +29,10 @@ public class ShooterTask extends Task {
         int gauge = super.clock.getCurrentState();
 
         while(!super.isInterrupted()) {
-            if(this.shoot) {
-                while(this.storage.getRings() != 0)
-                    this.feeder.feedRing(this);
-            }
             if(this.isRunning)
-                this.shooter.runShooterPower(this, .78);
+                this.shooter.runShooterPower(this, .79);
             else
                 this.shooter.stopShooter(this);
-
-            if(super.clock.getCurrentState() - gauge >= ShooterTask.gaugeRefresh)
-                this.shooter.resetGauge();
 
             int startClock = super.clock.getCurrentState();
             while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
@@ -61,12 +54,14 @@ public class ShooterTask extends Task {
 
         ShooterTask.status = true;
         this.isRunning = true;
+
+        this.storage.setPosition(this, 1);
     }
     public void shoot() {
-        if(!this.isRunning || this.shoot)
+        if(!this.isRunning || !this.alive)
             return;
 
-        this.shoot = true;
+        this.feeder.feedRing(this);
     }
 
     private static boolean status = false;
@@ -77,6 +72,5 @@ public class ShooterTask extends Task {
     private boolean alive;
     private boolean shoot;
 
-    private static final double power = .77;
-    private static final int gaugeRefresh = 100;
+    private static final double power = .796;
 }

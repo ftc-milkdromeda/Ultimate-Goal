@@ -17,6 +17,7 @@ public class RingTaskCoordinator extends Task {
         this.intake = new IntakeTask(clock, intake);
         this.shooter = new ShooterTask(clock, shooter, feeder, storage);
         this.storage = storage;
+        this.mode = false;
     }
 
     @Override
@@ -25,7 +26,8 @@ public class RingTaskCoordinator extends Task {
             return;
         RingTaskCoordinator.status = true;
 
-        this.mode = false;
+        this.intake.start();
+        this.shooter.start();
 
         while(!super.isInterrupted()) {
             if(!this.mode) {
@@ -33,8 +35,6 @@ public class RingTaskCoordinator extends Task {
 
                 this.storage.exitThread(this.shooter);
                 this.storage.enterThread(this.intake);
-
-                status = false;
 
                 this.intake.runIntake();
             }
@@ -44,12 +44,9 @@ public class RingTaskCoordinator extends Task {
                 this.storage.exitThread(this.intake);
                 this.storage.enterThread(this.shooter);
 
-                this.storage.setRings(3);
-
-                status = true;
-
                 this.shooter.proceed();
             }
+
 
             if(this.storage.getRings() == 0)
                 this.mode = false;
@@ -76,11 +73,14 @@ public class RingTaskCoordinator extends Task {
     public void stopShooter() {
         this.mode = false;
     }
+    public void shoot() {
+        this.shooter.shoot();
+    }
 
     private static boolean status = false;
 
     private IntakeTask intake;
     private ShooterTask shooter;
     private RobotStorage storage;
-    private static boolean mode;
+    private boolean mode;
 }

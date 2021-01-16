@@ -76,5 +76,5 @@ public class ShooterTask extends KeyTask {
     private boolean isRunning;
     private boolean alive;
 
-    private static final double power = .79;
+    private static final double power = .78;
 }

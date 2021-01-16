@@ -1,17 +1,25 @@
 package org.firstinspires.ftc.teamcode.Tasks.Auto;
 
+import android.sax.StartElementListener;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotArm;
 
 import TaskManager.Clock;
 import TaskManager.Task;
 
 public class ArmTask extends Task {
-    public ArmTask(Clock clock, RobotArm arm) {
+    public ArmTask(Clock clock, RobotArm arm, Telemetry telemetry) {
         super(clock);
 
         this.arm = arm;
 
+        this.armPosition = 0;
+        this.open = false;
+
         this.arm.enterThread(this);
+
+        this.telemetry = telemetry;
     }
 
     @Override
@@ -24,14 +32,17 @@ public class ArmTask extends Task {
         while(!super.isInterrupted()) {
             this.arm.setGrabberPosition(this, this.open);
             this.arm.setArmPosition(this, this.armPosition);
+
+            int startClock = super.clock.getCurrentState();
+            while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
         }
 
-        int startClock = super.clock.getCurrentState();
-        while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
+        this.telemetry.addData("HOOKA", "");
+        this.telemetry.update();
     }
 
     public void setPosition(int position) {
-        this.armPosition = armPosition;
+        this.armPosition = position;
     }
 
     public void setGrabber(boolean open) {
@@ -42,4 +53,5 @@ public class ArmTask extends Task {
 
     private boolean open;
     private int armPosition;
+    private Telemetry telemetry;
 }

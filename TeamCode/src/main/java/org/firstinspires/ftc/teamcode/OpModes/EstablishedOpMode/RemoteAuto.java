@@ -33,12 +33,11 @@ public class RemoteAuto extends AutoTemplate {
         return motor.getCurrentPosition() <= target + acceptedError && motor.getCurrentPosition() >= target - acceptedError;
     }
     private int tickCalculator(double distance, Units_length units) {
-        final double tickConstant = 3787.87878788;
+        final double tickConstant = 1492.290861;
         return (int)Math.round(distance * units.getValue() * tickConstant);
     }
     private void runToDistance(double power, double distance, Units_length units) {
         for(int a = 0; a < this.motors.length; a++) {
-            this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             this.motors[a].setTargetPosition(tickCalculator(distance, units));
             this.motors[a].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -55,10 +54,14 @@ public class RemoteAuto extends AutoTemplate {
                 this.motorIsDone(this.motors[3], this.tickCalculator(distance, units)))
                 && super.opModeIsActive()
         );
+
+        for(int a = 0; a < 4; a++) {
+            this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            this.motors[a].setPower(0.0);
+        }
     }
     private void strafeToDistance(double power, double distance, Units_length units) {
         for(int a = 0; a < this.motors.length; a+=3) {
-            this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             this.motors[a].setTargetPosition(tickCalculator(distance, units));
             this.motors[a].setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
@@ -81,6 +84,11 @@ public class RemoteAuto extends AutoTemplate {
             this.motorIsDone(this.motors[3], this.tickCalculator(distance, units)))
             && super.opModeIsActive()
         );
+
+        for(int a = 0; a < 4; a++) {
+            this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            this.motors[a].setPower(0.0);
+        }
 }
 
     @Override
@@ -106,8 +114,8 @@ public class RemoteAuto extends AutoTemplate {
         this.arm = new Arm(this.hardwareMap);
 
         //Tasks
-        this.clock = new Clock(20);
-        this.armTask = new ArmTask(this.clock, this.arm);
+        this.clock = new Clock(100);
+        this.armTask = new ArmTask(this.clock, this.arm, super.telemetry);
         this.coordinator = new RingTaskCoordinator(this.clock, this.intake, this.shooter, this.feeder, this.storage);
 
         this.motors = new DcMotor[4];
@@ -127,19 +135,38 @@ public class RemoteAuto extends AutoTemplate {
 
     @Override
     protected void main() {
-        this.runToDistance(0.5, 29, Units_length.IN);
+        for(DcMotor motor : this.motors) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setPower(0.4);
+        }
 
         this.storage.setRings(3);
         this.coordinator.runShooter();
-        while(this.storage.getRings() != 0 || super.opModeIsActive());
+        this.armTask.setPosition(1);
+
+        this.runToDistance(0.4, 30, Units_length.IN);
+
+        while(this.storage.getRings() != 0)
+            this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        this.strafeToDistance(0.2, 5, Units_length.IN);
-        this.runToDistance(0.2, 14, Units_length.IN);
+        this.strafeToDistance(0.2, 2, Units_length.IN);
+        this.runToDistance(0.1, 7, Units_length.IN);
 
-        this.strafeToDistance(-0.2, -5, Units_length.IN);
+        this.strafeToDistance(-0.2, -2, Units_length.IN);
+
+        this.storage.setRings(3);
         this.coordinator.runShooter();
-        while(this.storage.getRings() != 0 || super.opModeIsActive());
+        while(this.storage.getRings() != 0)
+            this.coordinator.shoot();
+        this.coordinator.stopShooter();
+
+        this.runToDistance(0.3, 10, Units_length.IN);
+
+        this.storage.setRings(1);
+        this.coordinator.runShooter();
+        while(this.storage.getRings() != 0)
+            this.coordinator.shoot();
         this.coordinator.stopShooter();
     }
 
@@ -148,6 +175,8 @@ public class RemoteAuto extends AutoTemplate {
     private RobotFeeder feeder;
     private RobotStorage storage;
     private RobotArm arm;
+
+    private int rings = 4;
 
     private DcMotor motors[];
 

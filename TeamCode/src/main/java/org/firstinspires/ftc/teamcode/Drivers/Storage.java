@@ -155,7 +155,7 @@ public class Storage extends RobotStorage {
     //constants
     private static final double liftInitialPosition = 0.0;
     private static final double liftPos1 = 0.0;
-    private static final double liftPos2 = 0.6;
+    private static final double liftPos2 = 0.75;
     private static final double liftPos3 = .95;
 
     private static final double storageInitialPosition = 1.0;

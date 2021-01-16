@@ -59,7 +59,7 @@ public class Arm extends RobotArm {
 
     //constants
     private static double armInitialPosition = .5;
-    private static double armReadyPosition = .75;
+    private static double armReadyPosition = .89;
     private static double armExtendedPosition = 1.0;
 
     private static double handClosedPosition = 0.0;

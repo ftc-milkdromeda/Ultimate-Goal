@@ -48,5 +48,5 @@ public abstract class RobotFeeder extends Driver {
     private static int processId = -1;
 
     //constants
-    private static final int shootingTimeDelay = 750;
+    private static final int shootingTimeDelay = 1000;
 }
