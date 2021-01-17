@@ -5,10 +5,10 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import Drivers.Controller;
-import TaskManager.Clock;
-import TaskManager.Task;
-import TaskManager.ThreadManager;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.Task;
+import Milkdromeda.TaskManager.ThreadManager;
 
 public class RingTaskCoordinator extends Task {
     public RingTaskCoordinator(Clock clock, RobotIntake intake, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {

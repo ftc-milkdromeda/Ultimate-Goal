@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotArm;
 
-import TaskManager.Task;
+import Milkdromeda.TaskManager.Task;
 
 public class Arm extends RobotArm {
     public Arm(HardwareMap hardware) {

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Drivers;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
 import com.vuforia.Vuforia;
@@ -11,10 +10,9 @@ import org.firstinspires.ftc.teamcode.R;
 
 import java.nio.ByteBuffer;
 
-import TaskManager.Task;
+import Milkdromda.TaskManager.Task;
 
-import Drivers.RobotCamera;
-
+import Milkdromda.Drivers.RobotCamera;
 
 public class Camera extends RobotCamera {
     public Camera() {
@@ -29,7 +27,7 @@ public class Camera extends RobotCamera {
     }
 
     @Override
-    public double[][] takeImage(Task task) {
+    public Image.Image takeImage(Task task) {
         if(super.busy /*|| !super.testTask(task)*/)
             return null;
 
@@ -55,13 +53,6 @@ public class Camera extends RobotCamera {
             return null;
 
         ByteBuffer byteArray = raw.getPixels();
-
-        double image[][] = new double[raw.getWidth()][raw.getHeight()];
-        for(int a = 0; a < raw.getWidth(); a++) {
-            for(int b = 0; b < raw.getHeight(); b++) {
-                image[a][b] = byteArray.getDouble(a * raw.getHeight() + b) / 256;
-            }
-        }
 
         super.busy = false;
 

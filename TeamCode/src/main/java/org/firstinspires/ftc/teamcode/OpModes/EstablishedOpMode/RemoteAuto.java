@@ -21,10 +21,10 @@ import org.firstinspires.ftc.teamcode.Tasks.Auto.IntakeTask;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.RingTaskCoordinator;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.ShooterTask;
 
-import Drivers.DriverManager;
-import RobotFunctions.Units_length;
-import TaskManager.Clock;
-import TaskManager.ThreadManager;
+import Milkdromda.Drivers.DriverManager;
+import Milkdromda.RobotFunctions.Units_length;
+import Milkdromda.TaskManager.Clock;
+import Milkdromda.TaskManager.ThreadManager;
 
 @Autonomous(name="Auto")
 public class RemoteAuto extends AutoTemplate {

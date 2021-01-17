@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
-import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,8 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.DoubleBuffer;
 
-import Drivers.RobotCamera;
-import Image.Image;
+import Milkdromeda.Drivers.RobotCamera;
+import Milkdromeda.Image.Image;
 
 //@Disabled
 @TeleOp(name = "Camera Test")
