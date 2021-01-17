@@ -8,9 +8,9 @@ import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
 import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
-import TaskManager.Clock;
-import Drivers.Controller;
-import TaskManager.ThreadManager;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.ThreadManager;
 
 @Disabled
 @TeleOp(name="Teleop Task Test")

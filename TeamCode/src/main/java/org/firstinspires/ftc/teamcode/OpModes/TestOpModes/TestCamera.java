@@ -24,7 +24,7 @@ public class TestCamera extends LinearOpMode {
         while(super.opModeIsActive()) {
             if(super.gamepad1.right_bumper) {
                 image = camera.takeImage(null);
-                image.writeImage("/storage/")
+                image.writeImage("/storage/self/primary/FIRST/testImage");
             }
         }
 

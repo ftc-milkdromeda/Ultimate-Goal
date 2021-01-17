@@ -15,10 +15,10 @@ import org.firstinspires.ftc.teamcode.Tasks.Gamepad.Movement;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.RingTaskCoordinator;
 import org.firstinspires.ftc.teamcode.Drivers.Arm;
 
-import Drivers.DriverManager;
-import TaskManager.Clock;
-import Drivers.Controller;
-import TaskManager.ThreadManager;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.ThreadManager;
 
 @TeleOp(name="TeleOp")
 public class Teleop extends TeleOpTemplate {

@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.ShooterTask;
 
-import Drivers.DriverManager;
-import TaskManager.Clock;
-import TaskManager.ThreadManager;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.ThreadManager;
 
 @TeleOp(name="PID test")
 

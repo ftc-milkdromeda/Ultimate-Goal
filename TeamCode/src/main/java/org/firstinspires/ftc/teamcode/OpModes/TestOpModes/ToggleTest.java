@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
 import org.firstinspires.ftc.teamcode.OpModes.Templates.TeleOpTemplate;
 
-import TaskManager.Clock;
-import Drivers.Controller;
-import TaskManager.KeyTask;
-import TaskManager.ThreadManager;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.KeyTask;
+import Milkdromeda.TaskManager.ThreadManager;
 
 @Disabled
 @TeleOp(name="Toggle test")

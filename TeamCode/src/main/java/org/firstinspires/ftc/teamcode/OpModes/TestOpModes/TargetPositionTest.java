@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import RobotFunctions.MecanumWheels.Motor;
+import Milkdromeda.RobotFunctions.MecanumWheels.Motor;
 
 @Disabled
 @TeleOp(name = "TargetPositionTest", group = "Robot Test")
