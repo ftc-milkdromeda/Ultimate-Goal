@@ -10,9 +10,10 @@ import org.firstinspires.ftc.teamcode.R;
 
 import java.nio.ByteBuffer;
 
-import Milkdromda.TaskManager.Task;
+import Milkdromeda.Image.Bitmap;
+import Milkdromeda.TaskManager.Task;
 
-import Milkdromda.Drivers.RobotCamera;
+import Milkdromeda.Drivers.RobotCamera;
 
 public class Camera extends RobotCamera {
     public Camera() {
@@ -27,7 +28,7 @@ public class Camera extends RobotCamera {
     }
 
     @Override
-    public Image.Image takeImage(Task task) {
+    public Bitmap takeImage(Task task) {
         if(super.busy /*|| !super.testTask(task)*/)
             return null;
 
@@ -53,10 +54,21 @@ public class Camera extends RobotCamera {
             return null;
 
         ByteBuffer byteArray = raw.getPixels();
+        byte array[] = byteArray.array();
+
+        int buffer[] = new int[array.length];
+
+        for(int a = 0; a < buffer.length; a++) {
+            buffer[a] = Math.abs(array[a]) + (array[a] < 0 ? 0x80 : 0x0);
+        }
+
+
 
         super.busy = false;
+        Bitmap finalImage = new Bitmap(raw.getWidth(), raw.getHeight(), false);
+        finalImage.setPixels(buffer);
 
-        return image;
+        return finalImage;
     }
 
     private VuforiaLocalizer locale;

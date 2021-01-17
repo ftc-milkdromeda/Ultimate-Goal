@@ -7,12 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Drivers.Camera;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.DoubleBuffer;
 
 import Milkdromeda.Drivers.RobotCamera;
-import Milkdromeda.Image.Image;
+import Milkdromeda.Image.Bitmap;
 
 //@Disabled
 @TeleOp(name = "Camera Test")
@@ -20,13 +17,14 @@ public class TestCamera extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         RobotCamera camera = new Camera();
-        Image image;
+        Bitmap image;
 
         super.waitForStart();
 
         while(super.opModeIsActive()) {
             if(super.gamepad1.right_bumper) {
                 image = camera.takeImage(null);
+                image.writeImage("/storage/")
             }
         }
 
