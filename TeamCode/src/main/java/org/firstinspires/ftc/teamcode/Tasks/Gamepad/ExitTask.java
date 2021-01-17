@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
-import Drivers.Controller;
-import TaskManager.Clock;
-import TaskManager.KeyTask;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.KeyTask;
 
 public class ExitTask extends KeyTask {
     public ExitTask(Controller controller) {

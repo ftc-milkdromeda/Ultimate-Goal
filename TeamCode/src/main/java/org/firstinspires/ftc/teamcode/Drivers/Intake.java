@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import TaskManager.Task;
+import Milkdromeda.TaskManager.Task;
 
 public class Intake extends RobotIntake {
     public Intake(RobotStorage storage, HardwareMap hardware) {

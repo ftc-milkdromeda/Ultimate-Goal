@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import TaskManager.Task;
-import TaskManager.ThreadManager;
+import Milkdromeda.TaskManager.Task;
+import Milkdromeda.TaskManager.ThreadManager;
 
 public class Storage extends RobotStorage {
     public Storage(HardwareMap hardware) {

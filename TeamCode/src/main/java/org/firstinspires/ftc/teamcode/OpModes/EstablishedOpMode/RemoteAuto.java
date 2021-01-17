@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Drivers.Arm;
 import org.firstinspires.ftc.teamcode.Drivers.Feeder;
 import org.firstinspires.ftc.teamcode.Drivers.Intake;
@@ -17,14 +16,12 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.ArmTask;
-import org.firstinspires.ftc.teamcode.Tasks.Auto.IntakeTask;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.RingTaskCoordinator;
-import org.firstinspires.ftc.teamcode.Tasks.Auto.ShooterTask;
 
-import Milkdromda.Drivers.DriverManager;
-import Milkdromda.RobotFunctions.Units_length;
-import Milkdromda.TaskManager.Clock;
-import Milkdromda.TaskManager.ThreadManager;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.RobotFunctions.Units_length;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.ThreadManager;
 
 @Autonomous(name="Auto")
 public class RemoteAuto extends AutoTemplate {

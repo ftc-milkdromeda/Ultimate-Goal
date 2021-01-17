@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Drivers;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
-import TaskManager.JoyStick;
-import Drivers.Controller;
+import Milkdromeda.TaskManager.JoyStick;
+import Milkdromeda.Drivers.Controller;
 
 public class GamePad extends Controller {
     public GamePad(Gamepad gamepad) {

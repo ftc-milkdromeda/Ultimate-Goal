@@ -3,12 +3,11 @@ package org.firstinspires.ftc.teamcode.OpModes.Templates;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Drivers.GamePad;
-import org.firstinspires.ftc.teamcode.Drivers.Intake;
 import org.firstinspires.ftc.teamcode.Tasks.Gamepad.ExitTask;
 
-import Drivers.DriverManager;
-import RobotFunctions.Units_time;
-import TaskManager.ThreadManager;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.RobotFunctions.Units_time;
+import Milkdromeda.TaskManager.ThreadManager;
 
 public abstract class TeleOpTemplate extends LinearOpMode {
     protected void startSequence() {}

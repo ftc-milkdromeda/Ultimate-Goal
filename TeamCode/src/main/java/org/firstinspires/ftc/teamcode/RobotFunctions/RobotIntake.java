@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.RobotFunctions;
 
-import Drivers.DriverManager;
-import Drivers.Template.Driver;
-import TaskManager.Task;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.Drivers.Template.Driver;
+import Milkdromeda.TaskManager.Task;
 
 public abstract class RobotIntake extends Driver {
     protected  RobotIntake() {

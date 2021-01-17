@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotArm;
 
-import Drivers.Controller;
-import TaskManager.Clock;
-import TaskManager.KeyTask;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.KeyTask;
 
 public class ArmTask extends KeyTask {
     public ArmTask(Clock clock, Controller controller, RobotArm arm) {

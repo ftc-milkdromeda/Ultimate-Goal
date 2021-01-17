@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import Drivers.DriveTrain;
-import RobotFunctions.MecanumWheels.Motor;
+import Milkdromeda.Drivers.DriveTrain;
+import Milkdromeda.RobotFunctions.MecanumWheels.Motor;
 
 public class MecanumDrive extends DriveTrain {
     public MecanumDrive(HardwareMap hardware) {

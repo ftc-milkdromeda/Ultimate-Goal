@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.OpModes.Templates;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import Drivers.DriverManager;
-import TaskManager.ThreadManager;
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.TaskManager.ThreadManager;
 
 public abstract class AutoTemplate extends LinearOpMode {
     protected void startSequence() {}

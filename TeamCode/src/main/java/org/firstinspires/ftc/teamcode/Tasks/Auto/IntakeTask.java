@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.Tasks.Auto;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
-import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import TaskManager.Clock;
-import TaskManager.Task;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.Task;
 
 public class IntakeTask extends Task {
     protected IntakeTask(Clock clock, RobotIntake intake) {

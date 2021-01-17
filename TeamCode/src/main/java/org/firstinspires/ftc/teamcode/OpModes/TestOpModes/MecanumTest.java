@@ -3,15 +3,12 @@ package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Drivers.MecanumDrive;
 
-import RobotFunctions.MecanumWheels.Procedure;
-import RobotFunctions.MecanumWheels.RoughMecanumWheels;
-import RobotFunctions.Units_length;
-import RobotFunctions.Units_length;
+import Milkdromeda.RobotFunctions.MecanumWheels.Procedure;
+import Milkdromeda.RobotFunctions.MecanumWheels.RoughMecanumWheels;
+import Milkdromeda.RobotFunctions.Units_length;
 
 @Disabled
 @TeleOp(name = "MecanumTest", group =  "Robot Test")

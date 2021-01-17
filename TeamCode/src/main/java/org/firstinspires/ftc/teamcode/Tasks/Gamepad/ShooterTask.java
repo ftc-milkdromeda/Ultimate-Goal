@@ -4,9 +4,9 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotFeeder;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import TaskManager.Clock;
-import Drivers.Controller;
-import TaskManager.KeyTask;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.Drivers.Controller;
+import Milkdromeda.TaskManager.KeyTask;
 
 public class ShooterTask extends KeyTask {
     public ShooterTask(Clock clock, Controller controller, RobotShooter shooter, RobotFeeder feeder, RobotStorage storage) {

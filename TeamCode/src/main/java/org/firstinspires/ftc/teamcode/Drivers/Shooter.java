@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotShooter;
-import TaskManager.Task;
+import Milkdromeda.TaskManager.Task;
 
-import RobotFunctions.Units_length;
+import Milkdromeda.RobotFunctions.Units_length;
 
 public class Shooter extends RobotShooter {
     public Shooter(HardwareMap hardware) {

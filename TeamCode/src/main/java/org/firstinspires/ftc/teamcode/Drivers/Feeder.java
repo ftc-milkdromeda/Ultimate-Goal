@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotFeeder;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
-
 public class Feeder extends RobotFeeder{
     public Feeder(RobotStorage storage, HardwareMap hardware) {
         super(storage);

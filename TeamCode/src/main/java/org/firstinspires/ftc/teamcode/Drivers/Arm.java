@@ -40,13 +40,14 @@ public class Arm extends RobotArm {
 
     @Override
     public boolean setGrabberPosition(Task task, boolean open) {
-        if(super.busy || !super.testTask(task))
+        if(super.busy || !super.testTask(task)) {
             return false;
+        }
         super.busy = true;
 
         if(open)
             handServo.setPosition(handOpenPosition);
-        else if(!open)
+        else
             handServo.setPosition(handClosedPosition);
 
         super.busy = false;

@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode.Tasks.Gamepad;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotIntake;
 import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 
-import TaskManager.Clock;
-import TaskManager.KeyTask;
-import Drivers.Controller;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.KeyTask;
+import Milkdromeda.Drivers.Controller;
 
 public class IntakeTask extends KeyTask {
     protected IntakeTask(Clock clock, Controller controller, RobotIntake intake, RobotStorage storage) {
