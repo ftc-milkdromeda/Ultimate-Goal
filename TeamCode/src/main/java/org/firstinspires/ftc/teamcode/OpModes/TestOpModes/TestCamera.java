@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Drivers.Camera;
 
-
 import Milkdromeda.Drivers.RobotCamera;
 import Milkdromeda.Image.Bitmap;
 
@@ -21,13 +20,15 @@ public class TestCamera extends LinearOpMode {
 
         super.waitForStart();
 
+        int counter = 0;
+
         while(super.opModeIsActive()) {
             if(super.gamepad1.right_bumper) {
                 image = camera.takeImage(null);
-                image.writeImage("/storage/self/primary/FIRST/testImage");
+                image.makeGrayscale();
+
+                image.writeImage("/storage/self/primary/FIRST/bitmap" + counter++);
             }
         }
-
-
     }
 }

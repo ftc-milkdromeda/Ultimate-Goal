@@ -23,7 +23,7 @@ public class Camera extends RobotCamera {
 
         ClassFactory factory = ClassFactory.getInstance();
         this.locale = factory.createVuforia(params);
-        Vuforia.setFrameFormat(PIXEL_FORMAT.GRAYSCALE, true);
+        Vuforia.setFrameFormat(PIXEL_FORMAT.RGB888, true);
         locale.setFrameQueueCapacity(1);
     }
 
@@ -44,7 +44,7 @@ public class Camera extends RobotCamera {
 
         Image raw = null;
         for(int a = 0; a < frame.getNumImages(); a++) {
-            if (frame.getImage(a).getFormat() == PIXEL_FORMAT.GRAYSCALE) {
+            if (frame.getImage(a).getFormat() == PIXEL_FORMAT.RGB888) {
                 raw = frame.getImage(a);
                 break;
             }
@@ -54,19 +54,17 @@ public class Camera extends RobotCamera {
             return null;
 
         ByteBuffer byteArray = raw.getPixels();
-        byte array[] = byteArray.array();
+        byteArray.rewind();
+        byte array[] = new byte[byteArray.remaining()];
+        byteArray.get(array);
 
-        int buffer[] = new int[array.length];
+        Bitmap finalImage = new Bitmap(raw.getHeight(), raw.getWidth());
 
-        for(int a = 0; a < buffer.length; a++) {
-            buffer[a] = Math.abs(array[a]) + (array[a] < 0 ? 0x80 : 0x0);
-        }
-
+        if(!finalImage.setPixels(array, false))
+            return null;
 
 
         super.busy = false;
-        Bitmap finalImage = new Bitmap(raw.getWidth(), raw.getHeight(), false);
-        finalImage.setPixels(buffer);
 
         return finalImage;
     }
