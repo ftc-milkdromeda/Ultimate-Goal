@@ -16,6 +16,7 @@ public class ShooterTask extends Task {
 
         this.isRunning = false;
         this.alive = false;
+        this.power = 0.796;
 
         this.shooter.enterThread(this);
         this.feeder.enterThread(this);
@@ -30,7 +31,7 @@ public class ShooterTask extends Task {
 
         while(!super.isInterrupted()) {
             if(this.isRunning)
-                this.shooter.runShooterPower(this, .79);
+                this.shooter.runShooterPower(this, this.power);
             else
                 this.shooter.stopShooter(this);
 
@@ -57,6 +58,9 @@ public class ShooterTask extends Task {
 
         this.storage.nextRing(this);
     }
+    public void setPower(double power) {
+        this.power = power;
+    }
     public void shoot() {
         if(!this.isRunning || !this.alive)
             return;
@@ -71,6 +75,5 @@ public class ShooterTask extends Task {
     private boolean isRunning;
     private boolean alive;
     private boolean shoot;
-
-    private static final double power = .79;
+    private double power;
 }
