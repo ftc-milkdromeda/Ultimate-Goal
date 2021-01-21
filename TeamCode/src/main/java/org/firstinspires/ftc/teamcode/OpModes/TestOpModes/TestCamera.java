@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Drivers.Camera;
 import Milkdromeda.Drivers.RobotCamera;
 import Milkdromeda.Image.Bitmap;
 
-//@Disabled
+@Disabled
 @TeleOp(name = "Camera Test")
 public class TestCamera extends LinearOpMode {
     @Override

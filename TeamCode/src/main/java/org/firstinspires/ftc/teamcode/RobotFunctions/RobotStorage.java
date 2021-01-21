@@ -49,7 +49,6 @@ public abstract class RobotStorage extends Driver {
         RobotStorage.processId = -1;
     }
 
-    private static int position;
     private static int numOfRings;
     private static int processId = -1;
 }

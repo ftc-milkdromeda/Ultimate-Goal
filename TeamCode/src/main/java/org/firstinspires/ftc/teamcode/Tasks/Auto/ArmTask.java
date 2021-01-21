@@ -27,6 +27,10 @@ public class ArmTask extends Task {
 
     @Override
     public void run() {
+
+        this.telemetry.addData("HOOKA1", "");
+        this.telemetry.update();
+
         while(!super.isInterrupted()) {
             this.arm.setGrabberPosition(this, this.open);
             this.arm.setArmPosition(this, this.armPosition);

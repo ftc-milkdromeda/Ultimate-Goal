@@ -21,13 +21,13 @@ public abstract class RobotFeeder extends Driver {
     protected abstract void feed();
 
     public boolean feedRing(Task task) {
-         if(!this.storage.nextRing(task) || !super.testTask(task))
+         if(!super.testTask(task) || super.busy)
             return false;
 
          super.busy = true;
 
-        long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime <= RobotFeeder.shootingTimeDelay);
+         if(!this.storage.nextRing(task))
+             return false;
 
         this.feed();
 
@@ -47,6 +47,4 @@ public abstract class RobotFeeder extends Driver {
 
     private static int processId = -1;
 
-    //constants
-    private static final int shootingTimeDelay = 1000;
 }

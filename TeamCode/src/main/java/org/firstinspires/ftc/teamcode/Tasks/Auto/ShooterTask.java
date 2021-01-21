@@ -55,7 +55,7 @@ public class ShooterTask extends Task {
         ShooterTask.status = true;
         this.isRunning = true;
 
-        this.storage.setPosition(this, 1);
+        this.storage.nextRing(this);
     }
     public void shoot() {
         if(!this.isRunning || !this.alive)
@@ -72,5 +72,5 @@ public class ShooterTask extends Task {
     private boolean alive;
     private boolean shoot;
 
-    private static final double power = .796;
+    private static final double power = .79;
 }

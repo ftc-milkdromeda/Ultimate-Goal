@@ -98,13 +98,13 @@ public class StackHeightTask extends Task {
     private Camera camera;
 
     private static final int oneRingMin = 800;
-    private static final int fourRingMin = 15000;
+    private static final int fourRingMin = 13000;
 
     private static final int crop_x1 = 84;
     private static final int crop_x2 = 234;
 
-    private static final int crop_y1 = 436;
-    private static final int crop_y2 = 696;
+    private static final int crop_y1 = 326;
+    private static final int crop_y2 = 646;
 
     private static final int LuminanceSampleSize = 50;
     private static final int BlackLevelCoord[] = {540, 590};

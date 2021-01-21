@@ -25,7 +25,7 @@ public class Intake extends RobotIntake {
 
         super.busy = true;
 
-        this.intake.setPower(Intake.power);
+        this.intake.setPower(this.power);
         this.storage.shake(task);
         this.storage.setPosition(task, 0);
 
@@ -41,9 +41,7 @@ public class Intake extends RobotIntake {
 
         this.intake.setPower(Intake.reversePower);
         this.storage.shakeEnd(task);
-        this.storage.setPosition(task, 1);
         super.busy = false;
-
         return true;
     }
 
@@ -65,10 +63,14 @@ public class Intake extends RobotIntake {
         this.intake.setPower(0.0);
     }
 
+    public void setPower(double power) {
+        this.power = power;
+    }
+
     private DcMotor intake;
     private RobotStorage storage;
+    private double power = 1.0;
 
     //constants
-    private static final double power = 1.0;
     private static final double reversePower = -.10;
 }

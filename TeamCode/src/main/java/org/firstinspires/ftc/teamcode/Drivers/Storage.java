@@ -45,6 +45,11 @@ public class Storage extends RobotStorage {
             storageServo.setPosition(storageExtendedPosition);
         }
 
+        long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime < 1000 * Math.abs(Storage.position - position));
+
+        Storage.position = position;
+
         super.busy = false;
 
         return true;
@@ -142,9 +147,9 @@ public class Storage extends RobotStorage {
         private Servo servo;
 
         //constants
-        private static final double frequency = 5;
+        private static final double frequency = 10;
         private static final double initialPos = 1.0;
-        private static final double extendedPos = 0.97;
+        private static final double extendedPos = 0.96;
     }
 
     private Servo liftServo;
@@ -152,14 +157,16 @@ public class Storage extends RobotStorage {
     private Storage.Shake shake;
     private boolean busy;
 
+    private static double position = 0;
+
     //constants
     private static final double liftInitialPosition = 0.0;
     private static final double liftPos1 = 0.0;
-    private static final double liftPos2 = 0.75;
+    private static final double liftPos2 = 0.8;
     private static final double liftPos3 = .95;
 
     private static final double storageInitialPosition = 1.0;
-    private static final double storageExtendedPosition = 0.879;
+    private static final double storageExtendedPosition = 0.8835;
 
     private static final double dumpPosition = 0.3;
     private static final long dumpWait = 1000;

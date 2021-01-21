@@ -18,6 +18,8 @@ import org.firstinspires.ftc.teamcode.RobotFunctions.RobotStorage;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.ArmTask;
 import org.firstinspires.ftc.teamcode.Tasks.Auto.RingTaskCoordinator;
 
+import java.sql.Driver;
+
 import Milkdromeda.Drivers.DriverManager;
 import Milkdromeda.RobotFunctions.Units_length;
 import Milkdromeda.TaskManager.Clock;
@@ -30,7 +32,7 @@ public class RemoteAuto extends AutoTemplate {
         return motor.getCurrentPosition() <= target + acceptedError && motor.getCurrentPosition() >= target - acceptedError;
     }
     private int tickCalculator(double distance, Units_length units) {
-        final double tickConstant = 1492.290861;
+        final double tickConstant = 1631.3213703;
         return (int)Math.round(distance * units.getValue() * tickConstant);
     }
     private void runToDistance(double power, double distance, Units_length units) {
@@ -134,37 +136,59 @@ public class RemoteAuto extends AutoTemplate {
     protected void main() {
         for(DcMotor motor : this.motors) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setPower(0.4);
+            motor.setPower(0.3);
         }
 
         this.storage.setRings(3);
         this.coordinator.runShooter();
         this.armTask.setPosition(1);
 
-        this.runToDistance(0.4, 30, Units_length.IN);
+        this.runToDistance(0.4, 29.5, Units_length.IN);
 
-        while(this.storage.getRings() != 0)
+        while(this.storage.getRings() > 0)
             this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        this.strafeToDistance(0.2, 2, Units_length.IN);
-        this.runToDistance(0.1, 7, Units_length.IN);
-
-        this.strafeToDistance(-0.2, -2, Units_length.IN);
+        this.strafeToDistance(0.4, 3.0625, Units_length.IN);
+        this.runToDistance(0.2, 7, Units_length.IN);
+        this.strafeToDistance(-0.4, -3.0625, Units_length.IN);
 
         this.storage.setRings(3);
         this.coordinator.runShooter();
-        while(this.storage.getRings() != 0)
+        while(this.storage.getRings() > 0)
             this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        this.runToDistance(0.3, 10, Units_length.IN);
+        this.strafeToDistance(0.4, 3.0625, Units_length.IN);
+        this.runToDistance(0.4, 12, Units_length.IN);
+        this.strafeToDistance(-0.4, -3.0625, Units_length.IN);
 
-        this.storage.setRings(1);
+        this.storage.setRings(2);
         this.coordinator.runShooter();
-        while(this.storage.getRings() != 0)
+        while(this.storage.getRings() > 0)
             this.coordinator.shoot();
+
         this.coordinator.stopShooter();
+
+        this.runToDistance(0.8, 53.375, Units_length.IN);
+        this.strafeToDistance(0.7, 29.5, Units_length.IN);
+
+        this.armTask.setPosition(2);
+        this.armTask.setGrabber(true);
+
+        long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+
+        this.armTask.setPosition(0);
+
+        startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+
+        ThreadManager.stopAllProcess();
+        DriverManager.stopAllProcess();
+
+        this.runToDistance(-1.0, -32.5, Units_length.IN);
+
     }
 
     private RobotShooter shooter;
@@ -180,4 +204,6 @@ public class RemoteAuto extends AutoTemplate {
     private ArmTask armTask;
     private RingTaskCoordinator coordinator;
     private Clock clock;
+
+    private static final double ArmTimeDown = 500;
 }

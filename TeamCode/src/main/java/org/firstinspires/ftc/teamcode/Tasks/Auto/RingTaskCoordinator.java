@@ -46,10 +46,6 @@ public class RingTaskCoordinator extends Task {
                 this.shooter.proceed();
             }
 
-
-            if(this.storage.getRings() == 0)
-                this.mode = false;
-
             int startClock = super.clock.getCurrentState();
             while(startClock == super.clock.getCurrentState() && !super.isInterrupted());
         }

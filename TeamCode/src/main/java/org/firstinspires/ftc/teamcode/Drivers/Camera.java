@@ -29,7 +29,7 @@ public class Camera extends RobotCamera {
 
     @Override
     public Bitmap takeImage(Task task) {
-        if(super.busy /*|| !super.testTask(task)*/)
+        if(super.busy || !super.testTask(task))
             return null;
 
         super.busy = true;
