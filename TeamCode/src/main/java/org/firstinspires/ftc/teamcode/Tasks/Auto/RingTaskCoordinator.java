@@ -17,6 +17,7 @@ public class RingTaskCoordinator extends Task {
         this.shooter = new ShooterTask(clock, shooter, feeder, storage);
         this.storage = storage;
         this.mode = false;
+        this.power = .79;
     }
 
     @Override
@@ -43,6 +44,7 @@ public class RingTaskCoordinator extends Task {
                 this.storage.exitThread(this.intake);
                 this.storage.enterThread(this.shooter);
 
+                this.shooter.setPower(this.power);
                 this.shooter.proceed();
             }
 
@@ -76,10 +78,15 @@ public class RingTaskCoordinator extends Task {
         this.shooter.shoot();
     }
 
+    public void setPower(double power) {
+        this.power = power;
+    }
+
     private static boolean status = false;
 
     private IntakeTask intake;
     private ShooterTask shooter;
     private RobotStorage storage;
     private boolean mode;
+    private double power;
 }
