@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.teamcode.Tasks.Auto;
 
-
 import org.firstinspires.ftc.teamcode.Drivers.Camera;
 
+import Milkdromeda.Drivers.RobotCamera;
 import Milkdromeda.TaskManager.Clock;
 import Milkdromeda.TaskManager.Task;
 
 import Milkdromeda.Image.Bitmap;
+import Milkdromeda.TaskManager.ThreadManager;
 
 public class StackHeightTask extends Task {
-    public StackHeightTask(Clock clock, Camera camera) {
+    public StackHeightTask(Clock clock, RobotCamera camera) {
         super(clock);
 
         this.ringHeight = -1;
@@ -88,6 +89,8 @@ public class StackHeightTask extends Task {
 
 
         image.writeImage("/storage/self/primary/FIRST/finalImage");
+
+        ThreadManager.stopProcess(super.getProcessId());
     }
 
     public int getRingHeight() {
@@ -95,7 +98,7 @@ public class StackHeightTask extends Task {
     }
 
     private int ringHeight;
-    private Camera camera;
+    private RobotCamera camera;
 
     private static final int oneRingMin = 800;
     private static final int fourRingMin = 13000;
