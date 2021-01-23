@@ -15,6 +15,7 @@ public class StackHeightTask extends Task {
 
         this.ringHeight = -1;
         this.camera = camera;
+        this.image = null;
 
         this.camera.enterThread(this);
     }
@@ -40,21 +41,23 @@ public class StackHeightTask extends Task {
 
     @Override
     public void run() {
-        Bitmap image = this.camera.takeImage(this);
 
-        if(image == null)
+        while(this.image == null && !this.isInterrupted())
             return;
 
-        image.makeGrayscale();
+        if(this.isInterrupted())
+            return;
 
-        image.writeImage("/storage/self/primary/FIRST/beforeImage");
+        this.image.makeGrayscale();
+
+        this.image.writeImage("/storage/self/primary/FIRST/beforeImage");
 
         double whiteLevel = 0;
         double blackLevel = 0;
 
         for(int a = 0; a < StackHeightTask.LuminanceSampleSize; a++) {
-            blackLevel += image.getPixel(StackHeightTask.BlackLevelCoord[0], StackHeightTask.BlackLevelCoord[1] + a)[0];
-            whiteLevel += image.getPixel(StackHeightTask.WhiteLevelCoord[0] + a, StackHeightTask.WhiteLevelCoord[1])[0];
+            blackLevel += this.image.getPixel(StackHeightTask.BlackLevelCoord[0], StackHeightTask.BlackLevelCoord[1] + a)[0];
+            whiteLevel += this.image.getPixel(StackHeightTask.WhiteLevelCoord[0] + a, StackHeightTask.WhiteLevelCoord[1])[0];
 
             System.out.println("A Value: " + a);
         }
@@ -62,9 +65,9 @@ public class StackHeightTask extends Task {
         whiteLevel /= StackHeightTask.LuminanceSampleSize;
         blackLevel /= StackHeightTask.LuminanceSampleSize;
 
-        image.crop(StackHeightTask.crop_x1, StackHeightTask.crop_y1, StackHeightTask.crop_x2, StackHeightTask.crop_y2);
+        this.image.crop(StackHeightTask.crop_x1, StackHeightTask.crop_y1, StackHeightTask.crop_x2, StackHeightTask.crop_y2);
 
-        image.adjustLuminance(blackLevel, whiteLevel);
+        this.image.adjustLuminance(blackLevel, whiteLevel);
 
         Bitmap.Curve curve = new Bitmap.Curve() {
             @Override
@@ -76,9 +79,9 @@ public class StackHeightTask extends Task {
             }
         };
 
-        image.adjustCurve(curve);
+        this.image.adjustCurve(curve);
 
-        int pixelCount = this.countPixel(image, -0.1, 0.1);
+        int pixelCount = this.countPixel(this.image, -0.1, 0.1);
 
         if(pixelCount <= oneRingMin)
             this.ringHeight = 0;
@@ -88,7 +91,7 @@ public class StackHeightTask extends Task {
             this.ringHeight = 4;
 
 
-        image.writeImage("/storage/self/primary/FIRST/finalImage");
+        this.image.writeImage("/storage/self/primary/FIRST/finalImage");
 
         ThreadManager.stopProcess(super.getProcessId());
     }
@@ -97,8 +100,18 @@ public class StackHeightTask extends Task {
         return this.ringHeight;
     }
 
+    public boolean setImage(Bitmap image) {
+        if(this.image != null)
+            return false;
+
+        this.image = image;
+
+        return true;
+    }
+
     private int ringHeight;
     private RobotCamera camera;
+    private Bitmap image;
 
     private static final int oneRingMin = 800;
     private static final int fourRingMin = 13000;
