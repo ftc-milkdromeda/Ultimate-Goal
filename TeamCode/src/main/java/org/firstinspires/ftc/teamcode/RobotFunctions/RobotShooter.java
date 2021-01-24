@@ -89,4 +89,4 @@ public abstract class RobotShooter extends Driver {
 
     private static int processId = -1;
 }
-//todo fix VeloctyGauge
+//todo fix VelocityGauge
