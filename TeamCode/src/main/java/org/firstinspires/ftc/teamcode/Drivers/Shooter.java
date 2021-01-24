@@ -14,11 +14,11 @@ public class Shooter extends RobotShooter {
         shooter = new DcMotor[2];
 
         this.shooter[0] = hardware.dcMotor.get("shooter0");
-        this.shooter[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.shooter[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.shooter[0].setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.shooter[1] = hardware.dcMotor.get("shooter1");
-        this.shooter[1].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.shooter[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.shooter[1].setDirection(DcMotorSimple.Direction.REVERSE);
 
         super.setMeter(new Velocity(this.shooter));
