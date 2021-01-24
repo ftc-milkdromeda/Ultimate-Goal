@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Tasks.Auto;
 
 import org.firstinspires.ftc.teamcode.Drivers.Camera;
+import org.firstinspires.ftc.teamcode.OpModes.EstablishedOpMode.RemoteAuto;
+import org.firstinspires.ftc.teamcode.OpModes.Templates.AutoTemplate;
 
 import Milkdromeda.Drivers.RobotCamera;
 import Milkdromeda.TaskManager.Clock;
@@ -10,7 +12,7 @@ import Milkdromeda.Image.Bitmap;
 import Milkdromeda.TaskManager.ThreadManager;
 
 public class StackHeightTask extends Task {
-    public StackHeightTask(Clock clock, RobotCamera camera) {
+    public StackHeightTask(Clock clock, RobotCamera camera, RemoteAuto opmode) {
         super(clock);
 
         this.ringHeight = -1;
@@ -18,6 +20,8 @@ public class StackHeightTask extends Task {
         this.image = null;
 
         this.camera.enterThread(this);
+
+        this.opmode = opmode;
     }
 
     private int countPixel(Bitmap image, double lowerBound, double upperBound) {
@@ -93,10 +97,12 @@ public class StackHeightTask extends Task {
 
         this.image.writeImage("/storage/self/primary/FIRST/finalImage");
 
+        this.opmode.ringCallBack(this.ringHeight);
+
         ThreadManager.stopProcess(super.getProcessId());
     }
 
-    public synchronized int getRingHeight() {
+    public int getRingHeight() {
         return this.ringHeight;
     }
 
@@ -112,6 +118,7 @@ public class StackHeightTask extends Task {
     private int ringHeight;
     private RobotCamera camera;
     private Bitmap image;
+    private RemoteAuto opmode;
 
     private static final int oneRingMin = 800;
     private static final int fourRingMin = 13000;

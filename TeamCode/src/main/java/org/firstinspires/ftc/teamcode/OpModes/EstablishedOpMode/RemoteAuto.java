@@ -216,6 +216,9 @@ public class RemoteAuto extends AutoTemplate {
         this.runToDistance(1.0, 14, Units_length.IN);
     }
 
+    public synchronized void ringCallBack(int rings) {
+        this.numOfRings = rings;
+    }
 
     @Override
     protected void startSequence() {
@@ -248,7 +251,7 @@ public class RemoteAuto extends AutoTemplate {
         this.clock = new Clock(1000);
         this.armTask = new ArmTask(this.clock, this.arm, super.telemetry);
         this.coordinator = new RingTaskCoordinator(this.clock, this.intake, this.shooter, this.feeder, this.storage);
-        this.stack = new StackHeightTask(this.clock, this.camera);
+        this.stack = new StackHeightTask(this.clock, this.camera, this);
 
         this.motors = new DcMotor[4];
 
@@ -267,6 +270,8 @@ public class RemoteAuto extends AutoTemplate {
 
         this.motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
         this.motors[3].setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.numOfRings = -1;
     }
 
     @Override
@@ -284,9 +289,8 @@ public class RemoteAuto extends AutoTemplate {
         this.coordinator.stopShooter();
 
         boolean finish = false;
-
-        while (finish != false) {
-            switch (this.stack.getRingHeight()) {
+        while (!finish) {
+            switch (this.numOfRings) {
                 case 0:
                     this.zeroRing();
                     finish = true;
@@ -302,7 +306,7 @@ public class RemoteAuto extends AutoTemplate {
                 }
             }
         //this.fourRing();
-        }
+    }
 
     private RobotShooter shooter;
     private RobotIntake intake;
@@ -310,6 +314,7 @@ public class RemoteAuto extends AutoTemplate {
     private RobotStorage storage;
     private RobotArm arm;
     private RobotCamera camera;
+    private int numOfRings;
 
     private DcMotor motors[];
 
