@@ -44,8 +44,6 @@ public class RingTaskCoordinator extends KeyTask {
                 this.storage.exitThread(this.shooter);
                 this.storage.enterThread(this.intake);
 
-                System.out.println(this.storage.getProcessId());
-
                 this.storage.getProcessId();
 
                 status = false;
@@ -58,12 +56,11 @@ public class RingTaskCoordinator extends KeyTask {
                 this.storage.exitThread(this.intake);
                 this.storage.enterThread(this.shooter);
 
-                System.out.println(this.storage.getProcessId());
-
                 this.storage.setRings(3);
 
                 status = true;
 
+                this.storage.nextRing(this.shooter);
                 this.shooter.proceed();
             }
             else if(this.storage.getRings() == 0 && status)
