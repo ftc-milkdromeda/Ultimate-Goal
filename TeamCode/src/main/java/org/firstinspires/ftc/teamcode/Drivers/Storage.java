@@ -46,7 +46,7 @@ public class Storage extends RobotStorage {
         }
 
         long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < 1000 * Math.abs(Storage.position - position));
+        while(System.currentTimeMillis() - startTime < 1300 * Math.abs(Storage.position - position));
 
         Storage.position = position;
 
