@@ -96,7 +96,7 @@ public class StackHeightTask extends Task {
         ThreadManager.stopProcess(super.getProcessId());
     }
 
-    public int getRingHeight() {
+    public synchronized int getRingHeight() {
         return this.ringHeight;
     }
 
@@ -104,7 +104,7 @@ public class StackHeightTask extends Task {
         if(this.image != null)
             return false;
 
-        this.image = image;
+        this.image = new Bitmap(image);
 
         return true;
     }
