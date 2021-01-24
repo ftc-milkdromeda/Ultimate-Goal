@@ -42,14 +42,14 @@ public class ShooterTask extends Task {
         this.alive = false;
     }
 
-    public void pause() {
+    public synchronized void pause() {
         if(!this.isRunning)
             return;
 
         this.isRunning = false;
         ShooterTask.status = false;
     }
-    public void proceed() {
+    public synchronized void proceed() {
         if(ShooterTask.status || !this.alive || this.isRunning)
             return;
 

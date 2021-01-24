@@ -17,13 +17,13 @@ public class IntakeTask extends Task {
         this.intake.hardStop(this);
     }
 
-    public void runIntake() {
+    public synchronized void runIntake() {
         if(!this.isActive)
             return;
 
         this.isRunning = true;
     }
-    public void stopIntake() {
+    public synchronized void stopIntake() {
         if(!this.isRunning || !this.isActive)
             return;
 
