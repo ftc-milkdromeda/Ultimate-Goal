@@ -24,6 +24,7 @@ import java.sql.Driver;
 
 import Milkdromeda.Drivers.DriverManager;
 import Milkdromeda.Drivers.RobotCamera;
+import Milkdromeda.Image.Bitmap;
 import Milkdromeda.RobotFunctions.Units_length;
 import Milkdromeda.TaskManager.Clock;
 import Milkdromeda.TaskManager.ThreadManager;
@@ -35,9 +36,13 @@ public class RemoteAuto extends AutoTemplate {
         return motor.getCurrentPosition() <= target + acceptedError && motor.getCurrentPosition() >= target - acceptedError;
     }
     private int tickCalculator(double distance, Units_length units) {
-        final double tickConstant = 1631.3213703;
+        final double tickConstant = 1672.240802675585;
         return (int)Math.round(distance * units.getValue() * tickConstant);
     }
+    /*private int turnCalculator(double degree) {
+        final double degreeConstant = 0.0975;
+        return (int)Math.round(degree * degreeConstant);
+    }*/
     private void runToDistance(double power, double distance, Units_length units) {
         for(int a = 0; a < this.motors.length; a++) {
             this.motors[a].setTargetPosition(tickCalculator(distance, units));
@@ -49,7 +54,7 @@ public class RemoteAuto extends AutoTemplate {
         this.motors[2].setPower(power);
         this.motors[3].setPower(power);
 
-        while(
+        while (
                 !(this.motorIsDone(this.motors[0], this.tickCalculator(distance, units)) &&
                 this.motorIsDone(this.motors[1], this.tickCalculator(distance, units)) &&
                 this.motorIsDone(this.motors[2], this.tickCalculator(distance, units)) &&
@@ -92,106 +97,135 @@ public class RemoteAuto extends AutoTemplate {
             this.motors[a].setPower(0.0);
         }
 }
+    /*private void turnToDegree(double power, double degree) {
+        for(int a = 0; a < this.motors.length - 1; a++) {
+           this.motors[a].setTargetPosition(turnCalculator(degree));
+           this.motors[a].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
 
+        this.motors[2].setTargetPosition(-turnCalculator(degree));
+        this.motors[3].setTargetPosition(-turnCalculator(degree));
+
+        this.motors[0].setPower(power);
+        this.motors[1].setPower(power);
+        this.motors[2].setPower(-power);
+        this.motors[3].setPower(-power);
+
+        while (
+                !(this.motorIsDone(this.motors[0], this.turnCalculator(degree)) &&
+                this.motorIsDone(this.motors[1], this.turnCalculator(degree)) &&
+                this.motorIsDone(this.motors[2], -this.turnCalculator(degree)) &&
+                this.motorIsDone(this.motors[3], -this.turnCalculator(degree)))
+                && super.opModeIsActive()
+        );
+
+        for(int a = 0; a < 4; a++) {
+            this.motors[a].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            this.motors[a].setPower(0.0);
+        }
+    }*/
+
+    private void setWobble() {
+        this.armTask.setGrabber(true);
+        this.armTask.setPosition(2);
+
+        long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+
+        this.armTask.setPosition(0);
+
+        startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+
+        DriverManager.stopAllProcess();
+        ThreadManager.stopAllProcess();
+
+    }
     private void fourRing() {
-        this.strafeToDistance(0.4, 3.0625, Units_length.IN);
-        this.runToDistance(0.2, 7, Units_length.IN);
-        this.strafeToDistance(-0.4, -3.0625, Units_length.IN);
+        this.strafeToDistance(-0.75, -8.125, Units_length.IN);
+        this.runToDistance(0.15, 7.125, Units_length.IN);
 
         this.storage.setRings(3);
+        //this.coordinator.setPower(.790);
+        this.coordinator.setPower(0.70);
         this.coordinator.runShooter();
+
+        this.strafeToDistance(0.75, 8.125, Units_length.IN);
+
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        this.strafeToDistance(0.4, 3.0625, Units_length.IN);
-        this.runToDistance(0.4, 12, Units_length.IN);
-        this.strafeToDistance(-0.4, -3.0625, Units_length.IN);
+        this.strafeToDistance(-0.75, -8.125, Units_length.IN);
+        this.runToDistance(0.2625, 12.875, Units_length.IN);
 
         this.storage.setRings(2);
+        //this.coordinator.setPower(.79);
+        this.coordinator.setPower(0.70);
         this.coordinator.runShooter();
+
+        this.strafeToDistance(0.75, 8.125, Units_length.IN);
+
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
 
         this.coordinator.stopShooter();
 
-        this.runToDistance(0.8, 53.375, Units_length.IN);
-        this.strafeToDistance(0.7, 29.5, Units_length.IN);
+        this.runToDistance(1.0, 52.0625, Units_length.IN);
+        this.strafeToDistance(1.0, 13, Units_length.IN);
 
-        this.armTask.setPosition(2);
-        this.armTask.setGrabber(true);
-
-        long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
-
-        this.armTask.setPosition(0);
-
-        startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+        this.setWobble();
 
         ThreadManager.stopAllProcess();
         DriverManager.stopAllProcess();
 
-        this.runToDistance(-1.0, -32.5, Units_length.IN);
+        this.runToDistance(-1.0, -29.5, Units_length.IN);
     }
     private void oneRing() {
-        this.strafeToDistance(0.4, 3.0625, Units_length.IN);
-        this.runToDistance(0.2, 7, Units_length.IN);
-        this.strafeToDistance(-0.4, -3.0625, Units_length.IN);
+        this.strafeToDistance(-0.75, -8.125, Units_length.IN);
+        this.runToDistance(0.15, 7.125, Units_length.IN);
+        this.strafeToDistance(0.75, 8.125, Units_length.IN);
 
         this.storage.setRings(2);
+        this.coordinator.setPower(0.7);
         this.coordinator.runShooter();
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        this.runToDistance(0.8, 53.375, Units_length.IN);
-        this.strafeToDistance(0.7, 29.5, Units_length.IN);
+        this.runToDistance(1.0, 42.25, Units_length.IN);
+        this.strafeToDistance(-1.0,-12, Units_length.IN);
 
         this.armTask.setPosition(2);
         this.armTask.setGrabber(true);
 
-        long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
-
-        this.armTask.setPosition(0);
-
-        startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
+        this.setWobble();
 
         ThreadManager.stopAllProcess();
         DriverManager.stopAllProcess();
 
-        this.runToDistance(-1.0, -32.5, Units_length.IN);
+        this.runToDistance(-1.0, -6.875, Units_length.IN);
     }
     private void zeroRing() {
-        this.runToDistance(0.8, 53.375, Units_length.IN);
-        this.strafeToDistance(0.7, 29.5, Units_length.IN);
+        this.runToDistance(0.5, 25.4375, Units_length.IN);
+        this.strafeToDistance(0.5, 18, Units_length.IN);
 
-        this.armTask.setPosition(2);
-        this.armTask.setGrabber(true);
+        this.setWobble();
 
-        long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
-
-        this.armTask.setPosition(0);
-
-        startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis() - startTime < RemoteAuto.ArmTimeDown && super.opModeIsActive());
-
-        ThreadManager.stopAllProcess();
-        DriverManager.stopAllProcess();
-
-        this.runToDistance(-1.0, -32.5, Units_length.IN);
+        this.strafeToDistance(-1.0, -18, Units_length.IN);
+        this.runToDistance(1.0, 14, Units_length.IN);
     }
 
 
     @Override
     protected void startSequence() {
+        Bitmap image = this.camera.takeImage(this.stack);
+        this.stack.setImage(image);
+        //this.stack.start();
+
         this.clock.start();
         this.coordinator.start();
         this.armTask.start();
-        this.stack.start();
     }
 
     @Override
@@ -211,7 +245,7 @@ public class RemoteAuto extends AutoTemplate {
         this.camera = new Camera();
 
         //Tasks
-        this.clock = new Clock(100);
+        this.clock = new Clock(1000);
         this.armTask = new ArmTask(this.clock, this.arm, super.telemetry);
         this.coordinator = new RingTaskCoordinator(this.clock, this.intake, this.shooter, this.feeder, this.storage);
         this.stack = new StackHeightTask(this.clock, this.camera);
@@ -220,12 +254,16 @@ public class RemoteAuto extends AutoTemplate {
 
         this.motors[0] = hardwareMap.dcMotor.get("motor0");
         this.motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motors[1] = hardwareMap.dcMotor.get("motor1");
         this.motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motors[2] = hardwareMap.dcMotor.get("motor2");
         this.motors[2].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.motors[2].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motors[3] = hardwareMap.dcMotor.get("motor3");
         this.motors[3].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.motors[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         this.motors[2].setDirection(DcMotorSimple.Direction.REVERSE);
         this.motors[3].setDirection(DcMotorSimple.Direction.REVERSE);
@@ -233,35 +271,38 @@ public class RemoteAuto extends AutoTemplate {
 
     @Override
     protected void main() {
-        for(DcMotor motor : this.motors) {
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setPower(0.3);
-        }
-
         this.storage.setRings(3);
+        //this.coordinator.setPower(.785);
+        this.coordinator.setPower(0.7);
         this.coordinator.runShooter();
         this.armTask.setPosition(1);
 
-        this.runToDistance(0.4, 29.5, Units_length.IN);
+        this.runToDistance(0.7, 27.625, Units_length.IN);
 
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
         this.coordinator.stopShooter();
 
-        super.telemetry.addData("Rings", "%d", this.stack.getRingHeight());
+        boolean finish = false;
 
-        switch (this.stack.getRingHeight()) {
-            case 0:
-                this.zeroRing();
-                break;
-            case 1:
-                this.oneRing();
-                break;
-            case 4:
-                this.fourRing();
-                break;
+        while (finish != false) {
+            switch (this.stack.getRingHeight()) {
+                case 0:
+                    this.zeroRing();
+                    finish = true;
+                    break;
+                case 1:
+                    this.oneRing();
+                    finish = true;
+                    break;
+                case 4:
+                    this.fourRing();
+                    finish = true;
+                    break;
+                }
+            }
+        //this.fourRing();
         }
-    }
 
     private RobotShooter shooter;
     private RobotIntake intake;
