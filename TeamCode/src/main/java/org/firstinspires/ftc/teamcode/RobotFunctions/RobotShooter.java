@@ -35,12 +35,17 @@ public abstract class RobotShooter extends Driver {
 
     protected void setMeter(VelocityGauge meter) {
         this.meter = meter;
-        this.meter.start();
+        //this.meter.start();
 
         this.busy = false;
     }
 
     protected static abstract class VelocityGauge extends Thread {
+        VelocityGauge() {
+            this.dataPoints = 0;
+            this.motorVelocity = new double[] {0, 0};
+            this.averageMotorVelocity = new double[] {0, 0};
+        }
         @Override
         public abstract void run();
 
@@ -84,3 +89,4 @@ public abstract class RobotShooter extends Driver {
 
     private static int processId = -1;
 }
+//todo fix VeloctyGauge
