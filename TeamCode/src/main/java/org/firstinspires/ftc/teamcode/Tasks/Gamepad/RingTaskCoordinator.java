@@ -60,7 +60,6 @@ public class RingTaskCoordinator extends KeyTask {
 
                 status = true;
 
-                this.storage.nextRing(this.shooter);
                 this.shooter.proceed();
             }
             else if(this.storage.getRings() == 0 && status)
