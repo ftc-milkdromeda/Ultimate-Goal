@@ -19,7 +19,6 @@ public class Arm extends RobotArm {
     public boolean setArmPosition(Task task, int position) {
         if(super.busy || !super.testTask(task))
             return false;
-        super.busy = true;
 
         if(position == 0)
             armServo.setPosition(Arm.armInitialPosition);
@@ -33,8 +32,6 @@ public class Arm extends RobotArm {
             return false;
         }
 
-        super.busy = false;
-
         return true;
     }
 
@@ -43,14 +40,11 @@ public class Arm extends RobotArm {
         if(super.busy || !super.testTask(task)) {
             return false;
         }
-        super.busy = true;
 
         if(open)
             handServo.setPosition(handOpenPosition);
         else
             handServo.setPosition(handClosedPosition);
-
-        super.busy = false;
 
         return true;
     }

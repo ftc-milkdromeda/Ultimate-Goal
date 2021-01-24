@@ -27,10 +27,6 @@ public class ArmTask extends Task {
 
     @Override
     public void run() {
-
-        this.telemetry.addData("HOOKA1", "");
-        this.telemetry.update();
-
         while(!super.isInterrupted()) {
             this.arm.setGrabberPosition(this, this.open);
             this.arm.setArmPosition(this, this.armPosition);
@@ -38,9 +34,6 @@ public class ArmTask extends Task {
             int startClock = super.clock.getCurrentState();
             while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
         }
-
-        this.telemetry.addData("HOOKA", "");
-        this.telemetry.update();
     }
 
     public void setPosition(int position) {
