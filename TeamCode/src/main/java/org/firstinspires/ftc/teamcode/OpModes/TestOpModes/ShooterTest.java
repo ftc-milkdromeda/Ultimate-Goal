@@ -3,15 +3,17 @@ package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Drivers.Feeder;
 import org.firstinspires.ftc.teamcode.Drivers.Shooter;
 import org.firstinspires.ftc.teamcode.Drivers.Storage;
 
-import java.util.ArrayList;
-/*
+import Milkdromeda.TaskManager.Task;
+
+import Milkdromeda.Drivers.DriverManager;
+import Milkdromeda.TaskManager.Clock;
+import Milkdromeda.TaskManager.ThreadManager;
+
 //@Disabled
 @TeleOp(name = "ShooterTest", group = "Robot Test")
 public class ShooterTest extends LinearOpMode {
@@ -34,6 +36,17 @@ public class ShooterTest extends LinearOpMode {
     }
 
     public void runOpMode() {
+        Clock clock = new Clock(100);
+        Task task = new Task(clock) {
+        };
+
+        clock.start();
+        task.start();
+
+        this.shooter.enterThread(task);
+        this.storage.enterThread(task);
+        this.feeder.enterThread(task);
+
         this.shooter = new Shooter(super.hardwareMap);
         this.storage = new Storage(super.hardwareMap);
         this.feeder = new Feeder(this.storage, super.hardwareMap);
@@ -71,20 +84,20 @@ public class ShooterTest extends LinearOpMode {
                 }
                 else if (super.gamepad2.a) {
                     this.storage.setRings(3);
-                    this.storage.setPosition(0);
+                    this.storage.setPosition(task, 0);
                     while (super.gamepad2.a) {
                         this.updateTelemetry();
                     }
                 }
             }
 
-            this.shooter.runShooterPower(this.power);
+            this.shooter.runShooterPower(task, this.power);
 
             boolean isReset = false;
             while (this.status && super.opModeIsActive()) {
                 if ((super.gamepad1.right_bumper || super.gamepad2.right_bumper) && isReset) {
                     velocity = this.shooter.getAverageVelocity();
-                    this.feeder.feedRing();
+                    this.feeder.feedRing(task);
                     isReset = false;
 
                     while (super.gamepad1.right_bumper || super.gamepad2.right_bumper)
@@ -107,8 +120,11 @@ public class ShooterTest extends LinearOpMode {
             }
 
             this.updateTelemetry(velocity);
-            this.shooter.stopShooter();
+            this.shooter.stopShooter(task);
         }
+
+        DriverManager.stopAllProcess();
+        ThreadManager.stopAllProcess();
     }
 
     private Shooter shooter;
@@ -122,6 +138,3 @@ public class ShooterTest extends LinearOpMode {
     private static final double bigIncrement = 0.05;
     private static final double smallIncrement = 0.00025;
 }
-
- */
-//todo update to fit new drivers.
