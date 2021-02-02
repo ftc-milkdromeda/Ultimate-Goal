@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -15,6 +16,7 @@ import Milkdromeda.Drivers.DriverManager;
 import Milkdromeda.TaskManager.Clock;
 import Milkdromeda.TaskManager.ThreadManager;
 
+@Disabled
 @TeleOp(name="PID test")
 
 public class PIDTest extends OpMode {
