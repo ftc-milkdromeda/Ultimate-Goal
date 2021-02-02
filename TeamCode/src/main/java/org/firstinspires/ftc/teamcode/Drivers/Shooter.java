@@ -68,7 +68,7 @@ public class Shooter extends RobotShooter {
     }
 
     private static class Velocity extends VelocityGauge {
-        public Velocity(DcMotor motor[]) {
+        protected Velocity(DcMotor motor[]) {
             this.motor = motor;
             this.interrupt = Velocity.Interrupt.CONTINUE;
 
