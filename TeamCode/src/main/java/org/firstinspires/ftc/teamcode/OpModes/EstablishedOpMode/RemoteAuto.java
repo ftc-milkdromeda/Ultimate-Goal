@@ -139,7 +139,6 @@ public class RemoteAuto extends AutoTemplate {
 
         DriverManager.stopAllProcess();
         ThreadManager.stopAllProcess();
-
     }
     private void fourRing() {
         this.strafeToDistance(-0.75, -8.125, Units_length.IN);
@@ -147,7 +146,7 @@ public class RemoteAuto extends AutoTemplate {
 
         this.storage.setRings(3);
         //this.coordinator.setPower(.790);
-        this.coordinator.setPower(0.70);
+        this.coordinator.setPower(0.69);
         this.coordinator.runShooter();
 
         this.strafeToDistance(0.75, 8.125, Units_length.IN);
@@ -161,7 +160,7 @@ public class RemoteAuto extends AutoTemplate {
 
         this.storage.setRings(2);
         //this.coordinator.setPower(.79);
-        this.coordinator.setPower(0.70);
+        this.coordinator.setPower(0.69);
         this.coordinator.runShooter();
 
         this.strafeToDistance(0.75, 8.125, Units_length.IN);
@@ -187,7 +186,7 @@ public class RemoteAuto extends AutoTemplate {
         this.strafeToDistance(0.75, 8.125, Units_length.IN);
 
         this.storage.setRings(2);
-        this.coordinator.setPower(0.7);
+        this.coordinator.setPower(0.69);
         this.coordinator.runShooter();
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
@@ -216,7 +215,7 @@ public class RemoteAuto extends AutoTemplate {
         this.runToDistance(1.0, 14, Units_length.IN);
     }
 
-    public synchronized void ringCallBack(int rings) {
+    public void ringCallBack(int rings) {
         this.numOfRings = rings;
     }
 
@@ -224,7 +223,7 @@ public class RemoteAuto extends AutoTemplate {
     protected void startSequence() {
         Bitmap image = this.camera.takeImage(this.stack);
         this.stack.setImage(image);
-        //this.stack.start();
+        this.stack.start();
 
         this.clock.start();
         this.coordinator.start();
@@ -278,11 +277,11 @@ public class RemoteAuto extends AutoTemplate {
     protected void main() {
         this.storage.setRings(3);
         //this.coordinator.setPower(.785);
-        this.coordinator.setPower(0.7);
+        this.coordinator.setPower(0.725);
         this.coordinator.runShooter();
         this.armTask.setPosition(1);
 
-        this.runToDistance(0.7, 27.625, Units_length.IN);
+        this.runToDistance(0.8, 28.625, Units_length.IN);
 
         while(this.storage.getRings() > 0)
             this.coordinator.shoot();
@@ -305,7 +304,6 @@ public class RemoteAuto extends AutoTemplate {
                     break;
                 }
             }
-        //this.fourRing();
     }
 
     private RobotShooter shooter;
