@@ -30,10 +30,15 @@ public class ShooterTask extends Task {
         int gauge = super.clock.getCurrentState();
 
         while(!super.isInterrupted()) {
-            if(this.isRunning)
+            if(this.isRunning) {
                 this.shooter.runShooterPower(this, this.power);
-            else
+                this.storage.nextRing(this);
+                ShooterTask.status = true;
+            }
+            else {
                 this.shooter.stopShooter(this);
+                ShooterTask.status = false;
+            }
 
             int startClock = super.clock.getCurrentState();
             while(super.clock.getCurrentState() == startClock && !super.isInterrupted());
@@ -47,16 +52,12 @@ public class ShooterTask extends Task {
             return;
 
         this.isRunning = false;
-        ShooterTask.status = false;
     }
     public synchronized void proceed() {
         if(ShooterTask.status || !this.alive || this.isRunning)
             return;
 
-        ShooterTask.status = true;
         this.isRunning = true;
-
-        this.storage.nextRing(this);
     }
     public void setPower(double power) {
         this.power = power;

@@ -45,7 +45,6 @@ public class RingTaskCoordinator extends Task {
                 this.storage.enterThread(this.shooter);
 
                 this.shooter.setPower(this.power);
-                this.storage.nextRing(this.shooter);
                 this.shooter.proceed();
             }
 

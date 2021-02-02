@@ -88,16 +88,16 @@ public class StackHeightTask extends Task {
         int pixelCount = this.countPixel(this.image, -0.1, 0.1);
 
         if(pixelCount <= oneRingMin)
-            this.ringHeight = 0;
+            this.opmode.ringCallBack(0);
         else if(pixelCount <= fourRingMin)
-            this.ringHeight = 1;
+            this.opmode.ringCallBack(1);
         else
-            this.ringHeight = 4;
+            this.opmode.ringCallBack(4);
 
+        this.opmode.telemetry.addData("Finsihed", "");
+        this.opmode.telemetry.update();
 
         this.image.writeImage("/storage/self/primary/FIRST/finalImage");
-
-        this.opmode.ringCallBack(this.ringHeight);
 
         ThreadManager.stopProcess(super.getProcessId());
     }
@@ -124,7 +124,7 @@ public class StackHeightTask extends Task {
     private static final int fourRingMin = 13000;
 
     private static final int crop_x1 = 81;
-    private static final int crop_x2 = 251;
+    private static final int crop_x2 = 351;
 
     private static final int crop_y1 = 614;
     private static final int crop_y2 = 978;
