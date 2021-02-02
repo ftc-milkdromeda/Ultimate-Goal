@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
+/*package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -21,6 +21,7 @@ public class StackHeightTest extends LinearOpMode {
         StackHeightTask task = new StackHeightTask(clock, camera);
 
         super.waitForStart();
+        task.setImage(camera.takeImage(task));
         task.start();
 
         while(super.opModeIsActive()) {
@@ -32,3 +33,4 @@ public class StackHeightTest extends LinearOpMode {
         ThreadManager.stopAllProcess();
     }
 }
+*/
